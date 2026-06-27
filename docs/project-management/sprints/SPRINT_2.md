@@ -27,7 +27,7 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | Task | Ajan | Rapor | Çıktı | Durum |
 |------|------|-------|-------|-------|
 | **Task 009** | Agent 2 (Product) | [TASK_009_REPORT.md](../reports/TASK_009_REPORT.md) | [FEATURE_TRACEABILITY_MATRIX.md](../../product/FEATURE_TRACEABILITY_MATRIX.md) | ✅ Tamamlandı |
-| **Task 013** | Agent 1 (Dev) | [TASK_013_REPORT.md](../reports/TASK_013_REPORT.md) | Domain + Persistence for CRM Entities | ✅ Tamamlandı |
+| **Task 013** | Agent 1 (Dev) | [TASK_013_CRM_FOUNDATION_REPORT.md](../reports/TASK_013_CRM_FOUNDATION_REPORT.md) | Domain + Persistence for CRM Entities | ✅ Tamamlandı |
 
 **Task 009 özeti:** 92 widget traceability satırı (CEO 32 · Sales 29 · Finance 31). Kod yazılmadı.
 
@@ -39,7 +39,7 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 
 | # | Task | Ajan | Bağımlılık |
 |---|------|------|------------|
-| 1 | Chief Architect Review — Task 009 & 013 | Chief Architect | TASK_009_REPORT, TASK_013_REPORT |
+| 1 | Chief Architect Review — Task 009 & 013 | Chief Architect | TASK_009_REPORT, TASK_013_CRM_FOUNDATION_REPORT |
 | 2 | CRM Application / API Handler (CQRS Command/Query) | Agent 1 | TASK_013 |
 | 3 | Sales Order API | Agent 1 | Matris §2 |
 | 4 | CEO Control Tower read endpoints | Agent 1 | Matris §1 |
