@@ -57,6 +57,36 @@ Sonraki adım çalıştırılır.
 
 ---
 
+## Workflow Matrix (Süreç Matrisi)
+
+| Workflow Name | Owner Context | Trigger Event / Action | Steps | SLA | Escalation | Required Permissions | Output Events |
+| ------------- | ------------- | ---------------------- | ----- | --- | ---------- | -------------------- | ------------- |
+| `CrmProposalApproval` | CRM / Sales | `CrmProposalSent` | 1. Limit kontrolü (Rule Engine)<br>2. %20 üstü indirim ise SalesManager onayı<br>3. Büyük tutarlarda CEO onayı | 24 Saat | 24 saat onaylanmazsa SalesManager'a, 48 saatte CEO'ya eskalasyon. | `CRM.Proposal.Approve` | `CrmProposalApproved`, `CrmProposalDeclined` |
+| `FinanceJournalEntryPosting` | Finance | Fiş onay talebi | 1. Bakiye kontrolü (Rule Engine)<br>2. FinanceManager onayı | 48 Saat | 48 saat onaylanmazsa CEO'ya eskalasyon / bildirim. | `Finance.JournalEntry.Post` | `FinanceJournalEntryPosted` |
+| `HrLeaveApproval` | HR | `HrLeaveRequested` | 1. Kalan gün kontrolü (Rule Engine)<br>2. Departman Yöneticisi onayı<br>3. HRManager onayı | 72 Saat | 72 saat onaylanmazsa HRManager'a eskalasyon. | `HR.Leave.Approve` | `HrLeaveApproved`, `HrLeaveRejected` |
+| `LogisticsStockTransferApproval` | Logistics | `StockTransferRequested` | 1. Kaynak depo stok seviyesi kontrolü (Rule Engine)<br>2. Kaynak depo sorumlusu onayı<br>3. Hedef depo sorumlusu teslimat onayı | 12 Saat | 12 saatte tamamlanmazsa LogisticsManager'a uyarı. | `Logistics.StockTransfer.Approve`, `Logistics.StockTransfer.Complete` | `LogisticsStockTransferCompleted`, `LogisticsStockTransferRejected` |
+| `QcClaimResolution` | QC | `QcClaimCreated` | 1. Kalite Standardına göre inceleme<br>2. Rework/Hurda aksiyonu belirleme<br>3. QCManager sonuçlandırması | 5 İş Günü | 5 gün aşılırsa CEO ve QCManager'a acil alarm. | `QC.Claim.Resolve` | `QcClaimResolved` |
+| `DecisionLogApproval` | CEO | `DecisionLogCreated` | 1. AI ön değerlendirme analizi<br>2. CEO onayı | 24 Saat | Uygulanmaz (CEO inisiyatifi). | `CEO.DecisionLog.Approve` | `DecisionLogApproved` |
+
+---
+
+## 🛠️ Rule / Workflow / Event Entegrasyon Ayrımı
+
+Sistem süreç otomasyonunda görevler şu şekilde ayrılmıştır:
+1. **Rule Engine (Karar Verici):** Girdi parametrelerini ve eşik değerlerini değerlendirerek mantıksal kararlar üretir (Örn: "İndirim oranı limit aşımı: Evet").
+2. **Workflow Engine (Süreç İşletici):** Süreç adımlarını, SLA sürelerini, insan görevlerini (tasks) ve eskalasyon yollarını koordine eder.
+3. **Event Bus (Sonuç Dağıtıcı):** Süreç adımlarının tamamlanmasıyla üretilen event'leri (Örn: `HrLeaveApproved`) asenkron olarak diğer modüllere dağıtır.
+
+---
+
+## 🤖 AI Workflow Sınırları
+
+* **Analiz ve Öneri:** AI Ajanı, workflow süreçlerinde risk analizi yapabilir, öncelik atayabilir ve yöneticilere akıllı onay/ret önerileri sunabilir.
+* **Nihai Onay Yasağı:** AI hiçbir zaman nihai onay verme yetkisine sahip olamaz. Onaylar her zaman fiziksel bir sorumlu tarafından verilmelidir.
+* **Tetikleme Sınırı:** AI ancak `AI.Agent.Execute` veya ilgili modül yetkilerine sahip olması durumunda sadece sistem üzerinden görev veya workflow önerisi başlatabilir.
+
+---
+
 # Workflow Bileşenleri
 
 ## Workflow Definition
