@@ -1,13 +1,23 @@
-# QA Review — Task 008A Event Bus Hardening
+# QA Review — Task 008A Event Bus Hardening / Outbox
 
 **Task:** 008A — Event Bus Hardening / Outbox Fix  
-**Date:** 2026-06-27  
+**Date:** 2026-06-28  
 **Reviewer:** Agent 2 (Independent QA)  
-**Scope:** Emare BOS — `OutboxMessage`, `OutboxWriter`, `EmareDbContext.CollectDomainEventsToOutbox`, `DomainEventDispatcher`, Event Bus testleri  
-**Method:** `dotnet restore/build/test`, kaynak inceleme, Agent 1 `TASK_008A_REPORT.md` ile çapraz doğrulama  
+**Scope:** Emare BOS Platform — Outbox pattern, domain event dispatch, `OutboxMessage`, `OutboxWriter`, `EmareDbContext.CollectDomainEventsToOutbox`, `DomainEventDispatcher`, `InMemoryEventBus`  
+**Method:** Pre-flight docs + `dotnet restore/build/test` + kaynak inceleme + Agent 1 `TASK_008A_REPORT.md` çapraz doğrulama  
 **Kısıt:** Kod değiştirilmedi. Private repo commit/push yapılmadı.
 
-**Referanslar:** `TASK_008A_REPORT.md`, `QA_TASK_008_EVENT_BUS_INDEPENDENT.md` (Task 008 bağımsız inceleme)
+---
+
+## Pre-Flight (Okunan Dokümanlar)
+
+| Doküman | Uyum kontrolü |
+|---------|----------------|
+| `docs/project-management/AGENTS.md` | Dual-repo QA çıktısı public repoda — uygun |
+| `ANAYASA.md` | `DateTime.UtcNow` kuralı — Platform outbox uyumlu |
+| `EVENT_BUS.md` | Outbox pattern önerisi; integration event ayrımı — kısmen uyumlu (integration bypass devam) |
+| `DOMAIN_MODEL.md` | `OutboxMessage` entity matrisi ile uyumlu |
+| `TASK_008A_REPORT.md` | tenantId fix doğrulandı; correlationId runtime iddiası kısmen yanlış |
 
 ---
 
@@ -18,7 +28,7 @@
 | Komut | Sonuç |
 |-------|--------|
 | `dotnet restore Emare.sln` | Başarılı |
-| `dotnet build Emare.sln` | **0 hata**, **0 uyarı** |
+| `dotnet build Emare.sln` | **0 hata**, 5 uyarı (CA1000 ×4, CA1069 CRM enum — Task 008A dışı) |
 
 ---
 
@@ -29,122 +39,129 @@
 | Proje | Geçen | Başarısız | Toplam |
 |-------|-------|-----------|--------|
 | `Emare.BuildingBlocks.Tests` | 8 | 0 | 8 |
-| `Emare.Platform.Domain.Tests` | 10 | 0 | 10 |
-| `Emare.Platform.Persistence.Tests` | 14 | 0 | 14 |
+| `Emare.Platform.Domain.Tests` | 24 | 0 | 24 |
+| `Emare.Platform.Persistence.Tests` | 19 | 0 | 19 |
 | `Emare.Platform.API.Tests` | 47 | 0 | 47 |
-| **Toplam** | **79** | **0** | **79** |
-
-Task 008A ile eklenen/güncellenen testler:
-
-| Test | Konum | Sonuç |
-|------|-------|-------|
-| `OutboxMessage_Create_ShouldAssign_TenantId` | `OutboxHardeningTests` | ✅ |
-| `OutboxMessage_Create_ShouldAssign_CorrelationId` | `OutboxHardeningTests` | ✅ |
-| `OutboxWriter_ShouldAssign_TenantId_ToOutboxMessage` | `OutboxHardeningTests` | ✅ |
-| `DbContext_SaveChangesAsync_ShouldPersistOutboxMessage_WithTenantId` | `OutboxHardeningTests` | ✅ |
-| `SaveChangesAsync_CollectDomainEventsToOutbox_ShouldStampTenantId` | `PersistenceTests` | ✅ |
-| `DomainEventDispatcher_ShouldWriteToOutbox_AndClearDomainEvents` | `OutboxHardeningTests` | ✅ |
+| **Toplam** | **98** | **0** | **98** |
 
 ---
 
-## Task 008A Checklist (Özel Kontroller)
+## Özel Doğrulama Matrisi
 
 | # | Kontrol | Sonuç | Kanıt |
 |---|---------|--------|-------|
-| 1 | `OutboxMessage.Create` tenantId atıyor mu? | ✅ **Evet** | `OutboxMessage.cs` L38: `TenantId = tenantId`. `OutboxWriter` ve `CollectDomainEventsToOutbox` tenantId geçiriyor. Test 1, 10, 11, PersistenceTests stamp testi geçti. |
-| 2 | `OutboxMessage.Create` correlationId atıyor mu? | ⚠️ **Kısmi** | Factory parametre bağlama düzeltildi (`CorrelationId = correlationId`, L39). Unit test geçiyor. **Runtime çağrı noktaları correlationId geçmiyor** — `OutboxWriter` ve `CollectDomainEventsToOutbox` yalnızca 3 argümanlı overload kullanıyor; DB'de `CorrelationId` null kalıyor. |
-| 3 | SaveChanges sonrası domain event OutboxMessage'a dönüşüyor mu? | ✅ **Evet** | `EmareDbContext.SaveChangesAsync` → `CollectDomainEventsToOutbox()` → serialize + `OutboxMessages.Add`. Integration test: `SaveChangesAsync_CollectDomainEventsToOutbox_ShouldStampTenantId`. |
-| 4 | Aggregate domain event listesi temizleniyor mu? | ✅ **Evet** | `CollectDomainEventsToOutbox`: kopyala → `aggregate.ClearDomainEvents()`. `DomainEventDispatcher`: aynı kalıp. Test: `Aggregate_DomainEvents_ShouldBeCleared_AfterDispatch`, PersistenceTests empty assertion. |
-| 5 | Dış publish yapılmıyor mu? (domain → outbox yolu) | ✅ **Evet** | SaveChanges/outbox yolu yalnızca EF `OutboxMessages` insert. Broker/handler invoke yok. `DomainEventDispatcher` yalnızca `IOutboxWriter.WriteAsync` çağırır. |
-| 6 | RabbitMQ/Kafka eklenmemiş mi? | ✅ **Evet** | `src/Platform/**` içinde RabbitMQ/Kafka referansı yok. |
-| 7 | Background worker eklenmemiş mi? (outbox relay) | ✅ **Evet** | Platform katmanında outbox relay `BackgroundService`/`IHostedService` yok. (Legacy `EmareTicket.BackgroundJobs` ayrı monolit modülü — Task 008A kapsamı dışı.) |
-| 8 | `DateTime.Now` var mı? | ✅ **Yok** | `src/Platform/**` taraması: eşleşme yok. `OutboxMessage` → `DateTime.UtcNow`. |
-| 9 | `throw new Exception` var mı? | ✅ **Yok** | `src/Platform/**` taraması: eşleşme yok. Validation için `ArgumentException` kullanılıyor. |
+| 1 | `OutboxMessage.Create` → `tenantId` | ✅ | L38 `TenantId = tenantId`. Unit test + runtime call sites geçiriyor. |
+| 2 | `OutboxMessage.Create` → `correlationId` | ⚠️ Kısmi | L39 parametre binding doğru (unit test). **Runtime call sites geçirmiyor** → DB'de null. |
+| 3 | `OutboxWriter` doğru çalışıyor mu? | ✅ | Serialize + `OutboxMessages.Add`; tenantId stamp; test 6/10/11. |
+| 4 | `ITenantProvider` empty/null güvenli mi? | ✅ | `Guid.Empty ? null : TenantId` — `OutboxWriter` + `CollectDomainEventsToOutbox`. |
+| 5 | Domain Event → Outbox SaveChanges içinde mi? | ✅ | `SaveChangesAsync` → `CollectDomainEventsToOutbox()` → `OutboxMessages.Add` → `base.SaveChangesAsync`. |
+| 6 | Transaction sınırı bozulmuş mu? | ✅ | Tek EF `SaveChangesAsync` transaction; outbox insert aynı batch'te. **Not:** sync `SaveChanges()` override yok. |
+| 7 | Domain event dış publish yok mu? | ✅ | Outbox yolu broker/handler çağırmıyor. `DomainEventDispatcher` yalnızca `IOutboxWriter`. |
+| 8 | Integration event outbox bypass? | ⚠️ **Evet** | `InMemoryEventBus.PublishAsync` doğrudan handler invoke — outbox tablosuna yazmaz (Task 008 skeleton borcu). |
+| 9 | Save sonrası aggregate events temiz mi? | ✅ | `ClearDomainEvents()` — `CollectDomainEventsToOutbox` + `DomainEventDispatcher`. |
+| 10 | `DateTime.Now` | ✅ | `src/Platform/**` — yok. `OutboxMessage` → `DateTime.UtcNow`. |
+| 11 | `throw new Exception` | ✅ | `src/Platform/**` — yok. Factory `ArgumentException` kullanıyor. |
+| 12 | RabbitMQ / Kafka / outbox worker | ✅ | Platform katmanında yok. |
 
 ---
 
-## Clean Architecture
+## Akış Diyagramı (Doğrulanmış)
 
-* **Domain bağımsız mı?** ✅ `OutboxMessage` Domain'de; Infrastructure/Persistence bağımlılığı yok.
-* **Infrastructure sızıntısı var mı?** ✅ Outbox yazımı Persistence (`OutboxWriter`, `EmareDbContext`); dispatcher Infrastructure'da `IOutboxWriter` sözleşmesine bağımlı.
-* **Controller DbContext kullanıyor mu?** ✅ Event Bus değişikliği controller katmanına taşmamış.
+```text
+Aggregate raises IDomainEvent
+        ↓
+EmareDbContext.SaveChangesAsync()
+        ↓
+CollectDomainEventsToOutbox()
+  • tenantId = ITenantProvider (Empty → null)
+  • correlationId = null (bilinçli erteleme)
+  • JsonSerializer → payload
+  • OutboxMessage.Create(eventType, payload, tenantId)
+  • aggregate.ClearDomainEvents()
+        ↓
+base.SaveChangesAsync()  ← tek transaction
+        ↓
+OutboxMessages tablosu (ProcessedAt = null, relay bekler)
+
+Alternatif yol:
+DomainEventDispatcher → IOutboxWriter.WriteAsync → aynı DbContext (manuel çağrı)
+```
 
 ---
 
-## DDD Compliance
+## Test Kapsamı Matrisi
 
-* **AggregateRoot / domain event:** ✅ `IHasDomainEvents`, `ClearDomainEvents()` kalıbı doğru.
-* **Domain event → outbox:** ✅ SaveChanges pipeline'da toplanıyor (Task 008 independent review'daki UoW boşluğu kapatıldı).
-* **Çift yol notu:** `CollectDomainEventsToOutbox` (DbContext) ve `DomainEventDispatcher` (manuel çağrı) paralel mevcut; UoW yalnızca DbContext yolunu kullanıyor — çakışma riski düşük, ancak gelecekte tek giriş noktası tercih edilmeli.
+| Senaryo | Test var mı? | Test adı / konum |
+|---------|--------------|------------------|
+| **tenantId** — factory | ✅ | `OutboxMessage_Create_ShouldAssign_TenantId` |
+| **tenantId** — OutboxWriter | ✅ | `OutboxWriter_ShouldAssign_TenantId_ToOutboxMessage` |
+| **tenantId** — SaveChanges persist | ✅ | `DbContext_SaveChangesAsync_ShouldPersistOutboxMessage_WithTenantId` |
+| **tenantId** — CollectDomainEvents | ✅ | `SaveChangesAsync_CollectDomainEventsToOutbox_ShouldStampTenantId` |
+| **tenantId** — CRM domain event | ✅ | `SaveChangesAsync_CollectCrmDomainEvents_ShouldCreateOutboxMessages` |
+| **correlationId** — factory | ✅ | `OutboxMessage_Create_ShouldAssign_CorrelationId` |
+| **correlationId** — runtime stamp | ❌ | Eksik — `ICorrelationProvider` sonrası eklenmeli |
+| **payload** — serialize / not empty | ✅ | Test 4, 6; CRM outbox payload assertion |
+| **event type** — doğru ad | ✅ | Test 3, 6; CRM `CrmAccountCreatedDomainEvent` |
+| **UTC** — OccurredAt | ✅ | Test 5, 11, `IntegrationEvent_OccurredAt_ShouldBeUtc` |
+| **empty tenant** — null TenantId on outbox | ❌ | Eksik — `Guid.Empty` → outbox `TenantId` null testi yok |
+| **multiple domain events** — tek save | ❌ | Eksik — aggregate başına 2+ event senaryosu yok |
+| **no direct external publish** — domain | ✅ | `DomainEventDispatcher_ShouldWriteToOutbox_AndClearDomainEvents` (mock) |
+| **integration bypass** — bilinçli | ⚠️ | Dokümante borç; negatif test yok |
 
 ---
 
-## Security
+## Clean Architecture & Anayasa
 
-* **DateTime.Now:** ✅ Yok (Platform).
-* **throw new Exception:** ✅ Yok (Platform).
-* **Hardcoded Secret / Connection String / Tenant:** ✅ Yok.
-* **TenantId stamp:** ✅ `ITenantProvider.TenantId`; `Guid.Empty` → null (fail-safe).
-
----
-
-## Performance
-
-* **SaveChanges içi outbox toplama:** ChangeTracker scan — aggregate sayısına bağlı, kabul edilebilir skeleton maliyeti.
-* **Async:** `SaveChangesAsync` async; `OutboxWriter.WriteAsync` senkron add + `Task.CompletedTask` (iyileştirme önerisi, blocker değil).
+| Kural | Durum |
+|-------|--------|
+| Domain bağımsızlığı | ✅ `OutboxMessage` Domain'de |
+| Persistence → Application sözleşmesi | ✅ `IOutboxWriter` Application.Contracts |
+| Infrastructure dispatcher | ✅ `DomainEventDispatcher` → `IOutboxWriter` |
+| ANAYASA DateTime UTC | ✅ |
+| EVENT_BUS outbox önerisi | ⚠️ Domain path OK; integration path bypass |
 
 ---
 
 ## Persistence
 
-* **Outbox indexleri:** ✅ `ProcessedAt`, `OccurredAt`, `TenantId`, `EventType` — test ile doğrulandı.
-* **Tenant:** ✅ OutboxMessage'a tenantId yazılıyor; global filter davranışı test edildi.
-* **UTC:** ✅ `OccurredAt` UTC.
-
----
-
-## API
-
-Task 008A API yüzeyi değiştirmedi — N/A.
-
----
-
-## Test Coverage
-
-**Yeterli (Task 008A hotfix kapsamı için).**
-
-008A'nın hedeflediği tenantId bug'ı unit + integration test ile kapatılmış. Eksikler:
-
-* End-to-end: gerçek HTTP request → aggregate save → outbox row assertion (API integration).
-* `correlationId` runtime stamp testi (ICorrelationProvider gelince).
-* Outbox relay worker testi (henüz implementasyon yok).
+| Kontrol | Durum |
+|---------|--------|
+| `OutboxMessages` DbSet | ✅ |
+| Index: ProcessedAt, OccurredAt, TenantId, EventType | ✅ Test ile doğrulandı |
+| Outbox global tenant filter | N/A — `OutboxMessage` tenant filter dışı (relay için doğru) |
 
 ---
 
 ## Critical Issues
 
-1. **CorrelationId runtime'da null** — `OutboxMessage.Create` factory düzgün; `OutboxWriter` ve `CollectDomainEventsToOutbox` correlationId iletmiyor. Task 008A report'ta bilinçli erteleme (`ICorrelationProvider` backlog). **Blocker değil; izlenebilirlik borcu.**
+1. **CorrelationId runtime null** — Factory düzeltildi; `OutboxWriter` / `CollectDomainEventsToOutbox` iletmiyor. Task 008A report bilinçli erteleme ile uyumlu. **Blocker değil.**
 
----
+2. **Integration event outbox bypass** — `InMemoryEventBus.PublishAsync` skeleton davranışı; production öncesi EVENT_BUS.md ile hizalanmalı.
 
-## Suggestions
-
-1. `ICorrelationProvider` eklenince hem `OutboxWriter` hem `CollectDomainEventsToOutbox` correlationId geçirmeli.
-2. Integration event'ler (`InMemoryEventBus.PublishAsync`) hâlâ outbox bypass — production öncesi integration event → outbox veya transactional outbox relay tasarımı netleştirilmeli (Task 008 inherited).
-3. Outbox relay background worker gelecek task'ta eklenecek; `ProcessedAt` / retry mantığı henüz işletilmiyor.
-4. `DomainEventDispatcher` ile `CollectDomainEventsToOutbox` tek stratejide birleştirilebilir (mimari sadeleştirme).
+3. **Sync `SaveChanges()` override yok** — Yalnızca `SaveChangesAsync` outbox toplar; sync çağrı outbox atlar (düşük risk, UoW async kullanıyor).
 
 ---
 
 ## Agent 1 Report Cross-Check
 
-| Agent 1 iddiası | Bağımsız doğrulama |
-|-----------------|-------------------|
-| tenantId bug fix | ✅ Doğrulandı |
-| correlationId factory fix | ✅ Doğrulandı (param binding) |
-| correlationId runtime | ⚠️ Hâlâ null — report ile uyumlu |
-| 61 test yeşil | ⚠️ Güncel toplam **79/79** (test sayısı artmış) |
-| Build 0 hata | ✅ Doğrulandı |
+| Agent 1 iddiası | Bağımsız sonuç |
+|-----------------|----------------|
+| tenantId bug fix (2 call site) | ✅ Doğrulandı |
+| correlationId parametreleri geçiriliyordu ama atanmıyordu → fix | ✅ Factory fix doğru |
+| correlationId runtime | ❌ Hâlâ null — report'ta erteleme notu var |
+| 61 test | ⚠️ Güncel **98/98** |
+| Build 0 uyarı | ⚠️ 5 uyarı (CRM enum — 008A dışı) |
+
+---
+
+## Suggestions
+
+1. `ICorrelationProvider` + outbox correlationId runtime testi.
+2. `CollectDomainEventsToOutbox_GuidEmptyTenant_ShouldWriteNullTenantId` testi.
+3. `Aggregate_WithMultipleDomainEvents_ShouldCreateMultipleOutboxRows` testi.
+4. Integration event → outbox veya transactional relay tasarım kararı (ADR).
+5. `SaveChanges()` sync override veya yasaklama (analyzer/rule).
+6. Outbox relay worker + `ProcessedAt`/`RetryCount` işletimi (gelecek task).
 
 ---
 
@@ -152,11 +169,16 @@ Task 008A API yüzeyi değiştirmedi — N/A.
 
 **CONDITIONAL PASS**
 
-**Gerekçe:** Task 008A'nın ana hedefi olan **tenantId outbox stamp** bug'ı düzeltilmiş ve testlerle kanıtlanmış. SaveChanges → outbox → aggregate clear akışı çalışıyor. Platform katmanında broker/worker/DateTime.Now/throw new Exception ihlali yok.
+**Gerekçe:** Task 008A ana hedefi (**tenantId outbox stamp**) düzeltilmiş ve unit/integration testlerle kanıtlanmış. Domain event → outbox → aggregate clear → tek transaction akışı doğru. Platform'da broker/worker/`DateTime.Now`/`throw new Exception` ihlali yok.
 
-**Koşul:** `correlationId` production çağrı noktalarında hâlü null; `ICorrelationProvider` task'ı tamamlanana kadar izlenmeli. Integration event outbox bypass ve outbox relay worker Task 008 skeleton borcu olarak devam ediyor — Sprint 2+ gate maddesi.
+**Koşullar (gate):**
 
-**Sonraki adım:** Chief Architect Review (`ARCHITECT_REVIEW_TASK_008A.md` — yalnızca Chief Architect yazar).
+- `correlationId` runtime stamp + test eksik
+- Integration event outbox bypass devam ediyor
+- Outbox relay worker henüz yok
+- Test matrisinde empty-tenant-outbox ve multiple-event senaryoları eksik
+
+**Sonraki adım:** Chief Architect Review — `ARCHITECT_REVIEW_TASK_008A.md` (yalnızca Chief Architect yazar).
 
 ---
 
