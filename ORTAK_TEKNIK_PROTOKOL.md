@@ -111,17 +111,28 @@ Ortak dosya değişikliği gerekiyorsa ilgili değişiklik açıklanmalıdır.
 
 ## 5. Clean Architecture Kuralı
 
-Bağımlılık yönü daima içe doğrudur:
+Bağımlılık yönü daima içe doğrudur. Katmanların bağımlılık ilişkisi (Referans Yönü):
 
 ```text
-Domain
+Web / UI (En dış)
   ↓
-Application
+API
   ↓
 Infrastructure / Persistence
   ↓
-API
+Application
+  ↓
+Domain (En iç - bağımsız)
 ```
+
+Bu katmanlaşma doğrultusunda şu kritik yasaklara kesinlikle uyulmalıdır:
+1. **Controller ➡️ DbContext Yasaktır:** Veritabanı işlemleri doğrudan API Controller sınıflarında yapılamaz, Application katmanındaki Handler/Service üzerinden yürütülmelidir.
+2. **UI ➡️ Entity Yasaktır:** Kullanıcı arayüzü (Web/UI) doğrudan Domain Entity sınıflarını kullanamaz. API ve Application üzerinden sadece DTO'lar (Data Transfer Objects) veya Response sözleşmeleri taşınabilir.
+3. **Domain ➡️ Infrastructure/Persistence Yasaktır:** Domain katmanı dış dünyadaki veritabanı veya servis teknolojilerine bağımlı olamaz.
+4. **Application ➡️ Infrastructure Implementation Yasaktır:** Uygulama mantığı somut altyapı sınıflarına (örn. somut SMTP veya şifreleme kütüphanelerine) bağımlı olamaz; sadece arayüzleri (Interface'leri) kullanır.
+5. **Domain ➡️ Hiçbir Katmana Bağımlı Olamaz:** Domain en iç çekirdektir, dışındaki hiçbir katmandan referans alamaz.
+
+Bu konu hakkında daha fazla detay için bkz. [ADR-0002 — Clean Architecture](file:///Users/emre/yeni-versiyon-gecis/docs/adr/0002-clean-architecture.md).
 
 Kurallar:
 

@@ -75,6 +75,16 @@ var d = DateTime.SpecifyKind(rawDate, DateTimeKind.Utc);
 ---
 
 ## 5. Clean Architecture Bağımlılık Yönü
-Bağımlılık yönü her zaman içe doğrudur:
-`Domain` (en iç - hiçbir bağımlılığı yok) ➡️ `Application` ➡️ `Infrastructure` & `Persistence` ➡️ `API` (en dış).
-İç katmanlar dış katmanlardaki hiçbir sınıfa doğrudan bağımlı olamaz (örneğin Domain, Application veya Persistence katmanına referans veremez).
+Bağımlılık yönü her zaman içe (Domain katmanına) doğrudur. 
+
+Referans Akışı:
+`Web / UI` ➡️ `API` ➡️ `Infrastructure` & `Persistence` ➡️ `Application` ➡️ `Domain` (Bağımsız Çekirdek).
+
+**5 Kritik Katman Yasağı:**
+1. **Controller ➡️ DbContext Yasaktır:** Veritabanı DbContext'i API Controller'lar içinde doğrudan kullanılamaz.
+2. **UI ➡️ Entity Yasaktır:** Arayüz katmanı Domain Entity sınıflarını doğrudan referans alamaz.
+3. **Domain ➡️ Infrastructure Yasaktır:** Domain katmanı altyapı sınıflarına bağımlı olamaz.
+4. **Application ➡️ Infrastructure Implementation Yasaktır:** Uygulama somut altyapı uygulamalarına bağımlı olamaz.
+5. **Domain ➡️ Hiçbir Katmana Bağımlı Olamaz:** Domain en iç katmandır, dışındaki hiçbir katmanı bilemez.
+
+Detaylar için bkz. [ADR-0002 — Clean Architecture](file:///Users/emre/yeni-versiyon-gecis/docs/adr/0002-clean-architecture.md).

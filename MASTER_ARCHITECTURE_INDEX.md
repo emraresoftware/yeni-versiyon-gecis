@@ -37,6 +37,23 @@ Bu indeks platform genelindeki tüm mimari, veri, güvenlik, entegrasyon, geliş
 
 ---
 
+## Katman Bağımlılık Kuralları
+
+Platformda Clean Architecture prensipleri uygulanmaktadır. Bağımlılık yönü daima içe doğrudur:
+
+`Web / UI (En dış)` ➡️ `API` ➡️ `Infrastructure / Persistence` ➡️ `Application` ➡️ `Domain (En iç - bağımsız)`
+
+### 5 Kritik Katman Yasağı:
+1. **Controller ➡️ DbContext Yasaktır:** Veritabanı işlemleri doğrudan API Controller'larda yapılamaz.
+2. **UI ➡️ Entity Yasaktır:** UI katmanı Domain Entity sınıflarını doğrudan kullanamaz, sadece DTO'ları kullanır.
+3. **Domain ➡️ Infrastructure Yasaktır:** Domain katmanı altyapı sınıflarına bağımlı olamaz.
+4. **Application ➡️ Infrastructure Implementation Yasaktır:** Application katmanı somut altyapı sınıflarına bağımlı olamaz, interface kullanır.
+5. **Domain ➡️ Hiçbir Katmana Bağımlı Olamaz:** Domain en iç katmandır, bağımsız olmak zorundadır.
+
+Daha fazla detay için bkz. [ADR-0002 — Clean Architecture](file:///Users/emre/yeni-versiyon-gecis/docs/adr/0002-clean-architecture.md).
+
+---
+
 ## Doküman Bağımlılık Matrisi
 
 | Doküman | Birincil Bağımlılıklar | İkincil Bağımlılıklar | Durum | Not |
