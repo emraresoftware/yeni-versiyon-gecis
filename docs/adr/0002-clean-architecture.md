@@ -332,7 +332,7 @@ Dezavantajlar
 
 # Related Documents
 
-* ERP_MIMARISI.md
+* README.md
 * DOMAIN_MODEL.md
 * BOUNDED_CONTEXTS.md
 * ORTAK_TEKNIK_PROTOKOL.md

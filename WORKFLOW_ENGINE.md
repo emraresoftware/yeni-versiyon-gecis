@@ -5,7 +5,7 @@
 **Status:** Approved
 **Owner:** Architecture Board
 **Last Updated:** 2026-06-27
-**Dependencies:** EVENT_BUS_MIMARISI.md
+**Dependencies:** EVENT_BUS.md
 **Related Documents:** RULE_ENGINE.md, NOTIFICATION_ENGINE.md
 
 ---

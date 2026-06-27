@@ -6,7 +6,7 @@
 **Owner:** Architecture Board
 **Last Updated:** 2026-06-27
 **Dependencies:** DOMAIN_MODEL.md
-**Related Documents:** UBIQUITOUS_LANGUAGE.md, EVENT_BUS_MIMARISI.md
+**Related Documents:** UBIQUITOUS_LANGUAGE.md, EVENT_BUS.md
 
 ---
 

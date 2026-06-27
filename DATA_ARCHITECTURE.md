@@ -396,7 +396,7 @@ Recovery testleri düzenli yapılmalıdır.
 
 # İlgili Dokümanlar
 
-* ERP_MIMARISI.md
+* README.md
 * EVENT_BUS.md
 * ANALYTICS_ENGINE.md
 * METADATA_ENGINE.md

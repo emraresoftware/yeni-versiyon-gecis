@@ -146,7 +146,7 @@ Negatif
 
 # Related Documents
 
-* ERP_MIMARISI.md
+* README.md
 * EVENT_BUS.md
 * DOMAIN_MODEL.md
 * BOUNDED_CONTEXTS.md

@@ -5,8 +5,8 @@
 **Status:** Approved
 **Owner:** Architecture Board
 **Last Updated:** 2026-06-27
-**Dependencies:** EVENT_BUS_MIMARISI.md
-**Related Documents:** WORKFLOW_ENGINE_MIMARISI.md, INTEGRATION_ENGINE.md
+**Dependencies:** EVENT_BUS.md
+**Related Documents:** WORKFLOW_ENGINE.md, INTEGRATION_ENGINE.md
 
 ---
 

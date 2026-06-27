@@ -6,7 +6,7 @@
 **Owner:** Architecture Board
 **Last Updated:** 2026-06-27
 **Dependencies:** README.md
-**Related Documents:** WORKFLOW_ENGINE_MIMARISI.md, RULE_ENGINE.md
+**Related Documents:** WORKFLOW_ENGINE.md, RULE_ENGINE.md
 
 ---
 

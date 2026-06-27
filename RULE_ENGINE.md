@@ -5,7 +5,7 @@
 **Status:** Approved
 **Owner:** Architecture Board
 **Last Updated:** 2026-06-27
-**Dependencies:** WORKFLOW_ENGINE_MIMARISI.md
+**Dependencies:** WORKFLOW_ENGINE.md
 **Related Documents:** METADATA_ENGINE.md, SECURITY_ARCHITECTURE.md
 
 ---

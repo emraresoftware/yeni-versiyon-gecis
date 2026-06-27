@@ -407,7 +407,7 @@ Platform bağımsız tasarım hedeflenir.
 
 # İlgili Dokümanlar
 
-* ERP_MIMARISI.md
+* README.md
 * OBSERVABILITY.md
 * SECURITY_ARCHITECTURE.md
 * DATA_ARCHITECTURE.md
