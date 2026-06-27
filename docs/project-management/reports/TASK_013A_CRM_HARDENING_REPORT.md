@@ -1,74 +1,36 @@
-# Task 013A Report — CRM Foundation Hardening
+# TASK 013A — CRM Foundation Hardening Report
 
-## Pre-flight Checklist Verification
-Before writing any code, the following mandatory standard documents were read and verified:
-*   [x] `AGENTS.md` (Checked commands, topologies, and sync flow)
-*   [x] `ANAYASA.md` (Enforced Article 1, 2, and 3 constraints)
-*   [x] `DOMAIN_MODEL.md` (Checked CRM entity design and context separation)
-*   [x] `EVENT_BUS.md` (Aligned domain event names with standard naming rules)
-*   [x] `SECURITY_AUTHORIZATION.md` (Identified permissions structure and constants)
+## Pre-flight Checklist
+- [x] AGENTS.md okundu
+- [x] ANAYASA.md okundu
+- [x] DOMAIN_MODEL.md okundu
+- [x] EVENT_BUS.md okundu
+- [x] SECURITY_AUTHORIZATION.md okundu
 
----
+## Yapılan Değişiklikler
+1. **CrmProposalItem Eklendi:**
+   - `CrmProposalId`, `Description`, `Quantity`, `UnitPrice`, `Currency`, `LineTotal` alanları eklendi.
+   - `CrmProposal` altında child entity olarak ilişkilendirildi.
+   - `CrmProposalItemConfiguration` içinde `TenantId` ve `CrmProposalId` alanları için ayrı indeksler tanımlandı.
+2. **CrmAccount Plan Boşlukları Kapatıldı:**
+   - Account segment alanı (`Segment` enum), NPS/müşteri memnuniyeti alanı (`NpsScore`), müşteri risk skoru (`RiskScore`) ve müşteri sağlık skoru (`HealthScore`) alanları eklendi.
+   - NPS skoru (0-10), risk skoru (0-100) ve sağlık skoru (0-100) için aralık doğrulama kısıtlamaları uygulandı.
+3. **CRM İzinleri Tamamlandı:**
+   - `Permissions.cs` içinde `CRM.Account.Read/Write`, `CRM.Contact.Read/Write`, `CRM.Opportunity.Read/Write`, `CRM.Proposal.Read/Write/Approve`, `CRM.Activity.Read/Write` yetki sabitleri tanımlandı.
 
-## Amaç
-CRM Domain + Persistence katmanlarındaki mimari ve fonksiyonel eksikleri tamamlayarak QA raporu doğrultusunda modülü **PASS** seviyesine ulaştırmak.
+## Event Suffix Açıklaması
+- Kod içi event ismi: `CrmAccountCreatedDomainEvent`
+- EVENT_BUS karşılığı: `CrmAccountCreated`
+- `DomainEvent` suffix'i yalnızca C# kod içi marker'ıdır (derleyici seviyesinde tip güvenliği için). Gerçek event bus ve outbox Payload üzerinde `CrmAccountCreated` olarak serileştirilir.
 
----
+## DDD Aggregate / Child Entity Gerekçesi
+- **Aggregate Root Sınırları:** `CrmAccount`, `CrmOpportunity` ve `CrmProposal` bağımsız iş döngülerine sahip oldukları için Aggregate Root'tur.
+- **CrmProposalItem (Child Entity):** Teklif satır kalemleri (`CrmProposalItem`), teklifin (`CrmProposal`) gövdesi olmadan tek başına var olamaz. Bu nedenle `CrmProposal` aggregate'inin bir parçasıdır ve child entity olarak modellenmiştir.
+- **CrmContact ve CrmActivity (Logical References):** Modüller arası gevşek bağımlılığı korumak amacıyla `CrmAccount` ile fiziksel navigasyon yerine `CrmAccountId` (Guid) logical reference üzerinden bağlanmışlardır.
 
-## 🏗️ DDD Aggregate Sınırları & Gerekçeleri
-
--   **`CrmProposalItem` (Child Entity):** Bağımsız bir iş belgesi olan `CrmProposal` Aggregate Root'unun bir parçasıdır. Teklif satırları teklif olmadan anlamsızdır ve teklifin toplam tutarını belirler. Bu nedenle `CrmProposal` aggregate sınırları içinde bir *Child Entity* olarak modellenmiştir.
--   **`CrmContact` ve `CrmActivity` (Logical References / Context Boundaries):**
-    -   `CrmContact` ve `CrmActivity` nesneleri kendi başlarına bir Aggregate Root başlatmazlar. `CrmAccount` nesnesi ile logical reference (`CrmAccountId` Guid) üzerinden ilişkilendirilmişlerdir.
-    -   Navigasyon property'leri yerine logical references (Guid) tercih edilmiştir. Bu sayede modüller gevşek bağlı (loose coupling) kalmakta, veritabanı kısıtlamaları ve cross-context kilitlenmelerin önüne geçilmektedir.
-
----
-
-## ⚡ Event İsimlendirme ve Suffix Standardı
-`EVENT_BUS.md` ve genel platform standartlarına uyum sağlamak amacıyla:
--   Serileştirme ve mesajlaşma seviyesindeki event tipleri `CrmAccountCreated`, `CrmOpportunityStageChanged`, `CrmProposalSent` şeklinde suffix olmadan eşleşmektedir.
--   C# kodundaki `DomainEvent` suffix'i sadece derleyici seviyesinde tip güvenliğini sağlamak için kullanılan bir **marker (kod içi işaretleyici)**'dir.
-
----
-
-## 🔒 CRM İzin Seti (Permissions)
-Aşağıdaki yetki sabitleri `Emare.Platform.Application.Authorization.Permissions` sınıfına eklenmiştir:
--   `CRM.Account.Read`
--   `CRM.Account.Write`
--   `CRM.Contact.Read`
--   `CRM.Contact.Write`
--   `CRM.Opportunity.Read`
--   `CRM.Opportunity.Write`
--   `CRM.Proposal.Read`
--   `CRM.Proposal.Write`
--   `CRM.Proposal.Approve`
--   `CRM.Activity.Read`
--   `CRM.Activity.Write`
-
----
-
-## 🛠️ Eklenen Fonksiyonlar ve Alanlar
--   **`CrmAccount` plan boşlukları kapatıldı:**
-    -   `Segment` (enum `CrmAccountSegment`: A, B, C, D)
-    -   `NpsScore` (0-10 arası kısıtlı tamsayı)
-    -   `RiskScore` (0-100 arası kısıtlı tamsayı)
-    -   `HealthScore` (0-100 arası kısıtlı tamsayı)
--   **`CrmProposalItem` entity'si eklendi:**
-    -   `CrmProposalId` logical reference
-    -   `Quantity`, `UnitPrice`, `Currency` alanları eklendi.
-    -   `LineTotal` (`Quantity * UnitPrice`) otomatik hesaplanmaktadır.
-    -   `CrmProposal` içindeki `Amount` alanı, eklenen satır kalemlerinin toplam `LineTotal` değerine göre otomatik olarak güncellenmektedir.
-
----
-
-## Build Result
--   **Command:** `dotnet build Emare.sln`
--   **Result:** Başarılı (0 Hata, 0 Uyarı)
-
-## Test Result
-Bütün test projeleri başarıyla geçmiştir.
--   `Emare.Platform.Domain.Tests`: 28/28 passed (Yeni segment, NPS/Risk/Health aralık testleri, ProposalItem hesaplama testleri dahil).
--   `Emare.Platform.Persistence.Tests`: 21/21 passed (ProposalItem entegrasyon testleri, permission sabitleri kontrol testleri dahil).
--   `Emare.BuildingBlocks.Tests`: 8/8 passed
--   `Emare.Platform.API.Tests`: 47/47 passed
--   **Total Tests:** 104 / 104 Passed (0 Failed, 0 Skipped)
+## Build/Test Sonucu
+- **Build Durumu:** Başarılı (`dotnet build Emare.sln` -> 0 Hata, 0 Uyarı)
+- **Test Durumu:** Başarılı (`dotnet test Emare.sln` -> 104/104 Passed)
+  - `CrmProposalItem` line total doğrulaması test edildi.
+  - NPS (0-10), Risk (0-100) ve Health (0-100) aralık validasyonları sınır değerleriyle (boundary tests) test edildi.
+  - CRM permission constants doğruluğu persistence testlerinde kontrol edildi.
