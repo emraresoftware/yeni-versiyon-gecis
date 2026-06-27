@@ -1,71 +1,426 @@
-# 🚀 Emare AI Dashboard — Yeni Versiyon Geçişi Ajan Kılavuzu
+# 🏛️ Emare Business Operating System (BOS) Mimarisi
 
-Bu klasör, **Emare AI Dashboard** projesinin Odoo bağımlılıklarından arındırılarak özelleştirilmiş ERP/CRM modüllerine geçiş sürecini (V3 Aşama C) yöneten 7 yapay zeka ajanı için ortak koordinasyon merkezidir.
+## Amaç
 
----
+Emare Business Operating System (BOS), klasik ERP yaklaşımının ötesine geçerek; şirketin tüm süreçlerini, verilerini, kullanıcılarını, yapay zekâ ajanlarını ve entegrasyonlarını tek platform üzerinde yöneten kurumsal işletim sistemi mimarisidir.
 
-## 👥 Ajan Rol Dağılımı ve Görev Alanları
-
-Sistemde eşzamanlı veya ardışık çalışan 7 ajan bulunmaktadır:
-
-| Ajan ID | Ajan Rolü / Departman | Görev Kartı Dosyası |
-|---------|-----------------------|---------------------|
-| **A1**  | CEO / Executive       | `GOREVLER/A1_CEO.md` |
-| **A2**  | Sales Manager         | `GOREVLER/A2_SALES.md` |
-| **A3**  | Finance Manager       | `GOREVLER/A3_FINANCE.md` |
-| **A4**  | HR & Admin            | `GOREVLER/A4_HR.md` |
-| **A5**  | Production / Imalat   | `GOREVLER/A5_PRODUCTION.md` |
-| **A6**  | QC (Quality Control)  | `GOREVLER/A6_QC.md` |
-| **A7**  | Logistics / Sevkiyat  | `GOREVLER/A7_LOGISTICS.md` |
+Bu mimari SAP, Oracle, Microsoft Dynamics, IFS ve Odoo gibi sistemlerden edinilen deneyimlerin üzerine; Event Driven Architecture, AI Native Design ve Business Engine yaklaşımı eklenerek tasarlanmıştır.
 
 ---
 
-## 🛠️ Çalışma Kuralları ve Protokoller
+# Mimari Katmanları
 
-### 1. Aktif Branch ve Kod Güncelleme
-- Tüm geliştirmeler **`gece-otonom`** branch'inde yapılmalıdır.
-- Kod üzerinde değişiklik yapmadan önce daima yerel deponuzu güncelleyin (`git pull`).
-- Geliştirme sonrasında kodların derlendiğini doğrulamak için hem backend testlerini çalıştırın hem de frontend build alın:
-  ```bash
-  # Backend
-  dotnet build && dotnet test
-  # Frontend
-  cd web && npm run build
-  ```
-
-### 2. Canlıya Alım (Deployment) Adımları
-Değişiklikleri Git deposuna gönderdikten sonra staging sunucularını tetikleyin:
-```bash
-git add .
-git commit -m "feat/fix: aciklama"
-git push emaredestek gece-otonom
-
-# Staging (31.169.72.85) sunucusunda derlemeyi başlatmak için lokalden:
-ssh -o StrictHostKeyChecking=no ticket@31.169.72.85 "/home/ticket/sync_deploy.sh 31.169.72.85 gece-otonom"
+```text
+                    Kullanıcılar
+                         │
+────────────────────────────────────────────
+                Web / Mobile / API
+────────────────────────────────────────────
+                     AI Copilot
+────────────────────────────────────────────
+               Business Applications
+────────────────────────────────────────────
+                 Business Engines
+────────────────────────────────────────────
+              Workflow • Event Bus
+────────────────────────────────────────────
+                Common Services
+────────────────────────────────────────────
+               BOS Kernel Platform
+────────────────────────────────────────────
+ Database • Cache • Queue • Storage • Search
+────────────────────────────────────────────
 ```
 
-### 3. Görev Güncelleme ve Kapanış
-- Her ajan çalışmaya başladığında `STATUS.md` dosyasındaki durumunu `IN_PROGRESS` yapar.
-- Kendi rol dosyasındaki (`GOREVLER/A*_*.md`) görev maddelerini tamamlandıkça `[x]` ile işaretler.
-- Tüm görevler tamamlandığında ve derleme testleri başarılı olduğunda durumunu `TAMAM` olarak günceller.
+---
 
-### 4. Yazılım Standartları (Anayasa)
-- Her geliştirici ajan, kod yazmaya başlamadan önce **[ANAYASA.md](./ANAYASA.md)** dosyasını okumak ve kurallara istisnasız uymak zorundadır.
-- PostgreSQL DateTime UTC zorunluluğuna ve dinamik kiracı (White-Labeling) standartlarına özellikle dikkat edilmelidir.
+# Katman 1 — BOS Kernel
 
-### 5. Mimari Standartlar ve Entegrasyon Dokümanları
-Sürecin ERP bütünlüğü içinde yürütülmesi için aşağıdaki 10 mimari ve standart dokümanı mutlaka rehber alınmalıdır:
-1. **[ORTAK_TEKNIK_PROTOKOL.md](./ORTAK_TEKNIK_PROTOKOL.md):** Git branching, dosya sınırları ve build kontrolleri.
-2. **[BAGIMLILIK_HARITASI.md](./BAGIMLILIK_HARITASI.md):** Modüller arası veri akışı ve ajan ilişkileri.
-3. **[ENTITY_STANDARDLARI.md](./ENTITY_STANDARDLARI.md):** BaseAuditableEntity, decimal para tipleri, enum dönüşümleri ve merkezi numara üretimi.
-4. **[API_STANDARDLARI.md](./API_STANDARDLARI.md):** `Result<T>`, `ApiResponse<T>`, RFC-7807 validasyon hataları ve JWT tenant claims çözümleme.
-5. **[FRONTEND_STANDARDLARI.md](./FRONTEND_STANDARDLARI.md):** API istemci metodları, Zod form doğrulamaları ve UI Loading/Empty durum tasarımları.
-6. **[TEST_STRATEJISI.md](./TEST_STRATEJISI.md):** xUnit, FluentAssertions, `DateTimeKind.Utc` assert kuralları ve multi-tenant veri izolasyon testleri.
-7. **[VERITABANI_MIGRATION_PLANI.md](./VERITABANI_MIGRATION_PLANI.md):** EF Core Migration sıralaması (CRM -> Finance -> Logistics -> QC -> HR -> CEO).
-8. **[MODUL_ENTEGRASYON_PLANI.md](./MODUL_ENTEGRASYON_PLANI.md):** MediatR Domain Event'ler ile gevşek bağlı (loose-coupled) entegrasyon senaryoları.
-9. **[SECURITY_AUTHORIZATION.md](./SECURITY_AUTHORIZATION.md):** Rol bazlı erişim denetimi (RBAC) matrisleri ve `[RequireTenant]` denetimleri.
-10. **[AI_AGENT_RUNBOOK.md](./AI_AGENT_RUNBOOK.md):** Kodlamayı üstlenecek yapay zeka ajanları için adım adım çalışma ve teslimat kılavuzu.
+Bu katman sistemin işletim sistemidir.
 
-### 6. Mevcut Projeler ve Referans Kodlar (Hazır Kaynaklar)
-- Geliştiriciler, kodları sıfırdan yazarken yerel bilgisayardaki mevcut projelerden ve iş kurallarından yararlanmalıdır. Detaylı eşleşme tablosu için **[REFERANSLAR.md](./REFERANSLAR.md)** dosyasını inceleyin.
+## İçerik
 
+* Authentication
+* Authorization (RBAC + ABAC)
+* Tenant Management
+* User Management
+* Role Management
+* Permission Engine
+* Audit Log
+* Configuration
+* Localization
+* Feature Flags
+* License Management
+
+Kernel hiçbir iş modülüne bağımlı değildir.
+
+---
+
+# Katman 2 — Common Services
+
+Tüm sistem tarafından ortak kullanılan servisler.
+
+## Servisler
+
+* Notification Service
+* Email Service
+* SMS Service
+* WhatsApp Service
+* Telegram Service
+* File Storage
+* OCR
+* Barcode
+* QR
+* Currency Service
+* Exchange Rate Service
+* PDF Service
+* Report Service
+* Search Service
+* Number Generator
+* Digital Signature
+
+---
+
+# Katman 3 — Workflow & Automation
+
+İş süreçlerini yöneten katmandır.
+
+## İçerik
+
+* Workflow Engine
+* BPMN
+* Rule Engine
+* Approval Engine
+* Escalation Engine
+* Scheduler
+* Background Jobs
+* Retry Queue
+* Dead Letter Queue
+
+Tüm modüller aynı Workflow Engine'i kullanır.
+
+---
+
+# Katman 4 — Event Bus
+
+Sistem Event Driven Architecture kullanır.
+
+Her işlem Event üretir.
+
+Örnek:
+
+```text
+SalesOrderCreated
+
+↓
+
+ReserveStock
+
+↓
+
+ShipmentCreated
+
+↓
+
+InvoiceCreated
+
+↓
+
+AccountingPosted
+
+↓
+
+CustomerNotified
+```
+
+Modüller birbirini doğrudan çağırmaz.
+
+---
+
+# Katman 5 — Business Engines
+
+İş kuralları burada bulunur.
+
+## CRM Engine
+
+* Customer
+* Contact
+* Opportunity
+* Proposal
+* Activity
+* Campaign
+
+---
+
+## Sales Engine
+
+* Sales Order
+* Price Lists
+* Discount Rules
+* Contract
+* Dealer
+
+---
+
+## Procurement Engine
+
+* Purchase Request
+* RFQ
+* Purchase Order
+* Supplier Evaluation
+
+---
+
+## Inventory Engine
+
+* Warehouse
+* Stock
+* Reservation
+* Lot
+* Serial
+* Barcode
+* RFID
+
+---
+
+## Production Engine
+
+* BOM
+* Routing
+* Work Order
+* Capacity Planning
+* MRP
+* MES
+* OEE
+
+---
+
+## Finance Engine
+
+* General Ledger
+* Journal Entry
+* Cash
+* Bank
+* Budget
+* Fixed Assets
+* Tax
+* Cost Accounting
+
+---
+
+## HR Engine
+
+* Employee
+* Leave
+* Payroll
+* Performance
+* Recruitment
+* Training
+
+---
+
+## Service Engine
+
+* Service Requests
+* Warranty
+* Maintenance
+* Field Service
+
+---
+
+## Project Engine
+
+* Projects
+* Tasks
+* Resources
+* Timesheets
+* Budget
+
+---
+
+## Quality Engine
+
+* QC Standards
+* QC Tests
+* Claims
+* CAPA
+* Non-Conformance
+
+---
+
+# Katman 6 — Business Applications
+
+Bu katman kullanıcı ekranlarını içerir.
+
+Örnek:
+
+* CRM
+* Finance
+* HR
+* Production
+* Logistics
+* CEO Dashboard
+* AI Dashboard
+
+Bu katmanda iş kuralı bulunmaz.
+
+---
+
+# Katman 7 — AI Platform
+
+Sistemin tüm yapay zekâ bileşenleri.
+
+## AI Copilot
+
+Doğal dil ile ERP kullanımı.
+
+Örnek:
+
+> "Son 30 gündeki en büyük müşterilerimi göster."
+
+---
+
+## AI Analytics
+
+* Tahminleme
+* Anomali tespiti
+* Trend analizi
+* KPI açıklamaları
+
+---
+
+## AI Vision
+
+* OCR
+* Barkod
+* QR
+* Görsel kalite kontrol
+* Belge analizi
+
+---
+
+## AI Agent Platform
+
+Departman bazlı otonom ajanlar.
+
+* CEO Agent
+* Sales Agent
+* Finance Agent
+* HR Agent
+* Production Agent
+* QC Agent
+* Logistics Agent
+
+Her ajan yalnızca yetkili olduğu modüllerde işlem yapabilir.
+
+---
+
+# Katman 8 — Integration Platform
+
+Dış sistem entegrasyonları.
+
+## Desteklenen Protokoller
+
+* REST API
+* GraphQL
+* Webhook
+* gRPC
+* MQTT
+* Kafka
+* RabbitMQ
+
+## Hazır Entegrasyonlar
+
+* e-Fatura
+* e-Arşiv
+* e-İrsaliye
+* Bankalar
+* Kargo Firmaları
+* Pazaryerleri
+* ERP Aktarım Servisleri
+
+---
+
+# Katman 9 — Marketplace
+
+Platform genişletilebilir yapıdadır.
+
+Marketplace üzerinden;
+
+* Plugin
+* Tema
+* Widget
+* Connector
+* AI Agent
+* Rapor
+
+yüklenebilir.
+
+Çekirdek sistem değiştirilmeden yeni özellik eklenebilir.
+
+---
+
+# Çok Kiracılı (Multi-Tenant) Yapı
+
+Sistem tamamen Multi-Tenant olarak tasarlanmıştır.
+
+Her kayıt;
+
+* TenantId
+* Audit bilgileri
+* Yetki kontrolleri
+
+ile korunur.
+
+Tenant izolasyonu zorunludur.
+
+---
+
+# Güvenlik
+
+Desteklenen güvenlik mekanizmaları:
+
+* RBAC
+* ABAC
+* MFA
+* Audit Log
+* API Key
+* OAuth2
+* OpenID Connect
+* JWT
+* Row Level Security
+* Column Level Security
+
+---
+
+# Temel Mimari İlkeleri
+
+* Business Logic yalnızca Engine katmanında bulunur.
+* Controller hiçbir iş kuralı içermez.
+* UI yalnızca servis çağırır.
+* Modüller Event Bus üzerinden haberleşir.
+* AI doğrudan veritabanına yazmaz.
+* Her işlem Audit Log üretir.
+* Her modül Tenant izolasyonuna uyar.
+* Tüm zaman bilgileri UTC olarak saklanır.
+* Tüm servisler asenkron çalışır.
+
+---
+
+# Nihai Vizyon
+
+Emare BOS yalnızca bir ERP değildir.
+
+Amaç;
+
+* süreç yöneten,
+* karar destek sağlayan,
+* yapay zekâ ile çalışan,
+* olay tabanlı mimariye sahip,
+* genişletilebilir,
+* çok kiracılı,
+* kurumsal ölçeklenebilir
+
+bir **Business Operating System** oluşturmaktır.
+
+Bu doküman, sistemin tüm teknik ve iş mimarisinin temel referansıdır. Kod geliştiren tüm ajanlar bu mimariye uygun hareket etmekle yükümlüdür.
