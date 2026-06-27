@@ -1,4 +1,4 @@
-# EMARE BOS — Mandatory Documentation Protocol v1.0
+# EMARE BOS — Mandatory Documentation Protocol v1.1
 
 **Durum:** Zorunlu proje standardı — Agent 1, Agent 2, Architect ve tüm ekip  
 **Kanonik konum:** `docs/project-management/MANDATORY_DOCUMENTATION_PROTOCOL.md`  
@@ -19,8 +19,8 @@ Bu repository yalnızca kaynak kod deposu değildir. Aynı zamanda projenin:
 
 olarak kullanılır.
 
-**Her görev sonunda** aşağıdaki dokümanların oluşturulması **ZORUNLUDUR**.  
-Görev, bu dosyalar repository'ye commit edilmeden **tamamlandı kabul edilmez**.
+**Her görev sonunda** aşağıdaki dokümanların oluşturulması ve repository'ye eklenmesi **ZORUNLUDUR**.  
+Görev, bu dosyalar repository'ye commit edilip push edilmeden **tamamlandı kabul edilmez**.
 
 ---
 
@@ -32,7 +32,7 @@ docs/project-management/
 ├── DEVELOPMENT_PROTOCOL.md
 ├── reports/          ← Agent 1: TASK_XXX_REPORT.md
 ├── qa/               ← Agent 2: QA_TASK_XXX.md
-├── architect/        ← Chief Architect: ARCH_REVIEW_TASK_XXX.md
+├── architect/        ← Chief Architect: ARCHITECT_REVIEW_TASK_XXX.md
 ├── risks/            ← RISK_REGISTER.md
 ├── debt/             ← TECHNICAL_DEBT.md
 ├── sprints/          ← SPRINT_N.md
@@ -50,12 +50,12 @@ docs/project-management/
 3. Test
 4. Task Report  (Agent 1)
 5. QA Report    (Agent 2)
-6. Architect Review
-7. Commit       (kod + tüm zorunlu dokümanlar)
+6. Architect Review (Chief Architect) -> Rapor üretimi
+7. Commit & Push (kod + tüm zorunlu dokümanlar, review dahil)
 8. Sonraki Task (Architect onayı sonrası)
 ```
 
-**Architect Review tamamlanmadan sonraki Task başlatılamaz.**
+**Architect Review tamamlanıp ARCHITECT_REVIEW_TASK_XXX.md repoya commit edilmeden sonraki Task başlatılamaz.**
 
 ---
 
@@ -140,6 +140,7 @@ feat(platform): implement Identity module
 
 TASK_006_REPORT.md
 QA_TASK_006.md
+ARCHITECT_REVIEW_TASK_006.md
 SPRINT_1.md
 RISK_REGISTER.md          (gerekliyse)
 TECHNICAL_DEBT.md         (gerekliyse)
@@ -157,12 +158,13 @@ Bir Task aşağıdakilerin **TAMAMI** sağlanmadan tamamlandı kabul edilmez:
 - [ ] Testler başarılı
 - [ ] Task Report oluşturuldu (`TASK_XXX_REPORT.md`)
 - [ ] QA Report oluşturuldu (`QA_TASK_XXX.md`)
+- [ ] Architect Review Raporu oluşturuldu (`ARCHITECT_REVIEW_TASK_XXX.md`)
 - [ ] Sprint dosyası güncellendi
 - [ ] Risk Register güncellendi (gerekliyse)
 - [ ] Technical Debt güncellendi (gerekliyse)
 - [ ] Daily Log güncellendi
-- [ ] Architect Review tamamlandı
-- [ ] Tüm dokümanlar repository'ye commit edildi
+- [ ] Architect Review tamamlandı ve onaylandı
+- [ ] Tüm dokümanlar repository'ye commit ve push edildi
 
 ---
 
@@ -173,9 +175,9 @@ Her Task sonrası Chief Software Architect inceler:
 - `TASK_XXX_REPORT.md`
 - `QA_TASK_XXX.md`
 
-Çıktı: `architect/ARCH_REVIEW_TASK_XXX.md` — **Approved** / **Approved with conditions** / **Rejected**
+Çıktı: `architect/ARCHITECT_REVIEW_TASK_XXX.md` — **Approved** / **Approved with conditions** / **Rejected**
 
-**Architect Review tamamlanmadan sonraki Task başlatılmaz.** Tüm ekip için zorunludur.
+**Architect Review tamamlanıp ARCHITECT_REVIEW_TASK_XXX.md repoya eklenmeden sonraki Task başlatılmaz.** Tüm ekip için zorunludur.
 
 ---
 
@@ -191,4 +193,4 @@ Her Task sonrası Chief Software Architect inceler:
 
 ---
 
-*v1.0 — 2026-06-27*
+*v1.1 — 2026-06-27*

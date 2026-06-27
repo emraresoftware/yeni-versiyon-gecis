@@ -4,7 +4,7 @@ Bu dosya, bu repoda çalışan tüm AI ajanları (geliştirici, test, QA ajanlar
 
 ---
 
-# EMARE BOS — DUAL REPOSITORY MODEL PROTOCOL v1.1
+# EMARE BOS — DUAL REPOSITORY MODEL PROTOCOL v1.2
 
 ## 🔒 1. Çift Repository Yapısı ve Görev Paylaşımı
 
@@ -18,14 +18,15 @@ Sistemde iki farklı repository ve bunlara ait kesin sınırlarla çizilmiş gö
 * **İçerik:** Sadece Raporlar ve Mimari belgeler.
 * **Erişim:** Bu repository **Public (Açık)** konumda olup, ChatGPT Chief Architect (ve diğer denetim birimleri) tarafından okunacaktır.
 * **YASAK:** Bu depoya kesinlikle **KOD EKLENMEYECEKTİR.**
-* **İzin Verilen Dosya Tipleri:**
-  * `TASK_XXX_REPORT.md` (Geliştirici görev raporu)
-  * `QA_TASK_XXX.md` (QA kalite raporu)
+* **Her Task Sonunda Zorunlu Eklenecek Belgeler:**
+  * `docs/project-management/reports/TASK_XXX_REPORT.md` (Geliştirici görev raporu)
+  * `docs/project-management/qa/QA_TASK_XXX.md` (QA kalite raporu)
+  * `docs/project-management/architect/ARCHITECT_REVIEW_TASK_XXX.md` (Chief Architect inceleme raporu)
+* **İzin Verilen Diğer Dosya Tipleri:**
   * `SPRINT_X.md` (Sprint durum güncellemesi)
   * `RISK_REGISTER.md` (Risk kayıt defteri)
   * `TECHNICAL_DEBT.md` (Teknik borç defteri)
   * `daily/YYYY-MM-DD.md` (Günlük log)
-  * `architect/ARCHITECT_REVIEW_TASK_XXX.md` (Chief Architect inceleme raporu)
 
 ---
 
@@ -170,8 +171,9 @@ Her çalışma gününün sonunda güncelle: `docs/project-management/daily/YYYY
 
 Bir Task aşağıdaki maddelerin TAMAMI sağlanmadan tamamlandı kabul edilmez.
 * Kod yazıldı, Build başarılı, Testler başarılı.
-* Task Report oluşturuldu ve public depoya aktarıldı.
-* QA Report oluşturuldu ve public depoya aktarıldı.
+* Task Report (`TASK_XXX_REPORT.md`) oluşturuldu ve public depoya aktarıldı.
+* QA Report (`QA_TASK_XXX.md`) oluşturuldu ve public depoya aktarıldı.
+* Chief Architect Review Raporu (`ARCHITECT_REVIEW_TASK_XXX.md`) oluşturuldu ve public depoya aktarıldı.
 * Sprint dosyası güncellendi.
 * Risk Register & Technical Debt güncellendi (gerekliyse).
 * Daily Log güncellendi.

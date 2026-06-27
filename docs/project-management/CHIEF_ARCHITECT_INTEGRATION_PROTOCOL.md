@@ -53,6 +53,14 @@ docs/project-management/qa/
 QA_TASK_XXX.md
 ```
 
+## Architect Review
+
+```
+docs/project-management/architect/
+
+ARCHITECT_REVIEW_TASK_XXX.md
+```
+
 ## Sprint Güncellemesi
 
 ```
@@ -207,6 +215,8 @@ Bir Task aşağıdaki maddelerin tamamı gerçekleşmeden tamamlandı kabul edil
 
 ✓ QA Report repository'ye eklendi
 
+✓ Chief Architect Review Raporu (`ARCHITECT_REVIEW_TASK_XXX.md`) repository'ye eklendi
+
 ✓ Sprint güncellendi
 
 ✓ Daily Log güncellendi
@@ -217,7 +227,7 @@ Bir Task aşağıdaki maddelerin tamamı gerçekleşmeden tamamlandı kabul edil
 
 ✓ Repository push edildi
 
-✓ Chief Architect Review alındı
+✓ Chief Architect Review onaylandı
 
 Bundan sonra yeni Task ancak Chief Architect Review tamamlandıktan sonra başlatılacaktır.
 
