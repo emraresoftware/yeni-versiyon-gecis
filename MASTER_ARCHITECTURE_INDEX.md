@@ -75,3 +75,4 @@ Daha fazla detay için bkz. [ADR-0002 — Clean Architecture](file:///Users/emre
 | [SECURITY_ARCHITECTURE.md](file:///Users/emre/yeni-versiyon-gecis/SECURITY_ARCHITECTURE.md) | README.md | OBSERVABILITY.md, DATA_ARCHITECTURE.md | ✅ Approved | Zero Trust ve veri güvenliği |
 | [OBSERVABILITY.md](file:///Users/emre/yeni-versiyon-gecis/OBSERVABILITY.md) | README.md | EVENT_BUS.md, WORKFLOW_ENGINE.md, SECURITY_ARCHITECTURE.md | ✅ Approved | Metrik, log ve dağıtık izleme |
 | [DEPLOYMENT_ARCHITECTURE.md](file:///Users/emre/yeni-versiyon-gecis/DEPLOYMENT_ARCHITECTURE.md) | README.md | OBSERVABILITY.md, SECURITY_ARCHITECTURE.md, DATA_ARCHITECTURE.md, INTEGRATION_ENGINE.md, AI_ENGINE.md | ✅ Approved | K8s, CI/CD ve ortam stratejisi |
+| [SPRINT_0_DEVELOPMENT_READINESS.md](file:///Users/emre/yeni-versiyon-gecis/SPRINT_0_DEVELOPMENT_READINESS.md) | MASTER_ARCHITECTURE_INDEX.md | ANAYASA.md, ORTAK_TEKNIK_PROTOKOL.md | ✅ Approved | Geliştirme readiness ve Sprint 0 planı |
