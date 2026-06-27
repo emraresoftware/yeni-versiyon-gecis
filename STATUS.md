@@ -9,7 +9,7 @@ Bu dosya, ERP geçiş sürecinde yer alan 7 ajanın ve modüllerinin anlık duru
 | Ajan ID | Rol / Departman | Sorumlu Ajan | Durum | Açıklama |
 |---------|-----------------|--------------|-------|----------|
 | **A1**  | CEO / Executive | Ajan 1 | `BEKLIYOR` | Stratejik yönetim ve karar modülleri |
-| **A2**  | Sales Manager | Ajan 2 | `BEKLIYOR` | Müşteriler, Fırsatlar, Teklifler ve Satışlar |
+| **A2**  | Sales Manager | Ajan 2 | `TAMAM` | Müşteriler, Fırsatlar, Teklifler ve Satışlar |
 | **A3**  | Finance Manager | Ajan 3 | `BEKLIYOR` | Genel Muhasebe, Banka, Kasa ve Fatura Entegrasyonları |
 | **A4**  | HR & Admin | Ajan 4 | `BEKLIYOR` | Personel ve İzin Yönetimi |
 | **A5**  | Production / İmalat | Antigravity (Ajan 5) | `TAMAM` | Üretim Dashboard veri entegrasyonu, API doğrulaması ve Testler |

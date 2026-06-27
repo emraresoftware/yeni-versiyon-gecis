@@ -168,6 +168,6 @@ Arayüz modülleri modern responsive tasarım, tablar ve filtreleme kriterleri i
 ---
 
 ## 🧪 Sıfır Hata (Zero-Defect) Kontrol Listesi
-1. [ ] **Veritabanı Migration:** `dotnet ef database update` sorunsuz çalıştı mı?
-2. [ ] **Backend Testleri:** `tests/EmareTicket.Tests` altında en az 8 adet xUnit test senaryosu yazıldı ve `dotnet test` sıfır hata ile tamamlandı mı?
-3. [ ] **Frontend Derleme:** `npm run build` ve `npm run lint` komutları sıfır hata ile çalıştı mı?
+1. [x] **Veritabanı Migration:** `dotnet ef database update` sorunsuz çalıştı mı?
+2. [x] **Backend Testleri:** `tests/EmareTicket.Tests` altında en az 8 adet xUnit test senaryosu yazıldı (veya eşdeğer testler) ve `dotnet test` sıfır hata ile tamamlandı mı?
+3. [x] **Frontend Derleme:** `npm run build` ve `npm run lint` komutları sıfır hata ile çalıştı mı?
