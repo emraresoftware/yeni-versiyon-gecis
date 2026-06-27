@@ -36,6 +36,28 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 
 ---
 
+## Visual Acceptance Criteria
+
+Müşterinin paylaştığı Control Tower görselleri final ürün için görsel kabul kriteridir. Her Control Tower için aşağıdakiler zorunlu kabul edilecek:
+
+* **Sol dikey menü:** İlgili Control Tower'a özel modül alt menüleri ve genel geçiş bağlantıları.
+* **Üst KPI kart satırı:** En az 4 adet, trend yönü (yeşil/kırmızı ok) ve periyot karşılaştırması içeren metrik kartı.
+* **Executive Snapshot paneli:** Üst düzey özet metinler veya kritik durum grafikleri.
+* **Today’s Priorities paneli:** Bugün yapılması gereken acil işlerin (onaylar, takipler vb.) listelendiği aksiyon paneli.
+* **Critical Alerts paneli:** Eşik aşımı durumlarında (gecikme, limit aşımı vb.) tetiklenen kırmızı alarm göstergeleri.
+* **Notifications paneli:** Kullanıcı rolüne özel anlık sistem bildirimleri.
+* **Health / Risk Score kartı:** Sürecin veya departmanın genel sağlık durumunu (1-100 veya A-F) gösteren görsel widget.
+* **Customer / Supplier / Department paneli:** İlgili dış ve iç paydaşların performans ve durum izleme tablosu.
+* **Message Drafts alanı:** Hızlı iletişim için şablonlanmış ve onay bekleyen hazır mesaj taslakları.
+* **Calendar & Key Events alanı:** Kritik teslim günleri, denetimler, toplantılar ve kilit tarihleri içeren takvim.
+* **Next 7 Days Focus alanı:** Gelecek 7 günün hedefleri ve odak noktalarının listelendiği alan.
+* **Reports & Analytics bağlantıları:** Modüle ait detaylı analitik raporlara hızlı geçiş menüsü.
+* **Rol bazlı kullanıcı/profil alanı:** Aktif kullanıcının kimlik ve rol (Persona) bilgilerinin gösterildiği profil alanı.
+* **Export / Filter / Date controls:** CSV/Excel export, dinamik filtreleme ve tarih aralığı seçicileri.
+* **Legend / status açıklamaları:** Tablolarda ve grafiklerde kullanılan durum renklerinin ve sembollerinin açıklamaları.
+
+---
+
 ## 1. CEO Control Tower
 
 ### Menü Başlıkları
@@ -1446,26 +1468,26 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 
 ---
 
-## Özet Tablosu
+## Özet ve Görsel Kabul Matrisi
 
-| Control Tower | Persona | Ana KPI'lar | Gerekli Modüller | Backend Hazır mı? | Eksik Domainler | Öncelik |
-|---|---|---|---|---|---|---|
-| CEO Control Tower | CEO, Genel Müdür | Ciro, EBITDA, Nakit, Risk Skoru | Finance, Sales, HR, Production, QC, CRM, Reporting | ❌ Hayır | ExecutiveDashboard, BudgetTarget, DecisionLog | 🔴 Kritik |
-| Sales Control Tower | Satış Müdürü, Temsilci | Ciro, Pipeline, Win Rate, Sipariş | CRM, Sales, Reporting | ❌ Hayır | CrmOpportunity, SalesOrder, SalesTarget | 🔴 Kritik |
-| Finance & Cash Control Tower | CFO, Muhasebe | Nakit, Alacak, Borç, P&L | Finance, Bank, Budget | ❌ Hayır | FinanceJournal, BankAccount, BudgetLine | 🔴 Kritik |
-| HR & Admin Control Tower | İK Müdürü, Admin | Personel, İzin, Bordro | HR, Payroll, Recruitment | ❌ Hayır | HrEmployee, HrLeave, HrPayroll | 🔴 Kritik |
-| Production & Manufacturing Control Tower | Üretim Müdürü | OEE, Üretim Adedi, Fire Oranı | Production, Machine, Inventory | ⚠️ Kısmi (UI) | WorkOrder, BOM, MachineDowntime | 🔴 Kritik |
-| Quality Control Tower | Kalite Müdürü | FPY, CAPA, Şikayet | QC | ❌ Hayır | QcTestResult, QcClaim, QcCapa | 🟠 Yüksek |
-| Logistics Control Tower | Lojistik Müdürü | Sevkiyat, Teslim Oranı, Stok | Logistics, Customs | ❌ Hayır | LogisticsShipment, StockTransfer | 🟠 Yüksek |
-| Fabric Procurement Control Tower | Kumaş Satın Alma | Alım Tutarı, Tedarik Süresi, Fiyat | Procurement, Supplier, Inventory | ❌ Hayır | FabricPurchaseOrder, FabricSupplier, FabricMaterial | 🟠 Yüksek |
-| Accessories Procurement Control Tower | Aksesuar Satın Alma | Alım Tutarı, Stok Altı | Procurement, Supplier, Inventory | ❌ Hayır | AccessoryPurchaseOrder, AccessoryMaterial | 🟠 Yüksek |
-| Merchandising Control Tower | Merchandiser | Koleksiyon, Sipariş, Marj | Merchandising, Sampling, CRM | ❌ Hayır | Collection, Buyer, BuyerOrder | 🟡 Orta |
-| Design Control Tower | Tasarımcı, Tasarım Müdürü | Brief Sayısı, Onay Oranı, Revizyon | Design | ❌ Hayır | DesignBrief, DesignAsset, DesignApproval | 🟡 Orta |
-| Sample / Model Room Control Tower | Model Atölye Yöneticisi | Numune Adedi, Onay Oranı, Süre | Sampling, Design | ❌ Hayır | SampleRequest, SampleCard, SampleApproval | 🟡 Orta |
-| Licensing Control Tower | Lisans Yöneticisi | Aktif Lisans, Royalty, Uyumluluk | Licensing | ❌ Hayır | LicenseAgreement, RoyaltyRecord | 🟡 Orta |
-| Compliance & Sustainability Control Tower | Uyumluluk / Sürdürülebilirlik | ESG Skoru, Sertifika, Bulgular | Compliance, Sustainability | ❌ Hayır | Certification, ESGReport, ComplianceFinding | 🟡 Orta |
-| IT & AI Digital Control Tower | IT Müdürü, Sistem Admin | Uptime, Ticket, Güvenlik, AI | IT Support, Monitoring, AI, Security | ⚠️ Kısmi (AI engine) | ITSupportTicket, SecurityIncident, AIModelRegistry | 🟡 Orta |
-| Performance Intelligence Control Tower | Strateji, Tüm Yöneticiler | OKR, Scorecard, KPI | Performance, Reporting, Analytics | ❌ Hayır | OKRGoal, KPIDefinition, DepartmentScorecard | 🟡 Orta |
+| Control Tower | Screenshot Reference | Required UI Blocks | Backend Modules | Missing Domain | MVP Priority |
+| ------------- | -------------------- | ------------------ | --------------- | -------------- | ------------ |
+| CEO Control Tower | `screenshots/ceo-ct.png` | Tüm 15 UI Bloğu Zorunlu | Finance, Sales, HR, Production, QC, CRM, Reporting | ExecutiveDashboard, BudgetTarget, DecisionLog | 🔴 Kritik |
+| Sales Control Tower | `screenshots/sales-ct.png` | Tüm 15 UI Bloğu Zorunlu | CRM, Sales, Reporting | CrmOpportunity, SalesOrder, SalesTarget | 🔴 Kritik |
+| Finance & Cash Control Tower | `screenshots/finance-ct.png` | Tüm 15 UI Bloğu Zorunlu | Finance, Bank, Budget | FinanceJournal, BankAccount, BudgetLine | 🔴 Kritik |
+| HR & Admin Control Tower | `screenshots/hr-ct.png` | Tüm 15 UI Bloğu Zorunlu | HR, Payroll, Recruitment | HrEmployee, HrLeave, HrPayroll | 🔴 Kritik |
+| Production & Manufacturing Control Tower | `screenshots/production-ct.png` | Tüm 15 UI Bloğu Zorunlu | Production, Machine, Inventory | WorkOrder, BOM, MachineDowntime | 🔴 Kritik |
+| Quality Control Tower | `screenshots/qc-ct.png` | Tüm 15 UI Bloğu Zorunlu | QC | QcTestResult, QcClaim, QcCapa | 🟠 Yüksek |
+| Logistics Control Tower | `screenshots/logistics-ct.png` | Tüm 15 UI Bloğu Zorunlu | Logistics, Customs | LogisticsShipment, StockTransfer | 🟠 Yüksek |
+| Fabric Procurement Control Tower | `screenshots/fabric-proc-ct.png` | Tüm 15 UI Bloğu Zorunlu | Procurement, Supplier, Inventory | FabricPurchaseOrder, FabricSupplier, FabricMaterial | 🟠 Yüksek |
+| Accessories Procurement Control Tower | `screenshots/accessories-proc-ct.png` | Tüm 15 UI Bloğu Zorunlu | Procurement, Supplier, Inventory | AccessoryPurchaseOrder, AccessoryMaterial | 🟠 Yüksek |
+| Merchandising Control Tower | `screenshots/merch-ct.png` | Tüm 15 UI Bloğu Zorunlu | Merchandising, Sampling, CRM | Collection, Buyer, BuyerOrder | 🟡 Orta |
+| Design Control Tower | `screenshots/design-ct.png` | Tüm 15 UI Bloğu Zorunlu | Design | DesignBrief, DesignAsset, DesignApproval | 🟡 Orta |
+| Sample / Model Room Control Tower | `screenshots/sample-ct.png` | Tüm 15 UI Bloğu Zorunlu | Sampling, Design | SampleRequest, SampleCard, SampleApproval | 🟡 Orta |
+| Licensing Control Tower | `screenshots/licensing-ct.png` | Tüm 15 UI Bloğu Zorunlu | Licensing | LicenseAgreement, RoyaltyRecord | 🟡 Orta |
+| Compliance & Sustainability Control Tower | `screenshots/compliance-ct.png` | Tüm 15 UI Bloğu Zorunlu | Compliance, Sustainability | Certification, ESGReport, ComplianceFinding | 🟡 Orta |
+| IT & AI Digital Control Tower | `screenshots/it-ai-ct.png` | Tüm 15 UI Bloğu Zorunlu | IT Support, Monitoring, AI, Security | ITSupportTicket, SecurityIncident, AIModelRegistry | 🟡 Orta |
+| Performance Intelligence Control Tower | `screenshots/performance-ct.png` | Tüm 15 UI Bloğu Zorunlu | Performance, Reporting, Analytics | OKRGoal, KPIDefinition, DepartmentScorecard | 🟡 Orta |
 
 ---
 
