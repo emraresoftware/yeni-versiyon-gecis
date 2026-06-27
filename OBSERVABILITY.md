@@ -298,14 +298,7 @@ AI aşağıdaki alanlarda destek sağlar.
 
 # Güvenlik
 
-Observability verileri;
-
-* Tenant İzolasyonu
-* RBAC
-* Audit
-* Şifreleme
-
-ile korunmalıdır.
+Observability verileri; Tenant İzolasyonu, RBAC, Audit ve Şifreleme (Encryption) ile korunmalıdır. Bu konu için ana kaynak: [SECURITY_ARCHITECTURE.md](file:///Users/emre/yeni-versiyon-gecis/SECURITY_ARCHITECTURE.md).
 
 ---
 

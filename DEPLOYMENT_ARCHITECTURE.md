@@ -386,15 +386,7 @@ Entegrasyon
 
 # Güvenlik
 
-Deployment sırasında
-
-* Image Signing
-* Container Scan
-* Dependency Scan
-* Secret Scan
-* SBOM (Software Bill of Materials)
-
-desteklenmelidir.
+Deployment sırasında; Image Signing, Container Scan, Dependency Scan, Secret Scan ve SBOM (Software Bill of Materials) desteklenmelidir. Bu konu için ana kaynak: [SECURITY_ARCHITECTURE.md](file:///Users/emre/yeni-versiyon-gecis/SECURITY_ARCHITECTURE.md).
 
 ---
 

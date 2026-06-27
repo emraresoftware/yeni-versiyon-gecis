@@ -391,13 +391,7 @@ Kaydedilen bilgiler
 
 # Güvenlik
 
-Bildirimler;
-
-* Tenant izolasyonuna,
-* RBAC kurallarına,
-* kullanıcı tercihlerine
-
-uygun olarak gönderilir.
+Bildirimler; Tenant İzolasyonuna, RBAC kurallarına ve kullanıcı tercihlerine uygun olarak gönderilir. Bu konu için ana kaynak: [SECURITY_ARCHITECTURE.md](file:///Users/emre/yeni-versiyon-gecis/SECURITY_ARCHITECTURE.md).
 
 ---
 

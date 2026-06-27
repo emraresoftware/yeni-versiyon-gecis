@@ -386,17 +386,7 @@ Kaydedilen bilgiler
 
 # Güvenlik
 
-Integration Engine;
-
-* Tenant Isolation
-* RBAC
-* ABAC
-* API Gateway
-* Audit
-* Encryption
-* Secret Vault
-
-ile korunmalıdır.
+Integration Engine; Tenant Isolation, RBAC, ABAC, API Gateway, Audit, Encryption ve Secret Vault ile korunmalıdır. Bu konu için ana kaynak: [SECURITY_ARCHITECTURE.md](file:///Users/emre/yeni-versiyon-gecis/SECURITY_ARCHITECTURE.md).
 
 ---
 

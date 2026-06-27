@@ -204,14 +204,7 @@ sunulur.
 
 # Güvenlik
 
-Geliştirici erişimleri;
-
-* API Key
-* OAuth2
-* RBAC
-* Audit Log
-
-ile korunur.
+Geliştirici erişimleri; API Key, OAuth2, RBAC ve Audit Log ile korunur. Bu konu için ana kaynak: [SECURITY_ARCHITECTURE.md](file:///Users/emre/yeni-versiyon-gecis/SECURITY_ARCHITECTURE.md).
 
 ---
 

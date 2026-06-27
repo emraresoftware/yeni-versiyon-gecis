@@ -283,18 +283,7 @@ ekleyebilir.
 
 # Güvenlik
 
-Plugin'ler sandbox mantığıyla çalışmalıdır.
-
-Yetkiler açıkça tanımlanmalıdır.
-
-Örnek
-
-* CRM Read
-* Finance Write
-* Workflow Execute
-* Notification Send
-
-İzin verilmeyen alanlara erişim engellenir.
+Plugin'ler sandbox mantığıyla çalışmalı ve yetkileri açıkça tanımlanmalıdır. İzin verilmeyen alanlara erişim engellenir. Bu konu için ana kaynak: [SECURITY_ARCHITECTURE.md](file:///Users/emre/yeni-versiyon-gecis/SECURITY_ARCHITECTURE.md).
 
 ---
 

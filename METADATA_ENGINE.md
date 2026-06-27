@@ -414,15 +414,7 @@ Metadata;
 
 # Güvenlik
 
-Metadata değişiklikleri yalnızca yetkili kullanıcılar tarafından yapılabilir.
-
-Her değişiklik:
-
-* Audit Log
-* Tenant kontrolü
-* Yetki kontrolü
-
-ile korunmalıdır.
+Metadata değişiklikleri yalnızca yetkili kullanıcılar tarafından yapılabilir. Her değişiklik; Tenant kontrolü, yetki kontrolü ve Audit Log süreçleri ile korunmalıdır. Bu konu için ana kaynak: [SECURITY_ARCHITECTURE.md](file:///Users/emre/yeni-versiyon-gecis/SECURITY_ARCHITECTURE.md).
 
 ---
 
