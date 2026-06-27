@@ -21,7 +21,7 @@ Emare BOS (`Emare.sln`) — Clean Architecture platform çekirdeği: Domain, Per
 | **Task 004A** Hotfix Tenant Filter | [TASK_004A_REPORT.md](../reports/TASK_004A_REPORT.md) | `qa/QA_HOTFIX_TASK_004A_TENANT_FILTER.md` | Pass |
 | **Task 005** Composition Root / API Altyapısı | [TASK_005_REPORT.md](../reports/TASK_005_REPORT.md) | `qa/QA_TASK_005_COMPOSITION_ROOT.md` | Pass |
 | **Task 006** Identity / Authentication | [TASK_006_REPORT.md](../reports/TASK_006_REPORT.md) | `qa/QA_TASK_006.md` | Pass |
-| **Task 007** Platform Authorization / Yetkilendirme | [TASK_007_REPORT.md](../reports/TASK_007_REPORT.md) | `qa/QA_TASK_007.md` | Pass |
+| **Task 007** Platform Authorization / Yetkilendirme | [TASK_007_REPORT.md](../reports/TASK_007_REPORT.md) | `qa/QA_TASK_007_AUTHORIZATION.md` | Pass |
 
 ---
 
