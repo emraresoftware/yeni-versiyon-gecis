@@ -117,10 +117,10 @@ Alt Entity:
 
 Domain Event:
 
-* EmployeeCreated
-* LeaveRequested
-* LeaveApproved
-* LeaveRejected
+* HrEmployeeCreated
+* HrLeaveRequested
+* HrLeaveApproved
+* HrLeaveRejected
 
 Kural:
 
@@ -164,7 +164,7 @@ Aggregate Root:
 
 Domain Event:
 
-* QcTestCompleted
+* QcTestResultCompleted
 * QcClaimCreated
 * QcClaimResolved
 
@@ -182,10 +182,10 @@ Aggregate Root:
 
 Domain Event:
 
-* DecisionCreated
-* DecisionApproved
-* DecisionImplemented
-* DecisionCancelled
+* DecisionLogCreated
+* DecisionLogApproved
+* DecisionLogImplemented
+* DecisionLogCancelled
 
 ---
 

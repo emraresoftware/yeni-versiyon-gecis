@@ -465,9 +465,9 @@ Domain içinde gerçekleşen önemli olay.
 
 Örnek:
 
-* ProposalApproved
-* JournalEntryPosted
-* LeaveApproved
+* CrmProposalApproved
+* FinanceJournalEntryPosted
+* HrLeaveApproved
 
 ---
 

@@ -75,17 +75,17 @@ Yeni İşlem
 Örnek
 
 ```text
-CustomerCreated
+CrmAccountCreated
 
-ProposalApproved
+CrmProposalApproved
 
-JournalPosted
+FinanceJournalEntryPosted
 
-StockReserved
+LogisticsStockReserved
 
-LeaveApproved
+HrLeaveApproved
 
-TransferCompleted
+LogisticsStockTransferCompleted
 ```
 
 ---
@@ -173,29 +173,29 @@ EntityAction
 Örnek
 
 ```text
-CustomerCreated
+CrmAccountCreated
 
-CustomerUpdated
+CrmAccountUpdated
 
-CustomerDeleted
+CrmAccountDeleted
 
-ProposalSent
+CrmProposalSent
 
-ProposalApproved
+CrmProposalApproved
 
-PurchaseApproved
+PurchaseOrderApproved
 
-StockTransferred
+LogisticsStockTransferCompleted
 
-JournalPosted
+FinanceJournalEntryPosted
 
-EmployeeCreated
+HrEmployeeCreated
 
-LeaveApproved
+HrLeaveApproved
 
-QcTestCompleted
+QcTestResultCompleted
 
-ShipmentDelivered
+LogisticsShipmentDelivered
 ```
 
 ---
@@ -355,67 +355,48 @@ Outbox Pattern kullanılması önerilir.
 
 # Event Kategorileri
 
-## CRM
-
-* CustomerCreated
-* CustomerUpdated
-* OpportunityCreated
-* ProposalSent
-
----
-
-## Sales
-
-* OrderCreated
-* OrderApproved
-* OrderCancelled
-
----
-
-## Purchasing
-
-* PurchaseRequested
-* PurchaseApproved
-* PurchaseCompleted
-
----
-
-## Warehouse
-
-* StockReserved
-* StockReleased
-* StockTransferred
-
----
-
-## Production
-
-* WorkOrderCreated
-* ProductionStarted
-* ProductionCompleted
-
----
-
-## QC
-
-* TestStarted
-* TestCompleted
-* ClaimCreated
-
----
-
-## HR
-
-* EmployeeCreated
-* LeaveApproved
-
----
-
-## Finance
-
-* JournalPosted
-* PaymentReceived
-* InvoiceCreated
+| Event Name | Type | Owner Context | Trigger | Subscribers | Notes |
+| ---------- | ---- | ------------- | ------- | ----------- | ----- |
+| **CRM** | | | | | |
+| `CrmAccountCreated` | Integration / Domain | CRM | Cari hesap (Müşteri) oluşturulduğunda | Finance, AI, Notification | Dış sistem entegrasyonu ve bildirim için. |
+| `CrmAccountUpdated` | Domain | CRM | Cari hesap güncellendiğinde | AI, Integration | Veri senkronizasyonu. |
+| `CrmAccountDeleted` | Domain | CRM | Cari hesap silindiğinde (soft-delete) | Logistics, Finance | İlişkili işlemlerin kontrolü. |
+| `CrmOpportunityCreated` | Domain | CRM | Yeni satış fırsatı açıldığında | AI, Sales | Satış tahmini ve olasılık hesaplama. |
+| **Sales** | | | | | |
+| `CrmProposalSent` | Integration | Sales / Proposal | Müşteriye teklif gönderildiğinde | Notification, Analytics | Onay bekleyen teklif takibi. |
+| `CrmProposalApproved` | Integration | Sales / Proposal | Teklif müşteri tarafından onaylandığında | Finance, Logistics, AI, Notification | Sipariş oluşturma ve faturalandırma. |
+| `SalesOrderCreated` | Domain | Sales | Satış siparişi oluşturulduğunda | Warehouse, AI | Stok rezerve tetiklemesi. |
+| `SalesOrderApproved` | Integration | Sales | Satış siparişi onaylandığında | Logistics, Production, Finance | Sevk süreci ve üretim planlama. |
+| `SalesOrderCancelled` | Integration | Sales | Satış siparişi iptal edildiğinde | Logistics, Finance | Rezervasyon kaldırma ve iade. |
+| **Finance** | | | | | |
+| `FinanceJournalEntryPosted` | Integration | Finance | Yevmiye fişi onaylanıp deftere işlendiğinde | Analytics, AI | Muhasebe defteri güncellenmesi. |
+| `FinanceInvoiceCreated` | Integration | Finance | Fatura kesildiğinde | CRM, Notification, Integration | E-Fatura entegrasyonu. |
+| `FinancePaymentReceived` | Integration / Domain | Finance | Tahsilat/Ödeme alındığında | CRM, Notification, Analytics | Cari hesap limit ve bakiye güncellemesi. |
+| **HR** | | | | | |
+| `HrEmployeeCreated` | Domain | HR | Yeni personel kartı açıldığında | Finance, Security | Rol atamaları ve cari muhasebe hesabı. |
+| `HrLeaveApproved` | Integration | HR | İzin onaylandığında | Notification, Workflows | Takvim ve planlama senkronizasyonu. |
+| **Logistics** | | | | | |
+| `LogisticsStockReserved` | Domain | Logistics | Stok rezerve edildiğinde | Sales, Production | Sipariş hazırlık durumu. |
+| `LogisticsStockReleased` | Domain | Logistics | Rezerve çözüldüğünde | Sales, Production | İptaller sonrası stok serbest bırakma. |
+| `LogisticsStockTransferCompleted` | Integration | Logistics | Depolar arası transfer tamamlandığında | Analytics, AI | Stok seviyesi güncelleme. |
+| `LogisticsShipmentCreated` | Domain | Logistics | Sevk irsaliyesi oluşturulduğunda | Notification, Integration | Kargo firması entegrasyonu. |
+| `LogisticsShipmentDelivered` | Integration | Logistics | Teslimat tamamlandığında | CRM, Finance | Fatura tetikleme. |
+| **QC (Quality Control)** | | | | | |
+| `QcTestResultCompleted` | Domain | QC | Kalite testi tamamlandığında | Production, Logistics | Stok kalite durumu (Kabul/Red). |
+| `QcClaimCreated` | Integration | QC | Kalite şikâyeti / CAPA açıldığında | CRM, Production, AI | Müşteri şikâyet takibi. |
+| **Production** | | | | | |
+| `ProductionWorkOrderCreated` | Domain | Production | İş emri açıldığında | Logistics, AI | Hammadde hazırlığı. |
+| `ProductionStarted` | Domain | Production | Üretim başladığında | Analytics | Üretim bandı izleme. |
+| `ProductionCompleted` | Integration | Production | Üretim tamamlandığında | Logistics, QC | Kalite kontrol tetiklemesi. |
+| **CEO / Karar Defteri** | | | | | |
+| `DecisionLogCreated` | Domain | CEO | Yeni karar/strateji kaydı girildiğinde | AI, Workflow | Stratejik analiz. |
+| `DecisionLogApproved` | Integration | CEO | Karar onaylandığında | All Contexts | Şirket içi tebliğ. |
+| **System & Security** | | | | | |
+| `UserLoggedIn` | Domain | Security | Kullanıcı sisteme girdiğinde | Observability, Audit | Güvenlik günlüğü. |
+| `PasswordChanged` | Domain | Security | Şifre değiştiğinde | Notification, Audit | Güvenlik uyarısı. |
+| `TenantCreated` | Integration | Tenant | Yeni kiracı oluşturulduğunda | All Contexts | Veritabanı ve tenant şeması hazırlama. |
+| `RoleAssigned` | Domain | Security | Yetki rolü tanımlandığında | Audit | Erişim günlüğü. |
+| `ApiKeyCreated` | Integration | Security | API anahtarı üretildiğinde | Audit | Entegrasyon izni takibi. |
 
 ---
 
