@@ -1,5 +1,22 @@
 # 📈 Observability Mimarisi
 
+**Title:** Observability Mimarisi
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** README.md
+**Related Documents:** EVENT_BUS.md, WORKFLOW_ENGINE.md, SECURITY_ARCHITECTURE.md
+
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
 ## Amaç
 
 Observability, Emare Business Operating System (BOS) platformunun çalışmasını gerçek zamanlı olarak izleyen, ölçen, analiz eden ve sorunları proaktif olarak tespit eden platform katmanıdır.

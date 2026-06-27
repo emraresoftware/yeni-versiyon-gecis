@@ -1,5 +1,22 @@
 # 🔐 Security Architecture
 
+**Title:** Security Architecture
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** README.md
+**Related Documents:** OBSERVABILITY.md, DATA_ARCHITECTURE.md
+
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
 ## Amaç
 
 Security Architecture, Emare Business Operating System (BOS) platformunun güvenlik standartlarını, erişim modelini, veri koruma stratejisini ve güvenlik yaşam döngüsünü tanımlar.

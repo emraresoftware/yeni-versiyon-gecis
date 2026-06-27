@@ -1,5 +1,22 @@
 # 📘 Ubiquitous Language
 
+**Title:** Ubiquitous Language
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** DOMAIN_MODEL.md
+**Related Documents:** BOUNDED_CONTEXTS.md
+
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
 ## Amaç
 
 Bu doküman Emare Business Operating System (BOS) içerisinde kullanılan ortak iş ve teknik terimleri tanımlar.

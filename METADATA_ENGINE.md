@@ -1,5 +1,22 @@
 # 🧩 Metadata Engine Mimarisi
 
+**Title:** Metadata Engine Mimarisi
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** RULE_ENGINE.md
+**Related Documents:** EVENT_BUS.md, WORKFLOW_ENGINE.md
+
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
 ## Amaç
 
 Metadata Engine, Emare Business Operating System (BOS) içerisinde ekranların, formların, alanların, doğrulamaların, iş akışlarının ve raporların kod yazılmadan tanımlanmasını sağlayan çekirdek platform bileşenidir.

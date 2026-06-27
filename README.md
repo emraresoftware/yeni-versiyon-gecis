@@ -5,7 +5,7 @@
 **Status:** Approved
 **Owner:** Architecture Board
 **Last Updated:** 2026-06-27
-**Dependencies:** Yok
+**Dependencies:** MASTER_ARCHITECTURE_INDEX.md
 **Related Documents:** MASTER_ARCHITECTURE_INDEX.md, DOMAIN_MODEL.md, BOUNDED_CONTEXTS.md
 
 ---

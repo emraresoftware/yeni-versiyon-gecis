@@ -1,5 +1,22 @@
 # 🚀 Deployment Architecture
 
+**Title:** Deployment Architecture
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** README.md
+**Related Documents:** OBSERVABILITY.md, SECURITY_ARCHITECTURE.md, DATA_ARCHITECTURE.md, INTEGRATION_ENGINE.md, AI_ENGINE.md
+
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
 ## Amaç
 
 Deployment Architecture, Emare Business Operating System (BOS) platformunun geliştirme, test, staging ve production ortamlarında güvenli, ölçeklenebilir ve yüksek erişilebilir şekilde çalıştırılmasını tanımlar.
