@@ -1,51 +1,666 @@
-# Bağımlılık Haritası (BAGIMLILIK_HARITASI.md)
+# 🔗 Modül Bağımlılık Haritası (BAGIMLILIK_HARITASI.md)
 
-Bu döküman, ERP modülleri ve parallel ajanlar (A1-A7) arasındaki ilişkileri, veri akışını ve bağımlılıkları tanımlar. Her ajan, geliştirdiği modülün diğer modüllerle hangi veri noktalarında kesiştiğini buradan takip etmelidir.
+Bu doküman, ERP/Business Operating System (BOS) içerisindeki tüm modüllerin birbirleriyle olan bağımlılıklarını tanımlar.
+
+Amaç:
+
+* Ajanların hangi modülü önce geliştireceğini belirlemek
+* Döngüsel bağımlılıkları engellemek
+* Kod tekrarını önlemek
+* Modüller arası entegrasyonu standart hale getirmek
 
 ---
 
-## 🗺️ 1. Modüller Arası İlişki Diyagramı
+# Katmanlar
 
-```mermaid
-graph TD
-    A2_CRM[A2: CRM & Satış] -->|CrmAccountId| A6_QC[A6: Kalite Kontrol]
-    A2_CRM -->|Proposal & Quote| A3_FINANCE[A3: Muhasebe & Finans]
-    A7_LOGISTICS[A7: Depo & Stok] -->|StockMovement| A2_CRM
-    A5_PRODUCTION[A5: Üretim/İmalat] -->|BatchNumber| A6_QC
-    A7_LOGISTICS -->|StockTransfer| A5_PRODUCTION
-    A4_HR[A4: İnsan Kaynakları] -->|Employee / Approver| A1_CEO[A1: CEO / Kararlar]
-    A3_FINANCE -->|Financial State / KPIs| A1_CEO
+Sistem 6 katmandan oluşur.
+
+```text
+KERNEL
+
+↓
+
+COMMON SERVICES
+
+↓
+
+BUSINESS ENGINES
+
+↓
+
+BUSINESS MODULES
+
+↓
+
+AI ENGINES
+
+↓
+
+INTEGRATIONS
 ```
 
 ---
 
-## 🔗 2. Modüller Arası Entegrasyon Noktaları (Integration Points)
+# 1. Kernel
 
-### A6 Kalite Kontrol (QC) ➔ A2 CRM & Satış Bağımlılığı
-- **İlişki Tipi:** Foreign Key
-- **Detay:** Müşterilerin gönderdiği kalite şikayetleri ve iade talepleri (`QcClaim`), `CrmAccountId` alanı üzerinden doğrudan A2 modülündeki `CrmAccount` tablosuna bağlıdır. 
-- **Kısıt:** A6 ajanı şikayet kaydederken ilgili müşterinin A2 CRM veritabanında var olduğunu doğrulamak zorundadır.
+Hiçbir modüle bağımlı değildir.
 
-### A3 Finans & Muhasebe ➔ A2 CRM & Satış Bağımlılığı
-- **İlişki Tipi:** Data Transfer & Event Trigger
-- **Detay:** A2 CRM modülünde onaylanan bir teklif (`CrmProposal` - Status: Approved) veya gerçekleştirilen satış işlemi, A3 Finans modülünde otomatik olarak bir Yevmiye Fişi (`FinanceJournalEntry`) ve Cari Hesap borç/alacak hareketi oluşturur.
-- **Kısıt:** A3 ajanı, teklif onaylandığında faturayı ve muhasebe fişlerini otomatik oluşturacak entegrasyon servislerini sunmalıdır.
+Tüm sistem bunun üzerine kurulur.
 
-### A7 Lojistik & Sevkiyat ➔ A2 CRM & Satış / A5 Üretim Bağımlılığı
-- **İlişki Tipi:** Inventory Control
-- **Detay:** A2 Satış modülünde oluşturulan siparişler stoktan düşer (`LogisticsStockMovement` Out). A5 Üretim modülünde tamamlanan üretim emirleri ise stok girişini (`LogisticsStockMovement` In) tetikler.
-- **Kısıt:** A7 ajanı, stok hareket metotlarını diğer modüllerin (A2 ve A5) çağırabileceği şekilde servis interface'i (`ILogisticsStockService`) olarak dışarıya açmalıdır.
+İçerik
 
-### A1 CEO Dashboard ➔ Tüm Modüller (KPIs)
-- **İlişki Tipi:** Read-Only Analytics Data Aggregation
-- **Detay:** A1 CEO ve Yönetici raporlama modülü; A2'den satış hacimlerini, A3'ten kasa/banka nakit akışını, A7'den depo doluluk oranlarını ve A5'ten OTD (On Time Delivery) üretim metriklerini toplayarak tek bir ekranda sunar.
+* Authentication
+* Authorization
+* Tenant
+* User
+* Role
+* Permission
+* Audit Log
+* Event Bus
+* Workflow
+* Notification
+* Scheduler
+* Configuration
+* Localization
+
+Bu katman tamamlanmadan hiçbir modül geliştirilmez.
 
 ---
 
-## 🛠️ 3. Ajan Çalışma Sıralaması (Sequential Dependency Order)
+# 2. Common Services
 
-Bağımlılıklar göz önüne alındığında, kod tabanının kilitlenmemesi için ajanların şu sıralamayı gözetmesi önerilir:
-1. **Önce A2 (CRM):** Temel müşteri (`CrmAccount`) verisi oluşmadan QC, Muhasebe veya Lojistik çalıştırılamaz.
-2. **Sonra A3 & A7 (Finance & Logistics):** Stok kartları ve cari hesap bakiyeleri bu adımda kurulur.
-3. **Sonra A4 & A6 (HR & QC):** Personel kartları ve kalite standartları bu adımda eklenir.
-4. **En son A1 (CEO):** Tüm veri kaynakları tamamlandıktan sonra üst raporlama entegre edilir.
+Bütün modüllerin ortak kullandığı servisler.
+
+* File Service
+* Email Service
+* SMS Service
+* WhatsApp Service
+* OCR
+* Barcode
+* QR
+* Currency
+* Exchange Rate
+* Number Generator
+* PDF Generator
+* Report Service
+
+Bağımlılık
+
+```text
+Kernel
+
+↓
+
+Common Services
+```
+
+---
+
+# 3. CRM
+
+CRM ilk geliştirilecek iş modülüdür.
+
+Bağımlılık
+
+```text
+Kernel
+
+↓
+
+Common
+
+↓
+
+CRM
+```
+
+CRM tarafından kullanılanlar
+
+* User
+* Tenant
+* Notification
+
+CRM'yi kullananlar
+
+* Sales
+* Finance
+* QC
+* Service
+* Projects
+
+---
+
+# 4. Sales
+
+Bağımlılık
+
+```text
+CRM
+
+↓
+
+Sales
+```
+
+Kullandıği Modüller
+
+* CRM
+* Products
+* Price Lists
+* Workflow
+
+Sales'i kullananlar
+
+* Finance
+* Logistics
+* Production
+
+---
+
+# 5. Product Management
+
+Bağımlılık
+
+```text
+Kernel
+
+↓
+
+Product
+```
+
+Kullanan Modüller
+
+* Sales
+* Purchase
+* Production
+* QC
+* Warehouse
+
+---
+
+# 6. Purchasing
+
+Bağımlılık
+
+```text
+CRM
+
+↓
+
+Product
+
+↓
+
+Purchase
+```
+
+Satın alma tamamlandıktan sonra
+
+↓
+
+Warehouse
+
+↓
+
+Finance
+
+↓
+
+Production
+
+tetiklenebilir.
+
+---
+
+# 7. Warehouse
+
+Warehouse aşağıdaki modüllere bağlıdır.
+
+```text
+Product
+
+↓
+
+Warehouse
+```
+
+Warehouse kullananlar
+
+* Sales
+* Production
+* QC
+* Logistics
+* Finance
+
+---
+
+# 8. Logistics
+
+```text
+Warehouse
+
+↓
+
+Logistics
+```
+
+Bağımlılıklar
+
+* Warehouse
+* Sales
+* Purchase
+
+Logistics tamamlandıktan sonra
+
+↓
+
+Stock Movement
+
+↓
+
+Shipment
+
+↓
+
+Delivery
+
+oluşturur.
+
+---
+
+# 9. Production
+
+Production
+
+```text
+Warehouse
+
+↓
+
+Product
+
+↓
+
+Production
+```
+
+Production
+
+çıktı üretir
+
+↓
+
+QC
+
+↓
+
+Warehouse
+
+↓
+
+Finance
+
+---
+
+# 10. QC
+
+QC
+
+bağımlıdır
+
+```text
+CRM
+
+↓
+
+Warehouse
+
+↓
+
+Production
+
+↓
+
+QC
+```
+
+QC
+
+çıktıları
+
+↓
+
+Finance
+
+↓
+
+Customer Service
+
+↓
+
+Analytics
+
+---
+
+# 11. Finance
+
+ERP'nin merkezi modülüdür.
+
+Bağımlılıklar
+
+```text
+CRM
+
+Sales
+
+Purchase
+
+Warehouse
+
+Production
+
+HR
+
+↓
+
+Finance
+```
+
+Finance
+
+hiçbir modülü tetiklemez.
+
+Sadece muhasebeleştirir.
+
+---
+
+# 12. HR
+
+Bağımlılık
+
+```text
+Kernel
+
+↓
+
+HR
+```
+
+HR'yi kullananlar
+
+* Payroll
+* Projects
+* Production
+* Service
+
+---
+
+# 13. Projects
+
+Bağımlılık
+
+```text
+CRM
+
+↓
+
+HR
+
+↓
+
+Projects
+```
+
+---
+
+# 14. Service
+
+Bağımlılık
+
+```text
+CRM
+
+↓
+
+Warehouse
+
+↓
+
+Service
+```
+
+---
+
+# 15. BI
+
+BI
+
+hiçbir modüle veri sağlamaz.
+
+Sadece okur.
+
+```text
+Finance
+
+CRM
+
+HR
+
+Production
+
+Warehouse
+
+QC
+
+↓
+
+BI
+```
+
+---
+
+# 16. AI Engine
+
+AI bütün modülleri kullanır.
+
+```text
+CRM
+
+Finance
+
+Warehouse
+
+Production
+
+HR
+
+Projects
+
+↓
+
+AI
+```
+
+AI
+
+hiçbir tabloya doğrudan yazmaz.
+
+Her işlem servisler üzerinden yapılır.
+
+---
+
+# 17. Workflow
+
+Workflow
+
+bütün modülleri yönetir.
+
+```text
+Workflow
+
+↓
+
+Sales
+
+↓
+
+Purchase
+
+↓
+
+Finance
+
+↓
+
+HR
+
+↓
+
+QC
+
+↓
+
+Service
+```
+
+---
+
+# 18. Event Bus
+
+Her modül event üretir.
+
+Örnek
+
+```text
+SalesOrderCreated
+
+↓
+
+ReserveStock
+
+↓
+
+CreateShipment
+
+↓
+
+CreateInvoice
+
+↓
+
+PostAccounting
+
+↓
+
+NotifyCustomer
+```
+
+Hiçbir modül diğer modülü doğrudan çağırmaz.
+
+Event üzerinden haberleşir.
+
+---
+
+# 19. Bildirim Sistemi
+
+Tüm modüller ortak Notification Engine kullanır.
+
+Desteklenen kanallar
+
+* Email
+* SMS
+* Push
+* WhatsApp
+* Telegram
+* Teams
+* Slack
+
+---
+
+# 20. Geliştirme Sırası
+
+Kodlama aşağıdaki sıraya göre yapılacaktır.
+
+```
+1. Kernel
+
+2. Common Services
+
+3. Product
+
+4. CRM
+
+5. Sales
+
+6. Purchasing
+
+7. Warehouse
+
+8. Logistics
+
+9. Production
+
+10. QC
+
+11. Finance
+
+12. HR
+
+13. Projects
+
+14. Service
+
+15. BI
+
+16. AI
+
+17. Integrations
+
+18. Marketplace
+```
+
+Bu sıra zorunludur.
+
+---
+
+# 21. Yasak Bağımlılıklar
+
+Aşağıdaki bağımlılıklar oluşturulamaz.
+
+❌ Finance → CRM
+
+❌ Warehouse → Finance
+
+❌ QC → Finance
+
+❌ HR → Finance
+
+❌ BI → Business Logic
+
+❌ AI → Database
+
+❌ Controller → DbContext
+
+❌ UI → Entity
+
+❌ Domain → Infrastructure
+
+---
+
+# 22. Temel Mimari İlkesi
+
+Her modül yalnızca kendinden önce gelen katmanlara bağımlı olabilir.
+
+Hiçbir modül kendi seviyesindeki başka bir modülün veritabanına doğrudan erişemez.
+
+Modüller arası iletişim yalnızca aşağıdaki yollarla yapılabilir:
+
+* Application Services
+* Domain Events
+* Event Bus
+* Integration Events
+* REST API
+* gRPC (gerektiğinde)
+
+Bu kural Business Operating System mimarisinin temelidir ve tüm ajanlar tarafından zorunlu olarak uygulanacaktır.
