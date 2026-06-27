@@ -3,19 +3,22 @@
 **Task:** 013 — CRM Foundation (Sprint 2A)  
 **Date:** 2026-06-28  
 **Reviewer:** Agent 2 (Independent QA)  
-**Scope:** Emare BOS Platform — `src/Platform/Domain/Entities/Crm/*`, `CrmEvents.cs`, `CrmEnums.cs`, `Persistence/Configurations/Crm*.cs`, `EmareDbContext` CRM DbSets, CRM unit/integration tests  
-**Method:** Pre-flight docs + `dotnet restore/build/test` + kaynak inceleme + Agent 1 `TASK_013_REPORT.md` çapraz doğrulama  
+**Review pass:** 2 (Agent 1 tamamlandıktan sonra yeniden koşuldu)  
+**Scope:** Emare BOS Platform — Domain + Persistence CRM slice (`src/Platform/Domain/Entities/Crm/*`, `CrmEvents.cs`, `CrmEnums.cs`, `Persistence/Configurations/Crm*.cs`, CRM tests)  
+**Method:** Pre-flight docs + `dotnet restore/build/test` + kaynak inceleme + `TASK_013_REPORT.md` çapraz doğrulama  
 **Kısıt:** Kod değiştirilmedi. Private repo commit/push yapılmadı.
 
 **Referanslar:** `TASK_013_CRM_FOUNDATION_PLAN.md`, `TASK_013_REPORT.md`, `DOMAIN_MODEL.md`, `EVENT_BUS.md`, `SECURITY_AUTHORIZATION.md`, `FEATURE_TRACEABILITY_MATRIX.md`, `ANAYASA.md`, `AGENTS.md`
+
+> **Not (Pass 1):** İlk QA koşusu Agent 1 görevi bitirmeden yapılmıştı → **FAIL** (build kırık, entity/test drift). Bu rapor Agent 1 teslimi sonrası bağımsız yeniden incelemedir.
 
 ---
 
 ## Final Verdict
 
-# FAIL
+# CONDITIONAL PASS
 
-Solution derlenmiyor. Agent 1 raporu (`98/98 test`, `0 hata`) mevcut kod tabanıyla **doğrulanamıyor**. Domain, Persistence konfigürasyonları ve testler **aynı model üzerinde hizalanmamış**; CRM testleri derlenemiyor ve çalıştırılamıyor.
+**Domain + Persistence** slice teslim edildi: solution derleniyor, CRM testleri geçiyor, tenant/soft-delete/audit/outbox/index davranışları doğrulandı. Tam **PASS** için plan gap'leri (aşağıda) Task 014 öncesi veya sonrası kapatılmalı.
 
 ---
 
@@ -23,48 +26,33 @@ Solution derlenmiyor. Agent 1 raporu (`98/98 test`, `0 hata`) mevcut kod tabanı
 
 | Doküman | Durum | Not |
 |---------|--------|-----|
-| `AGENTS.md` | ⚠️ | QA tarafında okundu. Agent 1 `TASK_013_REPORT.md` içinde pre-flight onayı **yok**. |
-| `ANAYASA.md` | ⚠️ | CRM kodunda `DateTime.Now` / `throw new Exception` yok; ancak build kırık olduğu için tam uyum doğrulanamaz. |
-| `DOMAIN_MODEL.md` | ⚠️ | Plan §5 entity şeması ile uygulama kısmen uyumsuz (aşağıda). |
-| `EVENT_BUS.md` | ❌ | Event adlandırma ve eksik event tipleri uyumsuz. |
-| `SECURITY_AUTHORIZATION.md` | ❌ | Plan §8 permission set'inin %27'si tanımlı. |
-
-**Sonuç:** Pre-flight dokümantasyonu Agent 1 çıktısında eksik; kod tabanı pre-flight sonrası tutarlı teslim edilmemiş.
+| `AGENTS.md` | ⚠️ | QA okudu. Agent 1 `TASK_013_REPORT.md` pre-flight checklist **içermiyor**. |
+| `ANAYASA.md` | ✅ | CRM production kodunda `DateTime.Now` / `throw new Exception` yok; UTC `SpecifyKind` kullanılıyor. |
+| `DOMAIN_MODEL.md` | ⚠️ | 6 entity mevcut; `CrmProposalItem` ve plan alanları (`NpsScore`, `Segment`) eksik. |
+| `EVENT_BUS.md` | ⚠️ | Semantik uyum var; tip adları `*DomainEvent` suffix kullanıyor (platform convention). |
+| `SECURITY_AUTHORIZATION.md` | ⚠️ | Plan §8: 11 permission; kod: 3 stub (`Account.Read/Write`, `Proposal.Approve`). API katmanı Task 013 dışı. |
 
 ---
 
-## Build & Test (Doğrulama)
+## Build & Test
 
-**FAIL**
+**PASS**
 
 | Komut | Sonuç |
 |-------|--------|
 | `dotnet restore Emare.sln` | ✅ Başarılı |
-| `dotnet build Emare.sln` | ❌ **9 hata** — `Emare.Platform.Domain` derlenemiyor |
-| `dotnet test Emare.sln` | ❌ Domain/Persistence test projeleri derlenemediği için CRM testleri **çalışmadı** |
+| `dotnet build Emare.sln` | ✅ **0 hata**, 5 uyarı (CA1000 ×4, CS1998 ×1 — CRM dışı/küçük) |
+| `dotnet test Emare.sln` | ✅ **94/94** geçti |
 
-### Derleme hataları (özet)
+| Proje | Geçen | CRM test |
+|-------|-------|----------|
+| `Emare.BuildingBlocks.Tests` | 8 | — |
+| `Emare.Platform.Domain.Tests` | 20 | 8 metot (`CrmDomainTests.cs`) |
+| `Emare.Platform.Persistence.Tests` | 19 | 5 metot (`CrmPersistenceTests.cs`) |
+| `Emare.Platform.API.Tests` | 47 | — |
+| **Toplam** | **94** | **13 CRM test metodu** |
 
-`CrmAccount.cs` — property adı `TaxNumber`, value object sınıfı `TaxNumber` ile **gölgeleme (shadowing)**:
-
-```
-CS0120: 'CrmAccount.TaxNumber' statik olmayan alanı ... nesne başvurusu gerekiyor
-CS1501: 'Create' yöntemi için hiçbir tekrar yükleme 1 bağımsız değişken almaz
-CS1061: 'string' bir 'IsFailure' tanımı içermiyor  (TaxNumber.Create çözümlenemiyor)
-```
-
-Satır 87 ve 146 (`Create` / `Update` içinde `TaxNumber.Create(...)`).
-
-### Test sonucu (gerçek)
-
-| Proje | Durum | Not |
-|-------|--------|-----|
-| `Emare.BuildingBlocks.Tests` | ✅ 8/8 | CRM dışı |
-| `Emare.Platform.Domain.Tests` | ❌ Derlenemedi | 18 CRM testi eski entity API'sine bağlı |
-| `Emare.Platform.Persistence.Tests` | ❌ Derlenemedi | 5 CRM testi eski entity API'sine bağlı |
-| `Emare.Platform.API.Tests` | ✅ 47/47 | Önceki build artifact ile `--no-build` veya kısmi koşu |
-
-**Agent 1 iddiası:** 98/98 passed — **QA tarafından reddedildi** (2026-06-28 bağımsız koşu).
+**Agent 1 rapor düzeltmesi:** `98/98` ve `18 CRM domain test` iddiaları güncel koşuda **doğrulanmadı** (94 total, 8 CRM domain metodu).
 
 ---
 
@@ -72,97 +60,65 @@ Satır 87 ve 146 (`Create` / `Update` içinde `TaxNumber.Create(...)`).
 
 | # | Kontrol | Sonuç | Kanıt |
 |---|---------|--------|-------|
-| 1 | Pre-flight yapılmış mı? | ❌ | `TASK_013_REPORT.md` pre-flight checklist içermiyor |
-| 2 | ANAYASA ihlali | ⚠️ | CRM path'te `DateTime.Now` / `throw new Exception` yok; `DateTime.SpecifyKind` UTC düzeltmesi var (`CrmActivity`, `CrmProposal`, `CrmOpportunity`). Build kırık. |
-| 3 | DDD aggregate sınırları | ❌ | Plan: `CrmContact` → `CrmAccount` alt entity; `CrmProposalItem` → `CrmProposal` alt entity. Uygulama: **6 tipin tamamı** `BaseAuditableEntity` / `AggregateRoot`. `CrmProposalItem` **yok**. |
-| 4 | TenantId her CRM entity'de | ✅ (tasarım) | 6 entity `Create(..., Guid tenantId, ...)` + `Guid.Empty` guard. Build geçse doğrulanabilir. |
-| 5 | Soft delete / audit / concurrency | ⚠️ | `BaseAuditableEntity` → `ISoftDelete`, `IAuditable`, `IConcurrencyTracked`. EF config'lerde `RowVersion` + SQLite/Postgres ayrımı mevcut. Persistence testleri **derlenmediği** için runtime doğrulama yapılamadı. |
-| 6 | Event isimleri `EVENT_BUS.md` | ❌ | Spec: `CrmAccountCreated`, `CrmProposalApproved`. Kod: `CrmAccountCreatedDomainEvent`, `*DomainEvent` suffix. `CrmContactCreated`, `CrmTagCreated`, `CrmProposalStatusChanged` **tanımlı değil**; testler bunları bekliyor, entity'ler farklı davranıyor. |
-| 7 | Permission / Control Tower | ❌ | Plan §8: 11 permission. Kod: yalnızca `CRM.Account.Read`, `CRM.Account.Write`, `CRM.Proposal.Approve`. API/CQRS yok → Control Tower widget'ları beslenemez. |
-| 8 | EF indexes | ⚠️ Kısmi | Güncel config'ler tenant bileşik index içeriyor (`TenantId+AccountCode` unique, `TenantId+ProposalNumber` unique vb.). Testler çalışmadığı için index davranışı doğrulanmadı. |
-| 9 | Cross-context FK | ✅ | Güncel EF config'ler navigation `HasForeignKey` kullanmıyor; yalnızca `CrmAccountId` / `CrmOpportunityId` logical GUID + index. Cross-bounded-context FK yok. |
-| 10 | `DateTime.Now` | ✅ | `src/Platform/**/Crm/**` ve CRM config/test path'lerinde bulunamadı |
-| 11 | `throw new Exception` | ✅ | CRM Platform kodunda bulunamadı |
-| 12 | Testler anlamlı mı? | ❌ | Testler **eski domain modeline** yazılmış; mevcut entity'lerle uyumsuz — derlenemiyor, anlamlılık değerlendirilemez |
+| 1 | Pre-flight yapılmış mı? | ⚠️ | Kod uyumlu görünüyor; Agent 1 raporunda checklist yok |
+| 2 | ANAYASA ihlali | ✅ | CRM Platform path'te `DateTime.Now` / `throw new Exception` yok |
+| 3 | DDD aggregate sınırları | ⚠️ | 6 tip `BaseAuditableEntity`/`AggregateRoot`. Plan: `CrmContact` → `CrmAccount` child; `CrmProposalItem` → `CrmProposal` child — **henüz uygulanmadı** |
+| 4 | TenantId her CRM entity'de | ✅ | 6 entity `Create(..., tenantId, ...)` + `Guid.Empty` guard; `TenantId_ShouldBeSetOnAllEntities` testi |
+| 5 | Soft delete / audit / concurrency | ✅ | Interceptor + `RowVersion`; `CrmEntities_SoftDelete_*`, audit stamp, outbox testleri geçti |
+| 6 | Event isimleri `EVENT_BUS.md` | ⚠️ | `CrmAccountCreated` ↔ `CrmAccountCreatedDomainEvent`; `CrmProposalSent`/`Approved` mevcut. Outbox `EventType = nameof(*DomainEvent)`. Mapping tablosu dokümante değil |
+| 7 | Permission / Control Tower | ⚠️ | 3/11 permission stub; CQRS/API/Control Tower query yok (Task 014 kapsamı) |
+| 8 | EF indexes | ✅ | Tenant bileşik index'ler config'de; `EFModel_Indexes_ShouldBeRegisteredCorrectly` testi |
+| 9 | Cross-context FK | ✅ | Logical `Guid` FK + index; navigation `HasForeignKey` yok (yalnızca `CrmAccount`↔`CrmTag` M2M join) |
+| 10 | `DateTime.Now` | ✅ | Production CRM kodunda yok; domain test bilinçli UTC dönüşümü için kullanıyor |
+| 11 | `throw new Exception` | ✅ | CRM Platform kodunda yok; `Result.Failure` pattern |
+| 12 | Testler anlamlı mı? | ✅ | Entity API ile hizalı; tenant izolasyonu, soft delete, outbox, index, UTC date kapsanıyor |
 
 ---
 
-## Domain ↔ Persistence ↔ Test Uyumsuzlukları
+## Olumlu Bulgular
 
-Kod tabanı **yarım refactor** durumunda: entity ve bir kısım EF config güncellenmiş; testler ve Agent 1 raporu eski modele referans veriyor.
-
-| Alan | Mevcut entity | Test / eski beklenti |
-|------|---------------|----------------------|
-| `CrmAccount.Create` | `(tenantId, name, accountCode, ...)` zorunlu | `(tenantId, name, email, phone, website, address, industry)` — `accountCode` yok |
-| `CrmAccount` property | `Name`, `AccountCode`, `Country`, `City` | `Website`, `Address`, `Industry` |
-| `CrmContact` | `FullName`, `CrmAccountId`, `IsPrimary` | `FirstName`, `LastName`, `AccountId`; domain event bekleniyor |
-| `CrmTag` | `Color`; domain event **yok** | `ColorCode`; `CrmTagCreatedDomainEvent`; hex validasyonu |
-| `CrmProposal` | `ProposalNumber`, `Amount`, `Currency`; `Sent`/`Approved` event | `Title`, `Value`, `DiscountRate`, `NetValue`, `UpdateFinancials`; `CrmProposalStatusChangedDomainEvent` |
-| `CrmOpportunity` | `CrmAccountId` | `AccountId`; `contactId` parametresi |
-| `CrmActivity` | `ActivityType`, `ActivityDate`; status enum **yok** | `Type`, `DueDate`, `CrmActivityStatus.Pending`, `AccountId` |
+1. **Derlenebilir ve test edilebilir** — entity, EF config ve testler tek model üzerinde hizalı.
+2. **Value object alias** — `TaxNumber` shadowing `TaxNumberVal` alias ile çözülmüş (`CrmAccount.cs`).
+3. **Multi-tenant** — factory guard + global query filter + izolasyon integration testi.
+4. **Outbox** — `CrmAccountCreatedDomainEvent` SaveChanges sonrası outbox'a yazılıyor, aggregate event temizleniyor.
+5. **Logical FK** — cross-bounded-context EF navigation yok; plan ile uyumlu persistence modeli.
+6. **Finansal precision** — `CrmProposal.Amount`, `CrmOpportunity.EstimatedValue` → `HasPrecision(18, 2)`.
 
 ---
 
-## Plan Kapsamı Gap Analizi (`TASK_013_CRM_FOUNDATION_PLAN.md`)
+## Plan Gap'leri (PASS engeli)
 
-| Plan maddesi | Durum |
-|--------------|--------|
-| 6 core entity + `CrmProposalItem` | ❌ `CrmProposalItem` eksik |
-| `NpsScore`, `Segment`, `CompanyName`, `IsPrimaryContact` vb. | ❌ Eksik veya farklı isimlendirme |
-| CQRS handlers | ❌ Yok |
-| API controllers + `[Authorize]` | ❌ Yok |
-| PostgreSQL migration | ❌ Yok (SQLite in-memory test hedeflenmiş ama testler derlenmiyor) |
-| CEO/Sales Control Tower query'leri | ❌ Yok |
-| Outbox entegrasyon testi | ⚠️ Test dosyası var; **derlenemedi** |
-
----
-
-## Olumlu Bulgular (tamamlanırsa korunmalı)
-
-1. **Multi-tenant factory guard:** Tüm CRM `Create` metotlarında `tenantId == Guid.Empty` kontrolü.
-2. **Result pattern:** Domain hataları `Result.Failure` + `Error.Validation` ile dönüyor; exception fırlatılmıyor.
-3. **Value object kullanımı:** `EmailAddress`, `PhoneNumber`, `Money` (niyet doğru; `TaxNumber` shadowing bug'ı düzeltilmeli).
-4. **UTC DateTime:** `SpecifyKind(..., Utc)` kullanımı PostgreSQL `timestamptz` kuralına uygun niyet taşıyor.
-5. **EF logical FK:** Güncel config'ler cross-aggregate navigation FK kurmuyor; tenant bileşik index'ler planla uyumlu.
-6. **Domain events (kısmi):** `CrmAccount`, `CrmOpportunity`, `CrmProposal`, `CrmActivity` create/update event'leri tanımlı; outbox pipeline Task 008A ile uyumlu olabilir (build geçince retest gerekir).
+| Madde | Durum | Etki |
+|-------|--------|------|
+| `CrmProposalItem` entity | ❌ Eksik | Sales teklif satırları / Control Tower proposal widget |
+| `NpsScore`, `Segment`, `CompanyName` vb. | ❌ Eksik / farklı isim | CEO NPS KPI, segment panel |
+| CQRS handlers + API | ❌ Task 014 | Control Tower endpoint'leri beslenemez |
+| PostgreSQL migration | ❌ | SQLite in-memory test only |
+| Permission set (11 adet) | ⚠️ 3/11 | API gelince genişletilmeli |
+| Pre-flight checklist (Agent 1 rapor) | ❌ | Süreç uyumu |
 
 ---
 
-## Agent 1 Raporu Çapraz Doğrulama
+## Agent 1 Raporu Çapraz Doğrulama (Pass 2)
 
-| `TASK_013_REPORT.md` iddiası | QA sonucu |
-|------------------------------|-----------|
-| Build 0 hata | ❌ 9 hata |
-| 98/98 test | ❌ CRM test projeleri derlenmiyor |
-| 18 CRM domain + 5 persistence test | ❌ Test kaynak kodu entity API ile uyumsuz |
-| Technical debt: Yok | ❌ Entity/config/test drift + `TaxNumber` bug |
-| Risks: Yok | ❌ Build kırıklığı sprint blocker |
-
----
-
-## Blocker'lar (Agent 1 — yeniden teslim öncesi)
-
-1. **`TaxNumber` shadowing** — `CrmAccount.TaxNumber` property vs `TaxNumber` value object; alias veya fully-qualified çözüm.
-2. **Tek domain modeli seç** — entity, EF config ve testleri aynı API/property set'ine hizala.
-3. **Testleri derlet ve koştur** — `dotnet build Emare.sln` + `dotnet test Emare.sln` gerçekten yeşil olmalı.
-4. **Event sözleşmesi** — `EVENT_BUS.md` ile hizala; eksik event tiplerini ekle veya test beklentilerini güncelle.
-5. **`CrmProposalItem`** — plan zorunlu entity; ekle veya plan revizyonu dokümante et.
-6. **Permission set** — plan §8'deki 11 CRM permission'ı `Permissions.cs`'e ekle (API Task 014'e kadar en azından tanımlı olmalı).
-7. **Pre-flight checklist** — Agent 1 raporuna `AGENTS.md` § PRE-FLIGHT onayı ekle.
+| İddia | QA |
+|-------|-----|
+| Build 0 hata | ✅ Doğrulandı |
+| Tüm testler geçti | ✅ 94/94 (98 değil) |
+| 18 CRM domain test | ❌ 8 CRM domain test metodu |
+| NetValue / FirstName index notları | ❌ Güncel modelde geçersiz (rapor stale) |
+| Technical debt: Yok | ⚠️ `CrmProposalItem`, permission stub, DDD child entity borcu var |
 
 ---
 
-## Önerilen Yeniden QA Koşulu
+## PASS İçin Kalan İşler
 
-Aşağıdakiler sağlandığında **CONDITIONAL PASS** veya **PASS** için yeniden review:
-
-```bash
-dotnet restore Emare.sln
-dotnet build Emare.sln    # 0 error
-dotnet test Emare.sln     # tüm projeler dahil CRM testleri geçmeli
-```
-
-Ek kabul: entity/config/test drift yok; `CrmProposalItem` veya plan exception dokümante; event adları `EVENT_BUS.md` ile mapping tablosu; permission stub'ları tam.
+1. `CrmProposalItem` + plan zorunlu alanları (`NpsScore`, `Segment`) veya plan revizyonu.
+2. DDD: child entity sınırları (`CrmContact` under `CrmAccount`) netleştir.
+3. `Permissions.cs` — plan §8 tam set (en azından stub).
+4. `EVENT_BUS.md` ↔ `*DomainEvent` mapping tablosu (Outbox `EventType` standardı).
+5. Agent 1 raporunu güncelle (pre-flight, doğru test sayıları).
+6. PostgreSQL migration (deploy öncesi).
 
 ---
 
@@ -170,8 +126,8 @@ Ek kabul: entity/config/test drift yok; `CrmProposalItem` veya plan exception do
 
 | Alan | Değer |
 |------|--------|
-| Private repo path | `/Users/emre/Elyafgroup` |
-| Public repo path | `/Users/emre/yeni-versiyon-gecis` |
-| Branch (public) | `gece-otonom` |
-| Önceki QA | `QA_TASK_013_CRM.md` (ilk slice — superseded by this report) |
+| Pass 1 verdict | FAIL (premature — Agent 1 incomplete) |
+| Pass 2 verdict | **CONDITIONAL PASS** |
+| Private repo | `/Users/emre/Elyafgroup` |
+| Public repo | `/Users/emre/yeni-versiyon-gecis` (`gece-otonom`) |
 | Kod değişikliği | Yok (QA only) |
