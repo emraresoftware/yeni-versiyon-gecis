@@ -10,7 +10,7 @@ Bu dosya, ERP geçiş sürecinde yer alan 7 ajanın ve modüllerinin anlık duru
 |---------|-----------------|--------------|-------|----------|
 | **A1**  | CEO / Executive | Ajan 1 | `BEKLIYOR` | Stratejik yönetim ve karar modülleri |
 | **A2**  | Sales Manager | Ajan 2 | `TAMAM` | Müşteriler, Fırsatlar, Teklifler ve Satışlar |
-| **A3**  | Finance Manager / Security Review | Ajan 3 | `TAMAM` | Güvenlik İncelemesi (Task 010 tamamlandı) |
+| **A3**  | Finance Manager / Security & CRM Plan | Ajan 3 | `TAMAM` | Güvenlik İncelemesi & CRM Planlama (Task 010, 013 tamamlandı) |
 | **A4**  | HR & Admin | Ajan 4 | `TAMAM` | Personel ve İzin Yönetimi (Task 011 tamamlandı) |
 | **A5**  | Production / İmalat | Antigravity (Ajan 5) | `TAMAM` | Üretim Dashboard veri entegrasyonu, API doğrulaması ve Testler |
 | **A6**  | QC (Quality Control) | Ajan 6 | `BEKLIYOR` | Kalite ve Hata Bildirimleri |
@@ -37,5 +37,12 @@ Bu dosya, ERP geçiş sürecinde yer alan 7 ajanın ve modüllerinin anlık duru
 - **Tamamlanma Tarihi:** 2026-06-27
 - **Sonuç:** Kod yazılmadan, tüm mimari belgeler incelenerek ve güvenlik denetim raporu doğrultusunda 10 kritik güvenlik alanı analiz edilerek inceleme tamamlandı.
 - **Detaylı Rapor:** [SECURITY_REVIEW.md](file:///Users/emre/yeni-versiyon-gecis/docs/project-management/security/SECURITY_REVIEW.md)
+
+### **A3 — CRM Foundation Planning (Ajan 3)**
+- **Görev:** TASK 013 kapsamında Sprint 2A CRM Foundation ve CEO/Sales Control Tower entegrasyon planının çıkarılarak TASK_013_CRM_FOUNDATION_PLAN.md dökümanının oluşturulması.
+- **Tamamlanma Tarihi:** 2026-06-28
+- **Sonuç:** Kod yazılmadan, tüm kontrol kulesi kapsamları, API, CQRS, Permission ve Event adayları ile test senaryolarını içeren detaylı plan dökümanı tamamlandı.
+- **Detaylı Rapor:** [TASK_013_CRM_FOUNDATION_PLAN.md](file:///Users/emre/yeni-versiyon-gecis/docs/project-management/tasks/TASK_013_CRM_FOUNDATION_PLAN.md)
+
 
 
