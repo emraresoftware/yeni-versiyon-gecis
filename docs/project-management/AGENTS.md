@@ -1,6 +1,40 @@
 # EMARE BOS — WORKSPACE CUSTOMIZATION & RULES
 
+###############################
+MANDATORY PRE-FLIGHT CHECK
+###############################
+
+Bu repository'de kod üretmeden önce aşağıdaki dosyaları okumak ZORUNLUDUR.
+
+1. AGENTS.md
+2. ANAYASA.md
+3. SECURITY_AUTHORIZATION.md
+4. DOMAIN_MODEL.md
+5. EVENT_BUS.md
+
+Bu dosyalar okunmadan kod üretmek yasaktır.
+
+Kod üretmeden önce:
+
+PRE-FLIGHT CHECK
+✓ AGENTS.md
+✓ ANAYASA.md
+✓ DOMAIN_MODEL.md
+
+şeklinde doğrulama yapılmalıdır.
+
+---
+
+## ARTICLE 1
+
+No AI agent is allowed to generate code before reading AGENTS.md.
+
+Violation of this rule invalidates the task.
+
+---
+
 Bu dosya, bu repoda çalışan tüm AI ajanları (geliştirici, test, QA ajanları vb.) için bağlayıcı kuralları barındırır. Her ajan işlem yapmadan önce bu kuralları eksiksiz incelemek ve uymak zorundadır.
+
 
 ---
 

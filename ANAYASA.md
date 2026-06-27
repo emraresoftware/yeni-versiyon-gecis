@@ -35,6 +35,15 @@ Geliştiriciler, AI Ajanları.
 
 ---
 
+## ARTICLE 1
+
+No AI agent is allowed to generate code before reading AGENTS.md.
+
+Violation of this rule invalidates the task.
+
+---
+
+
 ## 1. DateTime + PostgreSQL Kuralı (Kritik!)
 
 PostgreSQL `timestamptz` veri tipiyle çalışırken .NET runtime tarafında kesinlikle **`DateTimeKind.Utc`** kullanılmalıdır. Aksi takdirde, veritabanına kayıt veya LINQ sorgularında **Npgsql runtime 500 hatası** alınır.
@@ -87,4 +96,4 @@ Referans Akışı:
 4. **Application ➡️ Infrastructure Implementation Yasaktır:** Uygulama somut altyapı uygulamalarına bağımlı olamaz.
 5. **Domain ➡️ Hiçbir Katmana Bağımlı Olamaz:** Domain en iç katmandır, dışındaki hiçbir katmanı bilemez.
 
-Detaylar için bkz. [ADR-0002 — Clean Architecture](file:///Users/emre/yeni-versiyon-gecis/docs/adr/0002-clean-architecture.md).
+Detaylar için bkz. [ADR-0002 — Clean Architecture](file:///Users/emre/Elyafgroup/Yeni%20versiyon%20ge%C3%A7i%C5%9F/docs/adr/0002-clean-architecture.md).
