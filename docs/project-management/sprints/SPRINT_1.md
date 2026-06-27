@@ -27,10 +27,12 @@ Emare BOS (`Emare.sln`) — Clean Architecture platform çekirdeği: Domain, Per
 
 ---
 
-## Devam eden / Sıradaki Tasklar (Sprint 2 Backlog)
+## Devam eden / Sıradaki Tasklar
 
-- **Task 009** Rule Engine Skeleton
-- **Task 010** Workflow Skeleton
+Sprint 2 başlatıldı — bkz. [`SPRINT_2.md`](SPRINT_2.md).
+
+- **Task 009** Feature Traceability Matrix (Agent 2) — ✅ Tamamlandı
+- **Task 010+** CRM / Sales / Finance implementasyon backlog — Sprint 2A / 2B
 
 ---
 
