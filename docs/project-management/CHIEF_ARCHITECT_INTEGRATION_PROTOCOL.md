@@ -53,14 +53,6 @@ docs/project-management/qa/
 QA_TASK_XXX.md
 ```
 
-## Architect Review
-
-```
-docs/project-management/architect/
-
-ARCHITECT_REVIEW_TASK_XXX.md
-```
-
 ## Sprint Güncellemesi
 
 ```
@@ -96,6 +88,16 @@ docs/project-management/debt/
 
 TECHNICAL_DEBT.md
 ```
+
+## Architect Review (Chief Architect ONLY)
+
+```
+docs/project-management/architect/
+
+ARCHITECT_REVIEW_TASK_XXX.md
+```
+
+**Zorunlu dosya** — içeriği **yalnızca Chief Software Architect (ChatGPT)** yazar. Agent 1 ve Agent 2 bu dosyayı dolduramaz; koordinatör ChatGPT çıktısını birebir public mimari repoya ekler.
 
 ---
 
@@ -143,7 +145,7 @@ ChatGPT repository üzerinden inceleme yapar.
 
 6.
 
-Architect Review hazırlanır (Sadece Chief Software Architect / ChatGPT tarafından). Agent 1 ve Agent 2 bu dosyayı dolduramaz.
+Architect Review hazırlanır → `docs/project-management/architect/ARCHITECT_REVIEW_TASK_XXX.md` *(Chief Architect / ChatGPT — Agent 1 ve Agent 2 yazmaz)*
 
 ↓
 
@@ -215,8 +217,6 @@ Bir Task aşağıdaki maddelerin tamamı gerçekleşmeden tamamlandı kabul edil
 
 ✓ QA Report repository'ye eklendi
 
-✓ Chief Architect Review Raporu (`ARCHITECT_REVIEW_TASK_XXX.md`) Chief Architect (ChatGPT) tarafından hazırlanıp repository'ye eklendi
-
 ✓ Sprint güncellendi
 
 ✓ Daily Log güncellendi
@@ -227,7 +227,7 @@ Bir Task aşağıdaki maddelerin tamamı gerçekleşmeden tamamlandı kabul edil
 
 ✓ Repository push edildi
 
-✓ Chief Architect Review onaylandı
+✓ Chief Architect Review alındı — `ARCHITECT_REVIEW_TASK_XXX.md` **Chief Software Architect (ChatGPT) tarafından hazırlanmış** olmalıdır *(Agent 1 / Agent 2 dolduramaz)*
 
 Bundan sonra yeni Task ancak Chief Architect Review tamamlandıktan sonra başlatılacaktır.
 

@@ -1,4 +1,4 @@
-# EMARE BOS — Mandatory Documentation Protocol v1.1
+# EMARE BOS — Mandatory Documentation Protocol v1.0
 
 **Durum:** Zorunlu proje standardı — Agent 1, Agent 2, Architect ve tüm ekip  
 **Kanonik konum:** `docs/project-management/MANDATORY_DOCUMENTATION_PROTOCOL.md`  
@@ -19,8 +19,8 @@ Bu repository yalnızca kaynak kod deposu değildir. Aynı zamanda projenin:
 
 olarak kullanılır.
 
-**Her görev sonunda** aşağıdaki dokümanların oluşturulması ve repository'ye eklenmesi **ZORUNLUDUR**.  
-Görev, bu dosyalar repository'ye commit edilip push edilmeden **tamamlandı kabul edilmez**.
+**Her görev sonunda** aşağıdaki dokümanların oluşturulması **ZORUNLUDUR**.  
+Görev, bu dosyalar repository'ye commit edilmeden **tamamlandı kabul edilmez**.
 
 ---
 
@@ -32,7 +32,7 @@ docs/project-management/
 ├── DEVELOPMENT_PROTOCOL.md
 ├── reports/          ← Agent 1: TASK_XXX_REPORT.md
 ├── qa/               ← Agent 2: QA_TASK_XXX.md
-├── architect/        ← Chief Architect: ARCHITECT_REVIEW_TASK_XXX.md
+├── architect/        ← Chief Architect ONLY: ARCHITECT_REVIEW_TASK_XXX.md
 ├── risks/            ← RISK_REGISTER.md
 ├── debt/             ← TECHNICAL_DEBT.md
 ├── sprints/          ← SPRINT_N.md
@@ -45,17 +45,18 @@ docs/project-management/
 ## Task yaşam döngüsü
 
 ```text
-1. Kod          (Agent 1)
-2. Build
-3. Test
-4. Task Report  (Agent 1)
-5. QA Report    (Agent 2)
-6. Architect Review (Chief Architect) -> Rapor üretimi (Agent 1 ve Agent 2 dolduramaz)
-7. Commit & Push (kod + tüm zorunlu dokümanlar, review dahil)
-8. Sonraki Task (Architect onayı sonrası)
+1. Kod              (Agent 1)
+2. Build + Test     (Agent 1)
+3. Task Report      (Agent 1)  → reports/TASK_XXX_REPORT.md
+4. QA Report        (Agent 2)  → qa/QA_TASK_XXX.md
+5. Architect Review (Chief Software Architect / ChatGPT ONLY) → architect/ARCHITECT_REVIEW_TASK_XXX.md
+6. Commit + push    (private kod + public raporlar)
+7. Sonraki Task     (Architect onayı sonrası)
 ```
 
-**Architect Review tamamlanıp ARCHITECT_REVIEW_TASK_XXX.md Chief Architect tarafından repoya commit edilmeden sonraki Task başlatılamaz.**
+**Architect Review tamamlanmadan sonraki Task başlatılamaz.**
+
+> **Önemli:** `ARCHITECT_REVIEW_TASK_XXX.md` dosyası **zorunludur**, ancak içeriğini **Agent 1 veya Agent 2 yazamaz**. Yalnızca Chief Software Architect (ChatGPT) hazırlar; koordinatör verilen metni **birebir** public mimari repoya ekler. Agent 1/2 bu dosyayı yalnızca **beklenen çıktı** olarak referans gösterebilir.
 
 ---
 
@@ -70,7 +71,7 @@ Ayrıca güncelle:
 
 **Dosya:** `docs/project-management/sprints/SPRINT_N.md` — sprint ilerleme yüzdesi
 
-Agent 1 **yapmaz:** QA raporu yazmak (Agent 2), kod dışı kalite denetimi.
+Agent 1 **yapmaz:** QA raporu (Agent 2), **`ARCHITECT_REVIEW_TASK_XXX.md` yazmak/doldurmak** (Chief Architect).
 
 ---
 
@@ -91,7 +92,7 @@ Gerekirse güncelle:
 - `debt/TECHNICAL_DEBT.md`
 - `daily/YYYY-MM-DD.md`
 
----
+Agent 2 **yapmaz:** Kod, commit, feature geliştirme, **`ARCHITECT_REVIEW_TASK_XXX.md` yazmak/doldurmak** (Chief Architect).
 
 ## Risk yönetimi
 
@@ -140,7 +141,6 @@ feat(platform): implement Identity module
 
 TASK_006_REPORT.md
 QA_TASK_006.md
-ARCHITECT_REVIEW_TASK_006.md
 SPRINT_1.md
 RISK_REGISTER.md          (gerekliyse)
 TECHNICAL_DEBT.md         (gerekliyse)
@@ -156,28 +156,33 @@ Bir Task aşağıdakilerin **TAMAMI** sağlanmadan tamamlandı kabul edilmez:
 - [ ] Kod yazıldı
 - [ ] Build başarılı
 - [ ] Testler başarılı
-- [ ] Task Report oluşturuldu (`TASK_XXX_REPORT.md` — Agent 1)
-- [ ] QA Report oluşturuldu (`QA_TASK_XXX.md` — Agent 2)
-- [ ] Architect Review Raporu oluşturuldu (`ARCHITECT_REVIEW_TASK_XXX.md` — Chief Architect tarafından)
+- [ ] Task Report oluşturuldu (`TASK_XXX_REPORT.md`)
+- [ ] QA Report oluşturuldu (`QA_TASK_XXX.md`)
 - [ ] Sprint dosyası güncellendi
 - [ ] Risk Register güncellendi (gerekliyse)
 - [ ] Technical Debt güncellendi (gerekliyse)
 - [ ] Daily Log güncellendi
-- [ ] Architect Review tamamlandı ve onaylandı
-- [ ] Tüm dokümanlar repository'ye commit ve push edildi
+- [ ] **Architect Review tamamlandı** — `architect/ARCHITECT_REVIEW_TASK_XXX.md` **Chief Software Architect (ChatGPT) tarafından** hazırlanmış ve public mimari repoya eklenmiş olmalıdır *(Agent 1 / Agent 2 bu dosyayı dolduramaz)*
+- [ ] Tüm dokümanlar ilgili repolara commit/push edildi
 
 ---
 
-## Mimari yönetim
+## Mimari yönetim (Chief Architect)
 
-Her Task sonrası Chief Software Architect inceler:
+**Sahip:** Chief Software Architect (ChatGPT) — Agent 1 ve Agent 2 **değil**.
 
-- `TASK_XXX_REPORT.md`
-- `QA_TASK_XXX.md`
+Girdi (repository'den okunur):
 
-Çıktı: `architect/ARCHITECT_REVIEW_TASK_XXX.md` — **Approved** / **Approved with conditions** / **Rejected** (Sadece Chief Architect tarafından yazılır)
+- `reports/TASK_XXX_REPORT.md`
+- `qa/QA_TASK_XXX.md`
 
-**Architect Review tamamlanıp ARCHITECT_REVIEW_TASK_XXX.md Chief Architect (ChatGPT) tarafından repoya eklenmeden sonraki Task başlatılmaz.** Tüm ekip için zorunludur.
+Zorunlu çıktı:
+
+- `architect/ARCHITECT_REVIEW_TASK_XXX.md`
+
+İçerik yalnızca Chief Architect tarafından üretilir veya ChatGPT'nin verdiği metin **değiştirilmeden** public mimari repoya eklenir. Agent 1/2 placeholder, taslak veya özet architect review yazamaz.
+
+**Architect Review tamamlanmadan sonraki Task başlatılmaz.**
 
 ---
 
@@ -193,4 +198,4 @@ Her Task sonrası Chief Software Architect inceler:
 
 ---
 
-*v1.1 — 2026-06-27*
+*v1.1 — 2026-06-27 (Architect Review sahipliği: yalnızca Chief Architect)*

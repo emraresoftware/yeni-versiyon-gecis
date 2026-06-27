@@ -88,5 +88,5 @@ Aynı task commit'inde `docs/project-management/sprints/SPRINT_N.md` güncelleni
 ## Agent 1 yapmaz
 
 - QA raporu (`qa/QA_TASK_XXX.md`) — Agent 2
-- Architect onayı — Chief Architect
+- **`ARCHITECT_REVIEW_TASK_XXX.md` yazmak/doldurmak** — yalnızca Chief Software Architect (ChatGPT); Agent 1 yalnızca beklenen çıktı olarak referans gösterir
 - Hassas veri commit etme

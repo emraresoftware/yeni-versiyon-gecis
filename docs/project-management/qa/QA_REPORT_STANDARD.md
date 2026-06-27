@@ -131,9 +131,18 @@ PASS / CONDITIONAL PASS / FAIL
 
 | Sonuç | Sonraki adım |
 |-------|----------------|
-| **PASS** | Architect Review |
-| **CONDITIONAL PASS** | Açık maddeler kayıtlı; Architect Review |
+| **PASS** | Chief Architect Review beklenir (`ARCHITECT_REVIEW_TASK_XXX.md` — Agent 2 yazmaz) |
+| **CONDITIONAL PASS** | Açık maddeler kayıtlı; Chief Architect Review |
 | **FAIL** | Agent 1 hotfix; yeni task yok |
+
+---
+
+## Agent 2 yapmaz
+
+- Kod yazma / değiştirme
+- Kod commit etme (private repo)
+- Feature geliştirme
+- **`ARCHITECT_REVIEW_TASK_XXX.md` yazmak/doldurmak** — yalnızca Chief Software Architect (ChatGPT); Agent 2 yalnızca beklenen çıktı olarak referans gösterir
 
 ---
 
