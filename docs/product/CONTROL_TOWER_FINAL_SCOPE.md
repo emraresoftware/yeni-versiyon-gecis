@@ -1,10 +1,10 @@
 # 🏰 Elyaf Group 2.0 — Control Tower Final Scope
 
-**Versiyon:** 1.0.0  
+**Versiyon:** 1.1.0  
 **Durum:** Draft — Onay Bekliyor  
 **Sahip:** Product Board  
 **Son Güncelleme:** 2026-06-27  
-**Bağımlı Dokümanlar:** DOMAIN_MODEL.md, BOUNDED_CONTEXTS.md, UBIQUITOUS_LANGUAGE.md
+**Bağımlı Dokümanlar:** DOMAIN_MODEL.md, BOUNDED_CONTEXTS.md, UBIQUITOUS_LANGUAGE.md, SECURITY_AUTHORIZATION.md, EVENT_BUS.md
 
 ---
 
@@ -131,8 +131,8 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 - `BudgetTarget` (Hedef değerler)
 
 ### Gerekli Workflow / Event / Permission Adayları
-- `DecisionLogCreated`, `DecisionLogApproved`
-- Permission: `ceo.control-tower.view`, `decision-log.approve`
+- `CeoDecisionLogCreated`, `CeoDecisionLogApproved`
+- Permission: `CEO.ControlTower.View`, `CEO.DecisionLog.Approve`
 - Workflow: KPI Özeti Hesaplama (scheduled), Eskalasyon Tetikleme
 
 ---
@@ -221,9 +221,9 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 - `SalesActivityLog` (Aktivite takibi)
 
 ### Gerekli Workflow / Event / Permission Adayları
-- `OpportunityCreated`, `ProposalCreated`, `ProposalApproved`
+- `CrmOpportunityCreated`, `CrmProposalCreated`, `CrmProposalApproved`
 - `SalesOrderCreated`, `SalesOrderConfirmed`
-- Permission: `sales.control-tower.view`, `proposal.approve`, `order.create`
+- Permission: `Sales.ControlTower.View`, `CRM.Proposal.Approve`, `Sales.Order.Write`
 - Workflow: Teklif Onay Akışı, Fırsat Kapanış Hatırlatması
 
 ---
@@ -319,9 +319,9 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 - `TaxDeclaration`
 
 ### Gerekli Workflow / Event / Permission Adayları
-- `JournalEntryCreated`, `JournalEntryPosted`
-- `InvoiceCreated`, `PaymentCompleted`
-- Permission: `finance.control-tower.view`, `journal.post`, `invoice.approve`
+- `FinanceJournalEntryCreated`, `FinanceJournalEntryPosted`
+- `FinanceInvoiceCreated`, `FinancePaymentCompleted`
+- Permission: `Finance.ControlTower.View`, `Finance.JournalEntry.Post`, `Finance.Invoice.Write`
 - Workflow: Otomatik Gecikme Uyarısı, Dönem Kapanış Checklist
 
 ---
@@ -413,7 +413,7 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 ### Gerekli Workflow / Event / Permission Adayları
 - `HrLeaveRequested`, `HrLeaveApproved`, `HrLeaveRejected`
 - `HrEmployeeOnboarded`, `HrEmployeeOffboarded`
-- Permission: `hr.control-tower.view`, `leave.approve`, `payroll.view`
+- Permission: `HR.ControlTower.View`, `HR.Leave.Approve`, `HR.Payroll.Read`
 - Workflow: İzin Onay Akışı, Onboarding Checklist
 
 ---
@@ -507,9 +507,9 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 - `MaintenanceSchedule`
 
 ### Gerekli Workflow / Event / Permission Adayları
-- `WorkOrderCreated`, `WorkOrderStarted`, `WorkOrderCompleted`
-- `MachineBreakdownReported`
-- Permission: `production.control-tower.view`, `work-order.manage`
+- `ProductionWorkOrderCreated`, `ProductionWorkOrderStarted`, `ProductionWorkOrderCompleted`
+- `ProductionMachineBreakdownReported`
+- Permission: `Production.ControlTower.View`, `Production.WorkOrder.Write`
 - Workflow: İş Emri Akışı, Bakım Alarm Tetikleme
 
 ---
@@ -594,8 +594,8 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 
 ### Gerekli Workflow / Event / Permission Adayları
 - `QcTestResultCompleted`, `QcClaimCreated`, `QcClaimResolved`
-- `CapaCreated`, `CapaClosed`
-- Permission: `qc.control-tower.view`, `claim.manage`, `capa.close`
+- `QcCapaCreated`, `QcCapaClosed`
+- Permission: `QC.ControlTower.View`, `QC.Claim.Write`, `QC.Claim.Resolve`
 - Workflow: CAPA Hatırlatma Akışı, Müşteri Şikayet Eskalasyon Akışı
 
 ---
@@ -679,9 +679,9 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 - `CustomsDeclaration`
 
 ### Gerekli Workflow / Event / Permission Adayları
-- `ShipmentCreated`, `ShipmentDelivered`
-- `StockTransferRequested`, `StockTransferCompleted`
-- Permission: `logistics.control-tower.view`, `shipment.manage`, `stock.transfer`
+- `LogisticsShipmentCreated`, `LogisticsShipmentDelivered`
+- `LogisticsStockTransferRequested`, `LogisticsStockTransferCompleted`
+- Permission: `Logistics.ControlTower.View`, `Logistics.Shipment.Write`, `Logistics.StockTransfer.Write`
 - Workflow: Sevkiyat Onay Akışı, Gümrük Evrak Hatırlatma
 
 ---
@@ -769,8 +769,8 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 
 ### Gerekli Workflow / Event / Permission Adayları
 - `FabricPurchaseOrderCreated`, `FabricPurchaseOrderApproved`
-- `FabricDeliveryReceived`
-- Permission: `fabric-procurement.control-tower.view`, `purchase-order.approve`
+- `FabricPurchaseOrderDelivered`
+- Permission: `FabricProcurement.ControlTower.View`, `FabricProcurement.PurchaseOrder.Approve`
 - Workflow: Satın Alma Onay Akışı, Tedarikçi Değerlendirme Akışı
 
 ---
@@ -852,7 +852,7 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 
 ### Gerekli Workflow / Event / Permission Adayları
 - `AccessoryPurchaseOrderCreated`, `AccessoryPurchaseOrderApproved`
-- Permission: `accessories-procurement.control-tower.view`, `purchase-order.approve`
+- Permission: `AccessoryProcurement.ControlTower.View`, `AccessoryProcurement.PurchaseOrder.Approve`
 - Workflow: Satın Alma Onay Akışı
 
 ---
@@ -937,9 +937,9 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 - `MerchandisingMarginTarget`
 
 ### Gerekli Workflow / Event / Permission Adayları
-- `CollectionCreated`, `ProductApproved`
-- `BuyerOrderReceived`
-- Permission: `merchandising.control-tower.view`, `collection.manage`
+- `MerchandisingCollectionCreated`, `MerchandisingProductApproved`
+- `MerchandisingBuyerOrderReceived`
+- Permission: `Merchandising.ControlTower.View`, `Merchandising.Collection.Write`
 - Workflow: Ürün Onay Akışı, Koleksiyon Sunum Akışı
 
 ---
@@ -1016,8 +1016,8 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 - `DesignApproval`
 
 ### Gerekli Workflow / Event / Permission Adayları
-- `DesignBriefCreated`, `DesignApproved`, `DesignRevisionRequested`
-- Permission: `design.control-tower.view`, `brief.assign`, `design.approve`
+- `DesignBriefCreated`, `DesignBriefApproved`, `DesignRevisionRequested`
+- Permission: `Design.ControlTower.View`, `Design.Brief.Write`, `Design.Brief.Approve`
 - Workflow: Tasarım Onay Akışı, Revizyon Takip Akışı
 
 ---
@@ -1095,8 +1095,8 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 - `SampleCostRecord`
 
 ### Gerekli Workflow / Event / Permission Adayları
-- `SampleRequested`, `SampleCompleted`, `SampleApproved`, `SampleRejected`
-- Permission: `sample.control-tower.view`, `sample.manage`, `sample.approve`
+- `SampleRequestCreated`, `SampleCompleted`, `SampleApproved`, `SampleRejected`
+- Permission: `Sample.ControlTower.View`, `Sample.Request.Write`, `Sample.Request.Approve`
 - Workflow: Numune Üretim Akışı, Müşteri Onay Takip Akışı
 
 ---
@@ -1173,9 +1173,9 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 - `LicenseBrand`
 
 ### Gerekli Workflow / Event / Permission Adayları
-- `LicenseExpiringSoon`, `LicenseRenewed`
-- `RoyaltyDue`
-- Permission: `licensing.control-tower.view`, `license.manage`
+- `LicensingAgreementExpiringSoon`, `LicensingAgreementRenewed`
+- `LicensingRoyaltyDue`
+- Permission: `Licensing.ControlTower.View`, `Licensing.Agreement.Write`
 - Workflow: Lisans Yenileme Hatırlatma Akışı
 
 ---
@@ -1260,9 +1260,9 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 - `RegulationRecord`
 
 ### Gerekli Workflow / Event / Permission Adayları
-- `CertificationExpiringSoon`, `CertificationRenewed`
+- `ComplianceCertificationExpiringSoon`, `ComplianceCertificationRenewed`
 - `ComplianceFindingOpened`, `ComplianceFindingClosed`
-- Permission: `compliance.control-tower.view`, `certification.manage`
+- Permission: `Compliance.ControlTower.View`, `Compliance.Certification.Write`
 - Workflow: Sertifika Yenileme Akışı, Bulgu Kapatma Akışı
 
 ---
@@ -1352,9 +1352,9 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 - `IntegrationLog`
 
 ### Gerekli Workflow / Event / Permission Adayları
-- `SupportTicketCreated`, `SupportTicketResolved`
-- `SecurityIncidentReported`
-- Permission: `it.control-tower.view`, `support.manage`, `security.manage`
+- `ITSupportTicketCreated`, `ITSupportTicketResolved`
+- `ITSecurityIncidentReported`
+- Permission: `IT.ControlTower.View`, `IT.SupportTicket.Write`, `IT.SecurityIncident.Write`
 - Workflow: Destek Talebi Akışı, Güvenlik Olay Eskalasyon Akışı
 
 ---
@@ -1439,9 +1439,9 @@ Her Control Tower aşağıdaki standart bileşen alanlarından oluşur:
 - `PerformancePeriod`
 
 ### Gerekli Workflow / Event / Permission Adayları
-- `OKRGoalCreated`, `OKRPeriodClosed`
-- `KPIValueUpdated`
-- Permission: `performance.control-tower.view`, `okr.manage`, `kpi.update`
+- `PerformanceOKRGoalCreated`, `PerformanceOKRPeriodClosed`
+- `PerformanceKPIValueUpdated`
+- Permission: `Performance.ControlTower.View`, `Performance.OKRGoal.Write`, `Performance.KPIValue.Write`
 - Workflow: OKR Check-in Hatırlatma, Dönem Kapanış Akışı
 
 ---
@@ -1485,5 +1485,147 @@ Bu doküman onaylanmadan sprint planlaması başlatılamaz.
 
 ---
 
+---
+
 *Bu doküman ürün kapsamı çıkarma amacıyla hazırlanmıştır. Kod içermez.*  
 *Güncellemeler Architecture Board onayı ile yapılır.*
+
+---
+
+## Standardization Notes
+
+**Versiyon:** 1.1.0 — Standardizasyon güncellemesi (2026-06-27)
+
+### Permission Adlandırma Standardı
+
+Kaynak: `SECURITY_AUTHORIZATION.md` § 3 Permission Matrix
+
+**Format:** `Module.Resource.Action`
+
+| Eski (v1.0.0 — Hatalı) | Yeni (v1.1.0 — Standart) |
+|---|---|
+| `ceo.control-tower.view` | `CEO.ControlTower.View` |
+| `decision-log.approve` | `CEO.DecisionLog.Approve` |
+| `sales.control-tower.view` | `Sales.ControlTower.View` |
+| `proposal.approve` | `CRM.Proposal.Approve` |
+| `order.create` | `Sales.Order.Write` |
+| `finance.control-tower.view` | `Finance.ControlTower.View` |
+| `journal.post` | `Finance.JournalEntry.Post` |
+| `invoice.approve` | `Finance.Invoice.Write` |
+| `hr.control-tower.view` | `HR.ControlTower.View` |
+| `leave.approve` | `HR.Leave.Approve` |
+| `payroll.view` | `HR.Payroll.Read` |
+| `production.control-tower.view` | `Production.ControlTower.View` |
+| `work-order.manage` | `Production.WorkOrder.Write` |
+| `qc.control-tower.view` | `QC.ControlTower.View` |
+| `claim.manage` | `QC.Claim.Write` |
+| `capa.close` | `QC.Claim.Resolve` |
+| `logistics.control-tower.view` | `Logistics.ControlTower.View` |
+| `shipment.manage` | `Logistics.Shipment.Write` |
+| `stock.transfer` | `Logistics.StockTransfer.Write` |
+| `fabric-procurement.control-tower.view` | `FabricProcurement.ControlTower.View` |
+| `purchase-order.approve` (Fabric) | `FabricProcurement.PurchaseOrder.Approve` |
+| `accessories-procurement.control-tower.view` | `AccessoryProcurement.ControlTower.View` |
+| `purchase-order.approve` (Accessory) | `AccessoryProcurement.PurchaseOrder.Approve` |
+| `merchandising.control-tower.view` | `Merchandising.ControlTower.View` |
+| `collection.manage` | `Merchandising.Collection.Write` |
+| `design.control-tower.view` | `Design.ControlTower.View` |
+| `brief.assign` | `Design.Brief.Write` |
+| `design.approve` | `Design.Brief.Approve` |
+| `sample.control-tower.view` | `Sample.ControlTower.View` |
+| `sample.manage` | `Sample.Request.Write` |
+| `sample.approve` | `Sample.Request.Approve` |
+| `licensing.control-tower.view` | `Licensing.ControlTower.View` |
+| `license.manage` | `Licensing.Agreement.Write` |
+| `compliance.control-tower.view` | `Compliance.ControlTower.View` |
+| `certification.manage` | `Compliance.Certification.Write` |
+| `it.control-tower.view` | `IT.ControlTower.View` |
+| `support.manage` | `IT.SupportTicket.Write` |
+| `security.manage` | `IT.SecurityIncident.Write` |
+| `performance.control-tower.view` | `Performance.ControlTower.View` |
+| `okr.manage` | `Performance.OKRGoal.Write` |
+| `kpi.update` | `Performance.KPIValue.Write` |
+
+> [!NOTE]
+> `ControlTower.View` action'ı her modülde standart olarak tanımlanmalıdır. Bu permission, Control Tower ekranına genel erişimi kontrol eder. Granüler kaynak izinleri ayrıca tanımlanır.
+
+---
+
+### Domain Event Adlandırma Standardı
+
+Kaynak: `EVENT_BUS.md` § Event İsimlendirme Standardı
+
+**Format:** `EntityAction` — Entity adı modül prefix'i ile başlar (örn. `Crm`, `Finance`, `HR`, `Logistics`)
+
+| Eski (v1.0.0 — Hatalı) | Yeni (v1.1.0 — Standart) | Modül |
+|---|---|---|
+| `DecisionLogCreated` | `CeoDecisionLogCreated` | CEO |
+| `DecisionLogApproved` | `CeoDecisionLogApproved` | CEO |
+| `OpportunityCreated` | `CrmOpportunityCreated` | CRM |
+| `ProposalCreated` | `CrmProposalCreated` | CRM |
+| `ProposalApproved` | `CrmProposalApproved` | CRM |
+| `JournalEntryCreated` | `FinanceJournalEntryCreated` | Finance |
+| `JournalEntryPosted` | `FinanceJournalEntryPosted` | Finance |
+| `InvoiceCreated` | `FinanceInvoiceCreated` | Finance |
+| `PaymentCompleted` | `FinancePaymentCompleted` | Finance |
+| `WorkOrderCreated` | `ProductionWorkOrderCreated` | Production |
+| `WorkOrderStarted` | `ProductionWorkOrderStarted` | Production |
+| `WorkOrderCompleted` | `ProductionWorkOrderCompleted` | Production |
+| `MachineBreakdownReported` | `ProductionMachineBreakdownReported` | Production |
+| `CapaCreated` | `QcCapaCreated` | QC |
+| `CapaClosed` | `QcCapaClosed` | QC |
+| `ShipmentCreated` | `LogisticsShipmentCreated` | Logistics |
+| `ShipmentDelivered` | `LogisticsShipmentDelivered` | Logistics |
+| `StockTransferRequested` | `LogisticsStockTransferRequested` | Logistics |
+| `StockTransferCompleted` | `LogisticsStockTransferCompleted` | Logistics |
+| `FabricDeliveryReceived` | `FabricPurchaseOrderDelivered` | FabricProcurement |
+| `CollectionCreated` | `MerchandisingCollectionCreated` | Merchandising |
+| `ProductApproved` | `MerchandisingProductApproved` | Merchandising |
+| `BuyerOrderReceived` | `MerchandisingBuyerOrderReceived` | Merchandising |
+| `DesignApproved` | `DesignBriefApproved` | Design |
+| `SampleRequested` | `SampleRequestCreated` | Sample |
+| `LicenseExpiringSoon` | `LicensingAgreementExpiringSoon` | Licensing |
+| `LicenseRenewed` | `LicensingAgreementRenewed` | Licensing |
+| `RoyaltyDue` | `LicensingRoyaltyDue` | Licensing |
+| `CertificationExpiringSoon` | `ComplianceCertificationExpiringSoon` | Compliance |
+| `CertificationRenewed` | `ComplianceCertificationRenewed` | Compliance |
+| `SupportTicketCreated` | `ITSupportTicketCreated` | IT |
+| `SupportTicketResolved` | `ITSupportTicketResolved` | IT |
+| `SecurityIncidentReported` | `ITSecurityIncidentReported` | IT |
+| `OKRGoalCreated` | `PerformanceOKRGoalCreated` | Performance |
+| `OKRPeriodClosed` | `PerformanceOKRPeriodClosed` | Performance |
+| `KPIValueUpdated` | `PerformanceKPIValueUpdated` | Performance |
+
+> [!NOTE]
+> `HrLeaveRequested`, `HrLeaveApproved`, `HrLeaveRejected`, `HrEmployeeOnboarded`, `HrEmployeeOffboarded`, `QcTestResultCompleted`, `QcClaimCreated`, `QcClaimResolved`, `FabricPurchaseOrderCreated`, `FabricPurchaseOrderApproved`, `AccessoryPurchaseOrderCreated`, `AccessoryPurchaseOrderApproved`, `DesignBriefCreated`, `DesignRevisionRequested`, `SalesOrderCreated`, `SalesOrderConfirmed` event adları zaten standarda uygundu — değiştirilmedi.
+
+---
+
+### Entity Adlandırma Standardı
+
+Kaynak: `DOMAIN_MODEL.md` Entity Matrix + `UBIQUITOUS_LANGUAGE.md`
+
+Entity adları `ModuleEntityName` formatında korunmuştur:
+
+| Doğrulanan Prefix | Modül | Örnek Entity |
+|---|---|---|
+| `Crm` | CRM | `CrmAccount`, `CrmContact`, `CrmOpportunity`, `CrmProposal` |
+| `Sales` | Sales | `SalesOrder`, `SalesOrderItem`, `SalesTarget` |
+| `Finance` | Finance | `FinanceAccountPlan`, `FinanceJournalEntry`, `FinanceInvoice`, `FinancePayment` |
+| `Hr` | HR | `HrEmployee`, `HrLeave`, `HrLeaveType`, `HrPayroll` |
+| `Logistics` | Logistics | `LogisticsWarehouse`, `LogisticsShipment`, `LogisticsStockMovement` |
+| `Qc` | QC | `QcStandard`, `QcTestResult`, `QcClaim`, `QcCapa` |
+| `Production` | Production | `ProductionWorkOrder`, `ProductionLine`, `ProductionWasteLog` |
+| `Fabric` | Fabric Procurement | `FabricPurchaseOrder`, `FabricMaterial`, `FabricSupplier` |
+| `Accessory` | Accessory Procurement | `AccessoryPurchaseOrder`, `AccessoryMaterial` |
+| `Merchandising` | Merchandising | `MerchandisingMarginTarget`, `Collection`, `Buyer` |
+| `Design` | Design | `DesignBrief`, `DesignRevision`, `DesignApproval` |
+| `Sample` | Sample | `SampleRequest`, `SampleCard`, `SampleApproval` |
+| `Licensing` | Licensing | `LicenseAgreement`, `RoyaltyRecord` |
+| `Compliance` | Compliance | `Certification`, `ComplianceFinding`, `ESGReport` |
+| `IT` | IT | `ITSupportTicket`, `SystemHealthSnapshot` |
+| `Performance` | Performance | `PerformanceOKRGoal`, `PerformanceKPIDefinition` |
+
+> [!IMPORTANT]
+> Yeni domain event veya permission tanımlarken bu tabloya ve ilgili standart dokümanlara başvurun.
+> Standartsız isimlendirme sprint planlama aşamasında reddedilir.
