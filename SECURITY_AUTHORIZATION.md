@@ -98,6 +98,11 @@ Permission isimlendirme standardı: `Module.Resource.Action`
 | `System.Role.Manage` | System | Role | Manage | SystemAdmin | Tenant | Rolleri yönetme. |
 | `AI.Copilot.Use` | AI | Copilot | Use | All Roles | User | AI Copilot kullanımı. |
 | `AI.Agent.Execute` | AI | Agent | Execute | SystemAdmin, TenantAdmin, CEO, AIOrchestrator | Tenant | Ajan çalıştırma/yönetme. |
+| `AI.Agent.Configure` | AI | Agent | Configure | SystemAdmin, TenantAdmin, CEO | Tenant | AI Ajan parametrelerini yapılandırma. |
+| `AI.Prompt.Manage` | AI | Prompt | Manage | SystemAdmin, TenantAdmin, CEO | Tenant | AI prompt şablonlarını yönetme. |
+| `AI.Memory.Read` | AI | Memory | Read | SystemAdmin, TenantAdmin, CEO, AIOrchestrator | Tenant | AI bellek kayıtlarını okuma. |
+| `AI.Memory.Write` | AI | Memory | Write | SystemAdmin, TenantAdmin, CEO, AIOrchestrator | Tenant | AI bellek kayıtlarını yazma/güncelleme. |
+| `AI.Audit.Read` | AI | Audit | Read | SystemAdmin, TenantAdmin, CEO, Auditor | Tenant | AI işlem denetim günlüklerini izleme. |
 
 ---
 
