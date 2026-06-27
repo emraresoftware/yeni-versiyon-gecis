@@ -23,6 +23,7 @@ Emare BOS (`Emare.sln`) — Clean Architecture platform çekirdeği: Domain, Per
 | **Task 006** Identity / Authentication | [TASK_006_REPORT.md](../reports/TASK_006_REPORT.md) | `qa/QA_TASK_006.md` | Pass |
 | **Task 007** Platform Authorization / Yetkilendirme | [TASK_007_REPORT.md](../reports/TASK_007_REPORT.md) | `qa/QA_TASK_007_AUTHORIZATION.md` | Pass |
 | **Task 008** Event Bus Skeleton / Domain Event | [TASK_008_REPORT.md](../reports/TASK_008_REPORT.md) | `qa/QA_TASK_008.md` | Pass |
+| **Task 008A** Event Bus Hardening / Outbox Fix | [TASK_008A_REPORT.md](../reports/TASK_008A_REPORT.md) | — | **Pass** |
 
 ---
 
