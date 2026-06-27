@@ -58,6 +58,12 @@ Müşterinin paylaştığı Control Tower görselleri final ürün için görsel
 
 ---
 
+## Multi-language (i18n) Requirement
+
+Bütün Control Tower ekranlarında ve bunlara bağlı backend servis mesajlarında çoklu dil (i18n) desteği zorunludur. Arayüzde hiçbir dil anahtarı hardcoded olarak yazılamaz. Detaylı teknik gereksinimler, desteklenen diller (tr-TR, en-US, de-DE, ar-SA), RTL yerleşim kuralları ve AI Copilot dil hiyerarşisi için kanonik standart olan [Çoklu Dil (i18n) ve Yerelleştirme Standartları](LOCALIZATION_I18N_STANDARDS.md) dokümanına uyulması zorunludur.
+
+---
+
 ## 1. CEO Control Tower
 
 ### Menü Başlıkları

@@ -1,21 +1,29 @@
 # 🌐 Çoklu Dil (i18n) ve Yerelleştirme Standartları
 
-**Versiyon:** 1.0.0  
+**Versiyon:** 1.1.0  
 **Durum:** Approved  
 **Sahip:** Architecture & Product Board  
 **Son Güncelleme:** 2026-06-27  
-**Bağımlı Dokümanlar:** FRONTEND_STANDARDLARI.md, DOMAIN_MODEL.md
+**Bağımlı Dokümanlar:** FRONTEND_STANDARDLARI.md, DOMAIN_MODEL.md, CONTROL_TOWER_FINAL_SCOPE.md
 
 ---
 
-## 1. Genel Bakış
+## 1. Genel Bakış ve Kilitli Diller
 
 Emare BOS platformu, küresel ölçeklenebilirlik ve çok dilli kullanıcı tabanlarını desteklemek amacıyla tasarlanmıştır. Sistemde hem kullanıcı arayüzü (frontend) hem de veri/iş mantığı katmanları (backend & database) çoklu dil desteğine (i18n) tam uyumlu olarak yapılandırılmıştır.
+
+### 🔒 Desteklenen Kilitli Diller
+Platformun ilk sürümünde desteklenecek diller kesin olarak aşağıdaki gibi sınırlandırılmış ve kilitlenmiştir:
+
+*   **`tr-TR`** (Türkçe - Türkiye) - Varsayılan Sistem Dili (defaultLocale)
+*   **`en-US`** (İngilizce - Amerika Birleşik Devletleri)
+*   **`de-DE`** (Almanca - Almanya)
+*   **`ar-SA`** (Arapça - Suudi Arabistan) - *RTL Düzen Desteği ile*
 
 Platform genelinde kullanılan dil yönetim sisteminin üç ana sacayağı bulunmaktadır:
 1. **`emare-i18n`:** Emare BOS için özel olarak geliştirilmiş, tamamen tip güvenli (type-safe) ve hafif i18n motoru.
 2. **Arayüz Yerelleştirmesi:** Sayfa etiketleri, form alanları, hata mesajları ve genel arayüz metinleri.
-3. **Veri Yerelleştirmesi (Dynamic Content):** Veritabanında saklanan dinamik verilerin (örn. kumaş türleri, ürün adları, departman açıklamaları) farklı dillerdeki karşılıkları.
+3. **Veri Yerelleştirmesi (Dynamic Content):** Veritabanında saklanan dinamik verilerin farklı dillerdeki karşılıkları.
 
 ---
 
@@ -70,7 +78,9 @@ src/
     ├── i18n.ts             ← i18n konfigürasyonu ve default ayarlar
     └── locales/
         ├── tr.ts           ← Türkçe ana dil şeması (Kanonik şema)
-        └── en.ts           ← İngilizce çeviri dosyası
+        ├── en.ts           ← İngilizce çeviri dosyası
+        ├── de.ts           ← Almanca çeviri dosyası
+        └── ar.ts           ← Arapça çeviri dosyası
 ```
 
 ### Kurallar:
@@ -85,17 +95,35 @@ src/
    - `_one`: Tekil durumda gösterilecek metin.
    - `_other`: Çoğul durumda gösterilecek metin (örn. `{count} öğe var`).
 
+### 🏰 3.1. Control Tower i18n Zorunluluğu
+Tüm **Control Tower** ekranlarının (CEO, Sales, Finance vb.) geliştirilmesinde i18n desteği **ZORUNLUDUR**.
+- Arayüzde yer alan hiçbir etiket, grafik başlığı, alert uyarısı, buton metni, tablo kolonu veya KPI açıklaması hardcoded olarak yazılamaz.
+- Tüm statik ve yarı dinamik metinler `emare-i18n` kütüphanesinin `t()` fonksiyonu üzerinden geçirilmelidir.
+
+### ⬅️ 3.2. RTL (Right-to-Left) Arayüz Desteği (Arapça - ar-SA)
+Arapça (`ar-SA`) dil seçeneği seçildiğinde, uygulamanın tüm görsel düzeni (layout) sağdan sola (RTL) akacak şekilde değişmelidir.
+- **HTML dir Özniteliği:** Arayüz dilinin `ar-SA` olması durumunda, root `<html>` veya `<body>` etiketine dinamik olarak `dir="rtl"` özniteliği eklenmelidir.
+- **Mantıksal CSS Özellikleri (Logical Properties):** Tasarımlarda sağ/sol yön bağımlı CSS özellikleri (`margin-left`, `padding-right`, `left: 0`) yerine, metin yönüne göre otomatik yön değiştiren mantıksal CSS özellikleri (`margin-inline-start`, `padding-inline-end`, `inset-inline-start: 0`) kullanılmalıdır.
+- **Görsel Objelerin Yönü:** İlerleme çubukları (progress bars), ok işaretleri ve kronolojik akış grafiklerinin yönü RTL modunda ayna görüntüsü alacak şekilde otomatik tersine dönmelidir (ancak video/ses oynatıcı kontrolleri ve global sayı formatları bu kuralın dışındadır).
+
 ---
 
-## 4. Backend Yerelleştirme Standartları (.NET 8)
+## 4. Backend ve AI Copilot Yerelleştirme Standartları (.NET 8)
 
-Backend servislerinin (API) istemciye döndüğü hata mesajları, e-posta şablonları ve bildirim metinleri de istemcinin talep ettiği dile göre yerelleştirilmelidir.
+Backend servislerinin (API) istemciye döndüğü hata mesajları, e-posta şablonları, bildirim metinleri ve AI servis çıktıları dil kurallarına uymak zorundadır.
 
 ### 🌐 Dil Tercihinin Alınması (Accept-Language Header)
 API katmanı, gelen HTTP isteklerinin başlığındaki `Accept-Language` değerini okur.
 - Varsayılan dil: `tr-TR`
-- Desteklenen diller: `tr-TR`, `en-US`
+- Desteklenen diller: `tr-TR`, `en-US`, `de-DE`, `ar-SA`
 - İlgili Middleware (`RequestLocalizationMiddleware`) gelen dil kodunu iş parçacığı (Thread Culture) seviyesine set eder: `CultureInfo.CurrentCulture` ve `CultureInfo.CurrentUICulture`.
+
+### 🤖 4.1. AI Copilot Cevap Dili Öncelik Hiyerarşisi
+AI Copilot veya Grok LLM / local fallback servisleri kullanıcıya yanıt üretirken, kullanılacak hedef dil aşağıdaki hiyerarşik öncelik sırasına göre belirlenir:
+
+1.  **Aktif Kullanıcı Dili (User Profile/UI Select):** Kullanıcının o an arayüzde seçtiği veya profil ayarlarında kilitlediği dil tercihi (birincil öncelik).
+2.  **Kiracı Varsayılan Dili (Tenant Default Language):** Kullanıcı tercihi belirtilmemişse, bağlı bulunulan Tenant'ın (SaaS organizasyonu) varsayılan dili (ikincil öncelik).
+3.  **İstek Üstbilgisi (Accept-Language HTTP Header):** Yukarıdaki iki bilgiye de erişilemediğinde HTTP istek başlığında tarayıcıdan gelen Accept-Language kodu (üçüncül öncelik/fallback).
 
 ### 🗂️ Veritabanı Çoklu Dil Mimarisi (PostgreSQL JSONB)
 Dinamik verilerin çoklu dil desteği için iki farklı yöntem uygulanır:
