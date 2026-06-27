@@ -143,7 +143,7 @@ ChatGPT repository üzerinden inceleme yapar.
 
 6.
 
-Architect Review hazırlanır.
+Architect Review hazırlanır (Sadece Chief Software Architect / ChatGPT tarafından). Agent 1 ve Agent 2 bu dosyayı dolduramaz.
 
 ↓
 
@@ -215,7 +215,7 @@ Bir Task aşağıdaki maddelerin tamamı gerçekleşmeden tamamlandı kabul edil
 
 ✓ QA Report repository'ye eklendi
 
-✓ Chief Architect Review Raporu (`ARCHITECT_REVIEW_TASK_XXX.md`) repository'ye eklendi
+✓ Chief Architect Review Raporu (`ARCHITECT_REVIEW_TASK_XXX.md`) Chief Architect (ChatGPT) tarafından hazırlanıp repository'ye eklendi
 
 ✓ Sprint güncellendi
 

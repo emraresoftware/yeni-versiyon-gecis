@@ -50,12 +50,12 @@ docs/project-management/
 3. Test
 4. Task Report  (Agent 1)
 5. QA Report    (Agent 2)
-6. Architect Review (Chief Architect) -> Rapor üretimi
+6. Architect Review (Chief Architect) -> Rapor üretimi (Agent 1 ve Agent 2 dolduramaz)
 7. Commit & Push (kod + tüm zorunlu dokümanlar, review dahil)
 8. Sonraki Task (Architect onayı sonrası)
 ```
 
-**Architect Review tamamlanıp ARCHITECT_REVIEW_TASK_XXX.md repoya commit edilmeden sonraki Task başlatılamaz.**
+**Architect Review tamamlanıp ARCHITECT_REVIEW_TASK_XXX.md Chief Architect tarafından repoya commit edilmeden sonraki Task başlatılamaz.**
 
 ---
 
@@ -156,9 +156,9 @@ Bir Task aşağıdakilerin **TAMAMI** sağlanmadan tamamlandı kabul edilmez:
 - [ ] Kod yazıldı
 - [ ] Build başarılı
 - [ ] Testler başarılı
-- [ ] Task Report oluşturuldu (`TASK_XXX_REPORT.md`)
-- [ ] QA Report oluşturuldu (`QA_TASK_XXX.md`)
-- [ ] Architect Review Raporu oluşturuldu (`ARCHITECT_REVIEW_TASK_XXX.md`)
+- [ ] Task Report oluşturuldu (`TASK_XXX_REPORT.md` — Agent 1)
+- [ ] QA Report oluşturuldu (`QA_TASK_XXX.md` — Agent 2)
+- [ ] Architect Review Raporu oluşturuldu (`ARCHITECT_REVIEW_TASK_XXX.md` — Chief Architect tarafından)
 - [ ] Sprint dosyası güncellendi
 - [ ] Risk Register güncellendi (gerekliyse)
 - [ ] Technical Debt güncellendi (gerekliyse)
@@ -175,9 +175,9 @@ Her Task sonrası Chief Software Architect inceler:
 - `TASK_XXX_REPORT.md`
 - `QA_TASK_XXX.md`
 
-Çıktı: `architect/ARCHITECT_REVIEW_TASK_XXX.md` — **Approved** / **Approved with conditions** / **Rejected**
+Çıktı: `architect/ARCHITECT_REVIEW_TASK_XXX.md` — **Approved** / **Approved with conditions** / **Rejected** (Sadece Chief Architect tarafından yazılır)
 
-**Architect Review tamamlanıp ARCHITECT_REVIEW_TASK_XXX.md repoya eklenmeden sonraki Task başlatılmaz.** Tüm ekip için zorunludur.
+**Architect Review tamamlanıp ARCHITECT_REVIEW_TASK_XXX.md Chief Architect (ChatGPT) tarafından repoya eklenmeden sonraki Task başlatılmaz.** Tüm ekip için zorunludur.
 
 ---
 

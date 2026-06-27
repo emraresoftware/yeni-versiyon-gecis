@@ -32,12 +32,15 @@ Sistemde iki farklı repository ve bunlara ait kesin sınırlarla çizilmiş gö
 
 ## 🛠️ 2. Görev Sonu Çalışma Akışı (Ajan Sorumluluğu)
 
-Bir görev (Task) bittikten sonra ajan sırasıyla şu adımları izlemek zorundadır:
+Bir görev (Task) bittikten sonra süreç sırasıyla şu şekilde işler:
 
-1. **Adım (Private Repo):** Kod, test ve yapılandırma değişikliklerini `emaredestek/emaredestek` private reposuna commit edin ve pushlayın.
-2. **Adım (Kopyalama):** `docs/project-management/` dizini altındaki rapor dosyalarını `/Users/emre/yeni-versiyon-gecis/docs/project-management/` dizinine kopyalayın.
-3. **Adım (Public Repo):** Raporları `emraresoftware/yeni-versiyon-gecis` public reposuna commit edin ve pushlayın.
-4. **Adım (Raporlama):** ChatGPT'ye **sadece** public repo linkini, branch ismini ve tamamlanan task numarasını verin.
+1. **Agent 1 (Geliştirici Ajan):** Kod/test değişikliklerini tamamlar ve `docs/project-management/reports/TASK_XXX_REPORT.md` raporunu yazar.
+2. **Agent 2 (QA Ajanı):** Kalite denetimini yapar ve `docs/project-management/qa/QA_TASK_XXX.md` raporunu yazar.
+3. **Chief Software Architect (ChatGPT):** Değerlendirmeyi yaparak `docs/project-management/architect/ARCHITECT_REVIEW_TASK_XXX.md` raporunu hazırlar (veya ChatGPT'nin sağladığı içerik doğrudan/birebir buraya kaydedilir). Agent 1 ve Agent 2 bu dosyayı kendileri dolduramaz, sadece beklenen çıktı olarak referans gösterirler.
+4. **Adım (Private Repo):** Tüm kod ve rapor değişikliklerini `emaredestek/emaredestek` private reposuna commit edin ve pushlayın.
+5. **Adım (Kopyalama):** `docs/project-management/` dizini altındaki rapor dosyalarını `/Users/emre/yeni-versiyon-gecis/docs/project-management/` dizinine kopyalayın.
+6. **Adım (Public Repo):** Raporları `emraresoftware/yeni-versiyon-gecis` public reposuna commit edin ve pushlayın.
+7. **Adım (Raporlama):** ChatGPT'ye **sadece** public repo linkini, branch ismini ve tamamlanan task numarasını verin.
 
 ---
 
@@ -171,9 +174,9 @@ Her çalışma gününün sonunda güncelle: `docs/project-management/daily/YYYY
 
 Bir Task aşağıdaki maddelerin TAMAMI sağlanmadan tamamlandı kabul edilmez.
 * Kod yazıldı, Build başarılı, Testler başarılı.
-* Task Report (`TASK_XXX_REPORT.md`) oluşturuldu ve public depoya aktarıldı.
-* QA Report (`QA_TASK_XXX.md`) oluşturuldu ve public depoya aktarıldı.
-* Chief Architect Review Raporu (`ARCHITECT_REVIEW_TASK_XXX.md`) oluşturuldu ve public depoya aktarıldı.
+* Task Report (`TASK_XXX_REPORT.md`) Agent 1 tarafından oluşturuldu ve public depoya aktarıldı.
+* QA Report (`QA_TASK_XXX.md`) Agent 2 tarafından oluşturuldu ve public depoya aktarıldı.
+* Chief Architect Review Raporu (`ARCHITECT_REVIEW_TASK_XXX.md`) Chief Architect (ChatGPT) tarafından hazırlanarak public depoya eklenmiş/aktarılmış olmalıdır (Agent 1 ve Agent 2 bu dosyayı kendileri dolduramaz).
 * Sprint dosyası güncellendi.
 * Risk Register & Technical Debt güncellendi (gerekliyse).
 * Daily Log güncellendi.
