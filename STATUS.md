@@ -10,8 +10,8 @@ Bu dosya, ERP geçiş sürecinde yer alan 7 ajanın ve modüllerinin anlık duru
 |---------|-----------------|--------------|-------|----------|
 | **A1**  | CEO / Executive | Ajan 1 | `BEKLIYOR` | Stratejik yönetim ve karar modülleri |
 | **A2**  | Sales Manager | Ajan 2 | `TAMAM` | Müşteriler, Fırsatlar, Teklifler ve Satışlar |
-| **A3**  | Finance Manager | Ajan 3 | `BEKLIYOR` | Genel Muhasebe, Banka, Kasa ve Fatura Entegrasyonları |
-| **A4**  | HR & Admin | Ajan 4 | `BEKLIYOR` | Personel ve İzin Yönetimi |
+| **A3**  | Finance Manager / Security Review | Ajan 3 | `TAMAM` | Güvenlik İncelemesi (Task 010 tamamlandı) |
+| **A4**  | HR & Admin | Ajan 4 | `TAMAM` | Personel ve İzin Yönetimi (Task 011 tamamlandı) |
 | **A5**  | Production / İmalat | Antigravity (Ajan 5) | `TAMAM` | Üretim Dashboard veri entegrasyonu, API doğrulaması ve Testler |
 | **A6**  | QC (Quality Control) | Ajan 6 | `BEKLIYOR` | Kalite ve Hata Bildirimleri |
 | **A7**  | Logistics / Sevkiyat | Ajan 7 | `BEKLIYOR` | Sevkiyat ve Lojistik Planlama |
@@ -25,3 +25,17 @@ Bu dosya, ERP geçiş sürecinde yer alan 7 ajanın ve modüllerinin anlık duru
 - **Tamamlanma Tarihi:** 2026-06-27
 - **Sonuç:** Testler ve frontend build sıfır hata ile tamamlandı.
 - **Detaylı Rapor:** [walkthrough.md](file:///Users/emre/.gemini/antigravity-ide/brain/102cb3bd-17a1-431c-8c3d-e3fc851a13d8/walkthrough.md)
+
+### **A4 — Performance Review (Ajan 4)**
+- **Görev:** TASK 011 kapsamında veritabanı, önbellekleme, CQRS, event işleme ve EF Core performans stratejilerinin belirlenerek PERFORMANCE_GUIDE.md kılavuzunun oluşturulması.
+- **Tamamlanma Tarihi:** 2026-06-27
+- **Sonuç:** Kod yazılmadan, tüm mimari belgeler incelenerek kılavuz tamamlandı.
+- **Detaylı Rapor:** [TASK_011_REPORT.md](file:///Users/emre/yeni-versiyon-gecis/docs/project-management/reports/TASK_011_REPORT.md)
+
+### **A3 — Security Review (Ajan 3)**
+- **Görev:** TASK 010 kapsamında güvenlik mimarisi, yetkilendirme standartları, AI sınırları ve Control Tower gereksinimlerinin analiz edilerek SECURITY_REVIEW.md belgesinin oluşturulması.
+- **Tamamlanma Tarihi:** 2026-06-27
+- **Sonuç:** Kod yazılmadan, tüm mimari belgeler incelenerek ve güvenlik denetim raporu doğrultusunda 10 kritik güvenlik alanı analiz edilerek inceleme tamamlandı.
+- **Detaylı Rapor:** [SECURITY_REVIEW.md](file:///Users/emre/yeni-versiyon-gecis/docs/project-management/security/SECURITY_REVIEW.md)
+
+
