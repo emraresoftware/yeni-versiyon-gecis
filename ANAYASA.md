@@ -43,6 +43,19 @@ Violation of this rule invalidates the task.
 
 ---
 
+## ARTICLE 2 — Architectural Authority
+
+Hiçbir AI ajanı mevcut mimariyi değiştiremez. Yeni pattern, katman, teknoloji veya standart önerileri ancak ADR (Architecture Decision Record) ve Chief Architect onayı ile kabul edilir.
+
+---
+
+## ARTICLE 3 — No Silent Assumptions
+
+AI ajanı standartlarda bulunmayan bir konuda kendi varsayımıyla karar veremez. Belirsiz durumlar raporlanır ve Chief Architect kararı beklenir.
+
+---
+
+
 
 ## 1. DateTime + PostgreSQL Kuralı (Kritik!)
 
