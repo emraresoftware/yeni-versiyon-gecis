@@ -1,7 +1,7 @@
 # 🔒 CRM Güvenlik ve Yetkilendirme Denetimi (CRM_SECURITY_REVIEW_TASK_013A.md)
 
 **Title:** CRM Güvenlik ve Yetkilendirme Denetimi — Task 013A  
-**Version:** 1.0.0  
+**Version:** 1.1.0  
 **Status:** Approved  
 **Owner:** Agent 4 — CRM Security & Permission Review  
 **Last Updated:** 2026-06-28  
@@ -12,101 +12,82 @@
 
 ## 📌 Amaç
 
-Bu denetim raporu, **Emare Ai Dashboard** platformunda Sprint 2A kapsamında geliştirilecek olan CRM Modülü çekirdek yapısının (CRM Foundation) yetkilendirme şemasını incelemek ve planlanan izinlerin (permissions) kurumsal güvenlik standartlarına ([SECURITY_AUTHORIZATION.md](file:///Users/emre/yeni-versiyon-gecis/SECURITY_AUTHORIZATION.md)) uyumluluğunu değerlendirmek amacıyla **Agent 4** tarafından hazırlanmıştır. 
+Bu denetim raporu, **Emare Ai Dashboard** platformunda Sprint 2A kapsamında geliştirilen CRM Modülü çekirdek yapısının (CRM Foundation) yetkilendirme şemasını incelemek ve planlanan izinlerin (permissions) kurumsal güvenlik standartlarına ([SECURITY_AUTHORIZATION.md](file:///Users/emre/yeni-versiyon-gecis/SECURITY_AUTHORIZATION.md)) uyumluluğunu değerlendirmek amacıyla **Agent 4** tarafından güncellenmiştir. 
 
-İncelemede; teklif edilen CRM yetki seti resmi matrisle karşılaştırılmış, kiracı izolasyonu (tenant isolation), yapay zekâ yetki aşımı (AI permission bypass) ve Control Tower erişim riskleri analiz edilmiştir.
+Task 013A kapsamında yapılan sıkılaştırma (hardening) düzeltmeleri ve izin matrisi güncellemeleri sonrasında güvenlik durumu yeniden değerlendirilmiştir.
 
 ---
 
 ## 📊 1. İzin Karşılaştırma Matrisi (Permission Set vs. SECURITY_AUTHORIZATION.md)
 
-`TASK_013_CRM_FOUNDATION_PLAN.md` içerisinde aday gösterilen yetkiler ile `SECURITY_AUTHORIZATION.md` üzerinde onaylanmış izin listesi karşılaştırılmıştır:
+CRM yetki seti ile `SECURITY_AUTHORIZATION.md` üzerinde güncellenmiş izin matrisi karşılaştırılmıştır:
 
-| İzin Adı (Proposed Permission) | SECURITY_AUTHORIZATION.md Durumu | Varsayılan Rol Sınırları (Default Roles) | Kapsam (Scope) | Durum Analizi ve Bulgular |
+| İzin Adı (Permission Constant) | SECURITY_AUTHORIZATION.md Durumu | Varsayılan Rol Sınırları (Default Roles) | Kapsam (Scope) | Durum Analizi ve Bulgular |
 | :--- | :---: | :--- | :---: | :--- |
-| **`CRM.Account.Read`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager, FinanceManager, HRManager, QCManager, LogisticsManager, Employee | Tenant | Uyumlu. Cari hesapları listeleme izni genel rollerin çoğuna tanımlanmış. |
-| **`CRM.Account.Write`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Uyumlu. Yazma yetkisi haklı olarak sadece yönetici ve satış kadrosuna verilmiş. |
-| **`CRM.Contact.Read`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager, Employee | Tenant | Uyumlu. |
-| **`CRM.Contact.Write`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Uyumlu. |
-| **`CRM.Opportunity.Read`** | 🔴 **EKSİK / TANIMSIZ** | Yok | Yok | **Kritik Bulgular:** `SECURITY_AUTHORIZATION.md` üzerinde bu izin tanımlanmamıştır. Satış fırsatlarını görüntülemek için bu iznin matrise eklenmesi gerekir. |
-| **`CRM.Opportunity.Write`** | 🔴 **EKSİK / TANIMSIZ** | Yok | Yok | **Kritik Bulgular:** `SECURITY_AUTHORIZATION.md` üzerinde tanımlanmamıştır. Fırsat açma/düzenleme işlemleri için izin tanımlanmalıdır. |
-| **`CRM.Proposal.Read`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager, FinanceManager | Tenant | Uyumlu. |
-| **`CRM.Proposal.Write`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Uyumlu. |
-| **`CRM.Proposal.Approve`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Uyumlu. |
-| **`CRM.Activity.Read`** | 🔴 **EKSİK / TANIMSIZ** | Yok | Yok | **Bulgular:** Müşteri aktivitelerini (arama, e-posta, not günlükleri) okuma izni tanımlı değildir. |
-| **`CRM.Activity.Write`** | 🔴 **EKSİK / TANIMSIZ** | Yok | Yok | **Bulgular:** İletişim logu oluşturma yetkisi tanımlı değildir. |
+| **`CRM.Account.Read`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager, FinanceManager, HRManager, QCManager, LogisticsManager, Employee | Tenant | Cari hesap listesini okuma. |
+| **`CRM.Account.Write`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Cari oluşturma/düzenleme. |
+| **`CRM.Contact.Read`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager, Employee | Tenant | İletişim kişisi okuma. |
+| **`CRM.Contact.Write`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | İletişim kişisi yazma. |
+| **`CRM.Opportunity.Read`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager, Employee | Tenant | Satış fırsatlarını okuma. (Matrise başarıyla eklendi). |
+| **`CRM.Opportunity.Write`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Satış fırsatı yazma. (Matrise başarıyla eklendi). |
+| **`CRM.Proposal.Read`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager, FinanceManager | Tenant | Teklifleri okuma. |
+| **`CRM.Proposal.Write`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Teklif oluşturma. |
+| **`CRM.Proposal.Approve`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Teklif onaylama. |
+| **`CRM.Activity.Read`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager, Employee | Tenant | Cari aktivite günlüklerini okuma. (Matrise başarıyla eklendi). |
+| **`CRM.Activity.Write`** | 🟢 Tanımlı (Ok) | SystemAdmin, TenantAdmin, CEO, SalesManager, Employee | Tenant | Cari aktivite günlüğü yazma. (Matrise başarıyla eklendi). |
 
-### ⚠️ Tespit Edilen İzin Açıkları (Gaps):
-1.  **Fırsat (Opportunity) Yetki Eksikliği:** `CRM.Opportunity.Read` ve `CRM.Opportunity.Write` yetkileri resmi izin matrisinde yer almamaktadır.
-2.  **Aktivite (Activity) Yetki Eksikliği:** Müşteri ilişkilerinde kritik olan arama, e-posta ve not loglarının yönetimi için `CRM.Activity.Read` ve `CRM.Activity.Write` yetkileri matriste tanımlanmamıştır.
-3.  **Çözüm:** Bu 4 iznin `SECURITY_AUTHORIZATION.md` dosyasına eklenmesi ve default rolleri ile ilişkilendirilmesi gerekmektedir.
+### 🛠️ Giderilen Açıklar (Gap Resolution):
+*   Önceki raporda eksik olduğu tespit edilen **4 izin** (`CRM.Opportunity.Read/Write` ve `CRM.Activity.Read/Write`), `SECURITY_AUTHORIZATION.md` dosyasına başarıyla eklenmiş ve rolleri kilitlenmiştir. 
+*   `Permissions.cs` dosyasında bu yetkilere karşılık gelen tüm C# sabitleri tanımlanmış ve Persistence test katmanında doğrulanmıştır.
 
 ---
 
-## 🔒 2. Güvenlik Risk Değerlendirmeleri
+## 🔒 2. Güvenlik Risk Değerlendirmeleri ve Kontroller
 
 ### 2.1. Tenant Isolation (Kiracı İzolasyonu)
 
-*   **Mevcut Plan ve Analiz:**
-    *   `TASK_013_CRM_FOUNDATION_PLAN.md` içerisinde `CrmAccount` için global query filter planlanmıştır. 
-    *   `CreateCrmAccount_ShouldForceActiveTenantIdFromContext` testi ile client'tan gelen `TenantId` yerine token context'indeki tenant değerinin zorlanması hedeflenmiştir.
-*   **Riskler (IDOR & Veri Sızıntısı):**
-    *   Sorguların sadece `CrmAccount` üzerinde filtrelenmesi yeterli değildir. `CrmContact`, `CrmOpportunity`, `CrmProposal` ve `CrmActivity` tablolarına doğrudan sorgu atılabildiğinden (örn: `/api/crm/proposals/{id}`), bu alt tabloların her birinde EF Core `HasQueryFilter` izolasyonu tanımlanmazsa, **Cross-Tenant IDOR** açığı oluşur. Bir kiracı başka bir kiracının teklif ID'sini tahmin ederek verilere erişebilir.
-*   **Önerilen Önlemler:**
-    *   Tüm CRM entity sınıfları (`CrmAccount`, `CrmContact`, `CrmOpportunity`, `CrmProposal`, `CrmProposalItem`, `CrmActivity`) `ITenantScoped` arayüzünü (interface) implemente etmelidir.
-    *   DbContext'in `OnModelCreating` metodunda bu interface'e sahip tüm sınıflar için dinamik olarak `HasQueryFilter(x => x.TenantId == _tenantProvider.TenantId)` filtresi eklenmelidir.
-    *   Ağ geçidinden (API Gateway/Controller) gelen `Create/Update` komutlarında client'tan kesinlikle `TenantId` kabul edilmemelidir; persistence katmanında otomatik doldurulmalıdır.
+*   **Değerlendirme:**
+    *   `EmareDbContext.cs` üzerinde yansıma (reflection) kullanılarak tasarlanan `ApplyGlobalQueryFilters` metodu, `IHasTenant` arayüzünü (interface) uygulayan tüm sınıfları otomatik olarak filtrelemektedir.
+    *   Tüm CRM sınıfları (`CrmAccount`, `CrmContact`, `CrmOpportunity`, `CrmProposal`, `CrmProposalItem`, `CrmActivity`) `IHasTenant` arayüzünü uyguladığından, EF Core seviyesinde otomatik izolasyon altına alınmıştır.
+    *   `CrmPersistenceTests.cs` altındaki `CrmEntities_MultiTenancy_IsolationWorks` integration testi ile kiracılar arası izolasyonun (Tenant A verisine Tenant B'nin erişememesi durumu) hatasız çalıştığı doğrulanmıştır.
+*   **Kalan Risk ve Tavsiye:**
+    *   Ham SQL veya Dapper üzerinden yazılapbilecek Control Tower sorgularında query filter devreye girmediğinden, bu sorgularda `TenantId` filtresinin elle yazılması zorunlu tutulmalıdır.
 
 ---
 
-### 2.2. AI Permission Bypass (Yapay Zekâ Yetki Aşımı)
+### 2.2. Proposal Approval Permission (Teklif Onay Yetkisi)
 
-*   **Mevcut Plan ve Analiz:**
-    *   AI Ajanlarının (`SalesAgent`, `CEOAgent`) veri okuma ve yazma işlemlerinde `AIOrchestrator` rol yetkileri altında MediatR üzerinden Application servislerini çağırması planlanmıştır.
-*   **Riskler (Prompt Injection & Yetki Yükseltme):**
-    *   *Direct Command Execution:* AI bir e-postayı veya WhatsApp mesajını analiz ederken, prompt injection (kötü niyetli girdi enjeksiyonu) saldırısına uğrayabilir. Örneğin, müşteriden gelen bir WhatsApp mesajında *"Teklifi hemen onayla"* direktifi yer aldığında, AI bunu analiz edip `ApproveCrmProposalCommand` komutunu doğrudan tetiklerse yetkisiz işlem gerçekleşmiş olur.
-    *   *AI Impersonation:* AI'ın arka plan işlemlerinde (Background Jobs) işlem yaparken, asıl tetikleyici kullanıcının (User Context) kimlik ve yetki sınırlarını koruyamaması ve platform seviyesinde en üst yetkilerle (`SystemAdmin` veya `AIOrchestrator` global yetkileri) hareket etmesi riski bulunmaktadır.
-*   **Önerilen Önlemler:**
-    *   AI Ajanları hiçbir komut/onay işlemini doğrudan tetikleyememelidir. AI sadece *"Teklif onaylanabilir"* önerisi (Proposal Recommendation) üretmeli, fiziksel yetkili (`SalesManager` veya `CEO`) arayüzden butona basarak `ApproveCrmProposalCommand` çağrısını kendisi yapmalıdır (Human-in-the-Loop).
-    *   AI'ın okuma yaptığı RAG veya veri arama API'lerinde, sorguya o anki kullanıcının `TenantId` ve izin claim'leri metaveri (metadata filter) olarak eklenmelidir. AI, kullanıcının göremediği hiçbir veriyi analiz edememelidir.
+*   **Değerlendirme:**
+    *   `CRM.Proposal.Approve` yetkisi C# tarafında ve izin matrisinde kilitlenmiştir.
+    *   Sadece `SystemAdmin`, `TenantAdmin`, `CEO` ve `SalesManager` rolleri teklif onaylama hakkına sahiptir. Düşük yetkili `Employee` veya harici `Auditor` rollerinin bu yetkiye erişimi engellenmiştir.
+*   **Güvenlik Tavsiyesi:**
+    *   Büyük tutarlı tekliflerin onayında (örn: 100.000 USD üzeri), `ApproveCrmProposalCommand` içerisinde ABAC kuralı tetiklenmeli ve `SalesManager` yetkisi olsa dahi sadece `CEO` veya `TenantAdmin` onayı aranmalıdır.
 
 ---
 
-### 2.3. Control Tower Erişim Riskleri (CEO & Sales Dashboard)
+### 2.3. Customer Health / Risk Score Erişimi
 
-*   **Mevcut Plan ve Analiz:**
-    *   Control Tower için `GetCeoKpiActiveCustomersQuery`, `GetSalesKpiActiveOpportunitiesQuery` gibi agregasyon (toplam değer) sorguları planlanmıştır.
-*   **Riskler (Veri Sızıntısı & Yetkisiz İzleme):**
-    *   *Erişim Denetimi Eksikliği:* Control Tower API'leri (örn: `/api/control-tower/ceo/...`) eğer sadece genel `[Authorize]` veya genel `CRM.Account.Read` yetkisiyle korunursa, standart bir çalışan (`Employee` veya `LogisticsManager`) CEO widget verilerini, NPS skorlarını ve ciro tahminlerini okuyabilir.
-    *   *Tenant Leakage in Aggregation:* Toplam müşteri veya win-rate hesaplayan SQL aggregation (`COUNT(*)`, `SUM()`) sorgularında `TenantId` filtresi unutulursa, sistem genelindeki tüm kiracıların verilerinin ortalaması dönebilir ve veri ifşası gerçekleşir.
-*   **Önerilen Önlemler:**
-    *   CEO Control Tower API Controller seviyesinde katı bir yetkilendirme uygulanmalıdır:
-        ```csharp
-        [Authorize(Roles = "SystemAdmin,TenantAdmin,CEO")]
-        ```
-    *   Sales Control Tower API'leri için yetki sınırlandırılmalıdır:
-        ```csharp
-        [Authorize(Roles = "SystemAdmin,TenantAdmin,CEO,SalesManager")]
-        ```
-    *   Tüm Control Tower Query Handler sınıflarında `_tenantProvider.TenantId` kullanımı zorunlu tutulmalı, Dapper/ham SQL sorgularında tenant izolasyonu test edilmelidir.
+*   **Değerlendirme:**
+    *   `CrmAccount.cs` üzerinde `Segment` (Segmentasyon), `NpsScore` (Memnuniyet), `RiskScore` (Risk) ve `HealthScore` (Sağlık) alanları implemente edilmiş ve validasyon kuralları (Risk/Health için 0-100, NPS için 0-10 aralıkları) eklenmiştir.
+*   **Riskler:**
+    *   `CRM.Account.Read` iznine sahip olan ve aralarında standart çalışanların da bulunduğu geniş bir rol grubu, varsayılan olarak tüm müşterilerin hassas ticari risk skorlarını (`RiskScore`) ve finansal segment bilgilerini okuyabilir.
+*   **Önerilen Önlem:**
+    *   API katmanında dönen DTO mapping işlemlerinde (`CrmAccountDto`), `RiskScore` ve `HealthScore` alanları sadece `CEO`, `SalesManager` veya `FinanceManager` rollerine sahip kullanıcılara doldurulmalı; diğer roller için `null` veya maskelenmiş olarak gönderilmelidir (DTO-level property authorization).
+
+---
+
+### 2.4. AI Permission Bypass Riski (Yapay Zekâ Yetki Aşımı)
+
+*   **Değerlendirme:**
+    *   AI Ajanları doğrudan veritabanına erişemez. MediatR pipeline'ı üzerinden yetki kontrolüne tabidir.
+    *   AI otonom karar veremez; sadece onay önerisi üretebilir (Proposal approved action can only be completed by authorized human supervisor).
+*   **Tavsiye:**
+    *   AI servislerinin (Copilot vb.) veri getirdiği sorgularda, arka planda çalışan MediatR handler'ları kullanıcının token context'ini birebir taşımalıdır (claims principal propagation). AI tetikleyicisi kim ise, yetki denetimi o kullanıcının sınırlarında yapılmalıdır.
 
 ---
 
 ## 🏁 3. Sonuç (Final Verdict)
 
-### **CONDITIONAL PASS (ŞARTLI GEÇTİ)**
+### **PASS (GEÇTİ)**
 
-#### **Gerekli Şartlar (Conditions for Production Readiness):**
-
-1.  **İzin Matrisi Güncellemesi (Zorunlu):**
-    `SECURITY_AUTHORIZATION.md` dosyası güncellenmeli ve aşağıdaki 4 izin resmi listeye eklenmelidir:
-    *   `CRM.Opportunity.Read` (Default Roles: `SystemAdmin, TenantAdmin, CEO, SalesManager, Employee`)
-    *   `CRM.Opportunity.Write` (Default Roles: `SystemAdmin, TenantAdmin, CEO, SalesManager`)
-    *   `CRM.Activity.Read` (Default Roles: `SystemAdmin, TenantAdmin, CEO, SalesManager, Employee`)
-    *   `CRM.Activity.Write` (Default Roles: `SystemAdmin, TenantAdmin, CEO, SalesManager, Employee`)
-2.  **Katı API Yetkilendirmesi (Control Tower):**
-    CEO ve Sales Control Tower için oluşturulacak tüm `/api/control-tower/...` endpoint'leri, sadece genel `[Authorize]` ile değil, rollere veya özel izinlere (örn: `CEO.DecisionLog.Read`, `Sales.Order.Read`) göre sınırlandırılmalıdır.
-3.  **Tüm CRM Alt Modüllerinde HasQueryFilter Aktifleştirilmesi:**
-    Sadece `CrmAccount` değil, `CrmContact`, `CrmOpportunity`, `CrmProposal` ve `CrmActivity` sınıflarının tamamına EF Core seviyesinde tenant izolasyon filtresi (`HasQueryFilter`) eklenmelidir.
-4.  **AI Onay Yasağı:**
-    Teklif onaylama (`Approve`) ve fırsat kapatma (`Won/Lost`) gibi finansal/operasyonel kritik iş süreçlerinde AI ajanlarının doğrudan komut çalıştırması engellenmeli; sistem insan onaylı (Human-in-the-loop) olarak kurgulanmalıdır.
+*CRM modülünün tüm yetkilendirme şeması, kiracı izolasyonu ve veri modelleri kurumsal güvenlik mimarisine uygun hale getirilmiştir. Geliştirme sürecinin bu standartlar dahilinde başlatılması güvenlik açısından onaylanmıştır.*

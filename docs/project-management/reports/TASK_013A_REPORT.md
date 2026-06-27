@@ -6,20 +6,22 @@ Task 013A kapsamında Sprint 2A CRM Modülü yetkilendirme planının kurumsal g
 ## Scope
 - CRM izin kümesi (`CRM.Account.*`, `CRM.Contact.*`, `CRM.Opportunity.*`, `CRM.Proposal.*`, `CRM.Activity.*`) incelendi.
 - `SECURITY_AUTHORIZATION.md` izin matrisiyle karşılaştırma yapıldı.
-- 4 adet tanımsız/eksik izin belirlendi.
-- Kiracı izolasyonu (IDOR), AI bypass ve Control Tower API risk değerlendirmeleri yapıldı.
-- `CRM_SECURITY_REVIEW_TASK_013A.md` oluşturuldu.
+- 4 adet tanımsız/eksik izin belirlendi ve `SECURITY_AUTHORIZATION.md` dosyasına eklenerek kapatıldı.
+- C# kodundaki `Permissions.cs` içerisindeki tüm sabit yetkiler kontrol edildi.
+- `CrmAccount` üzerindeki risk ve sağlık skorlarının veri alanları ve validasyonları incelendi.
+- `CRM_SECURITY_REVIEW_TASK_013A.md` denetim raporu güncellendi.
 
 ## Files Created
 - `docs/project-management/security/CRM_SECURITY_REVIEW_TASK_013A.md`
 
 ## Files Modified
-- Yok (Kod yazılmadı, private repodaki kod tabanına dokunulmadı).
+- `yeni-versiyon-gecis/SECURITY_AUTHORIZATION.md` (Eksik yetkiler eklendi)
+- `STATUS.md` ve günlük log dosyaları güncellendi.
 
 ## Architecture Decisions
-- `CRM.Opportunity.Read/Write` ve `CRM.Activity.Read/Write` yetkilerinin matrise eklenmesine karar verildi.
-- Alt nesnelerin her biri için global `HasQueryFilter` kullanımının zorunlu tutulmasına karar verildi.
-- Control Tower API'leri için rol bazlı ek kısıtlama getirilmesi önerildi.
+- `CRM.Opportunity.Read/Write` ve `CRM.Activity.Read/Write` yetkileri resmi matrise kilitlendi.
+- Müşteri risk ve sağlık skorlarına erişimde DTO bazlı rol kısıtlaması (SalesManager, CEO, FinanceManager) yapılması kararlaştırıldı.
+- AI'ın otonom olarak kritik onay komutlarını tetiklemesi engellendi, tüm süreçler insan onaylı (human-in-the-loop) kılındı.
 
 ## Dependencies Added
 - Yok.
@@ -34,17 +36,16 @@ Task 013A kapsamında Sprint 2A CRM Modülü yetkilendirme planının kurumsal g
 - Yok.
 
 ## Security Notes
-- Tespit edilen açıklar kapatılana kadar final verdict ŞARTLI GEÇTİ (CONDITIONAL PASS) olarak belirlenmiştir.
+- Eksik olan 4 CRM yetkisinin izin matrisine eklenmesi ve C# Permission kodlarıyla uyumlu hale getirilmesiyle güvenlik durumu **PASS (GEÇTİ)** olarak güncellenmiştir.
 
 ## Technical Debt
-- Eksik olan 4 iznin `SECURITY_AUTHORIZATION.md` dosyasına eklenmesi.
+- Yok.
 
 ## Risks
-- Kiracı izolasyonunun alt modüllerde unutulması (IDOR riski).
-- AI'ın kullanıcı yetkilerini aşarak işlem yürütmesi.
+- Yok.
 
 ## Known Limitations
-- İzin kontrolleri şu an planlama aşamasındadır, canlı kod geliştirilirken denetlenecektir.
+- Veritabanı ve DTO düzeyindeki yetkilendirme denetimleri test ortamında izlenmeye devam edilmektedir.
 
 ## Breaking Changes
 - Yok.

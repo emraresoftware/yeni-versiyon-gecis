@@ -29,6 +29,7 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task 009** | Agent 2 (Product) | [TASK_009_REPORT.md](../reports/TASK_009_REPORT.md) | [FEATURE_TRACEABILITY_MATRIX.md](../../product/FEATURE_TRACEABILITY_MATRIX.md) | ✅ Tamamlandı |
 | **Task 013** | Agent 1 (Dev) | [TASK_013_CRM_FOUNDATION_REPORT.md](../reports/TASK_013_CRM_FOUNDATION_REPORT.md) | Domain + Persistence for CRM Entities | ✅ Tamamlandı |
 | **Task 013A** | Agent 1 (Dev) | [TASK_013A_CRM_HARDENING_REPORT.md](../reports/TASK_013A_CRM_HARDENING_REPORT.md) | CRM Domain + Persistence Hardening | ✅ Tamamlandı |
+| **Task 013A Security** | Agent 4 (Sec) | [TASK_013A_REPORT.md](../reports/TASK_013A_REPORT.md) | [CRM_SECURITY_REVIEW_TASK_013A.md](../security/CRM_SECURITY_REVIEW_TASK_013A.md) | ✅ Tamamlandı |
 
 **Task 009 özeti:** 92 widget traceability satırı (CEO 32 · Sales 29 · Finance 31). Kod yazılmadı.
 

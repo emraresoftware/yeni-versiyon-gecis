@@ -56,9 +56,13 @@ Permission isimlendirme standardı: `Module.Resource.Action`
 | `CRM.Account.Write` | CRM | Account | Write | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Cari oluşturma/düzenleme. |
 | `CRM.Contact.Read` | CRM | Contact | Read | SystemAdmin, TenantAdmin, CEO, SalesManager, Employee | Tenant | İletişim kişisi okuma. |
 | `CRM.Contact.Write` | CRM | Contact | Write | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | İletişim kişisi yazma. |
+| `CRM.Opportunity.Read` | CRM | Opportunity | Read | SystemAdmin, TenantAdmin, CEO, SalesManager, Employee | Tenant | Satış fırsatlarını okuma. |
+| `CRM.Opportunity.Write` | CRM | Opportunity | Write | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Satış fırsatı yazma. |
 | `CRM.Proposal.Read` | CRM | Proposal | Read | SystemAdmin, TenantAdmin, CEO, SalesManager, FinanceManager | Tenant | Teklifleri okuma. |
 | `CRM.Proposal.Write` | CRM | Proposal | Write | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Teklif oluşturma. |
 | `CRM.Proposal.Approve` | CRM | Proposal | Approve | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Teklif onaylama. |
+| `CRM.Activity.Read` | CRM | Activity | Read | SystemAdmin, TenantAdmin, CEO, SalesManager, Employee | Tenant | Cari aktivite günlüklerini okuma. |
+| `CRM.Activity.Write` | CRM | Activity | Write | SystemAdmin, TenantAdmin, CEO, SalesManager, Employee | Tenant | Cari aktivite günlüğü yazma. |
 | `Sales.Order.Read` | Sales | Order | Read | SystemAdmin, TenantAdmin, CEO, SalesManager, FinanceManager, LogisticsManager | Tenant | Satış siparişlerini okuma. |
 | `Sales.Order.Write` | Sales | Order | Write | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Satış siparişi yazma. |
 | `Sales.Order.Approve` | Sales | Order | Approve | SystemAdmin, TenantAdmin, CEO, SalesManager | Tenant | Satış siparişi onaylama. |
