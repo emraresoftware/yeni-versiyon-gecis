@@ -295,7 +295,7 @@ Hazırlandı.
 Örnek
 
 ```text
-OrderCreated
+SalesOrderCreated
 
 ↓
 

@@ -57,6 +57,42 @@ Tüm DateTime alanları UTC olmalıdır.
 
 ---
 
+# Entity Matrix
+
+| Entity Name | Type | Owner Context | Parent / Aggregate | Key Relations | Notes |
+| ----------- | ---- | ------------- | ------------------ | ------------- | ----- |
+| `CrmAccount` | Aggregate Root | CRM | None | CrmContact, CrmOpportunity, CrmProposal | Cari / Müşteri. |
+| `CrmContact` | Entity | CRM | CrmAccount | CrmAccount | Cari iletişim kişisi. |
+| `CrmOpportunity` | Entity | CRM | CrmAccount | CrmAccount | Satış fırsatı. |
+| `CrmProposal` | Aggregate Root | CRM / Sales | None | CrmAccount, CrmProposalItem | Teklif kartı. |
+| `CrmProposalItem` | Entity | CRM / Sales | CrmProposal | CrmProposal | Teklif satırları. |
+| `SalesOrder` | Aggregate Root | Sales | None | CrmAccount, SalesOrderItem | Satış Siparişi (Generic "Order" kullanımı yasaktır). |
+| `SalesOrderItem` | Entity | Sales | SalesOrder | SalesOrder | Sipariş satırları. |
+| `FinanceAccountPlan` | Aggregate Root | Finance | None | None | Tek düzen hesap planı (120, 320 vb.). |
+| `FinanceJournalEntry` | Aggregate Root | Finance | None | FinanceJournalEntryLine | Yevmiye Fişi. |
+| `FinanceJournalEntryLine` | Entity | Finance | FinanceJournalEntry | FinanceJournalEntry, FinanceAccountPlan | Yevmiye fişi satırları. |
+| `FinanceInvoice` | Aggregate Root | Finance | None | FinanceInvoiceLine | Fatura. |
+| `FinanceInvoiceLine` | Entity | Finance | FinanceInvoice | FinanceInvoice | Fatura satırları. |
+| `FinancePayment` | Aggregate Root | Finance | None | CrmAccount | Ödeme/tahsilat işlemi. |
+| `HrEmployee` | Aggregate Root | HR | None | HrLeave | Personel kartı. |
+| `HrLeave` | Aggregate Root | HR | None | HrEmployee, HrLeaveType | İzin talebi. |
+| `HrLeaveType` | Entity / VO | HR | None | None | İzin türleri (yıllık izin, mazeret vb.). |
+| `LogisticsWarehouse` | Aggregate Root | Logistics | None | None | Depo kartı (Generic "Warehouse" kullanımı yasaktır). |
+| `LogisticsStockMovement` | Aggregate Root | Logistics | None | LogisticsWarehouse | FIFO stok giriş/çıkış hareketi. |
+| `LogisticsStockTransfer` | Aggregate Root | Logistics | None | LogisticsStockTransferLine | Depolar arası transfer başlığı. |
+| `LogisticsStockTransferLine` | Entity | Logistics | LogisticsStockTransfer | LogisticsStockTransfer | Transfer satırları. |
+| `LogisticsShipment` | Aggregate Root | Logistics | None | SalesOrder | Sevk irsaliyesi. |
+| `QcStandard` | Aggregate Root | QC | None | None | Ürün kalite test standardı. |
+| `QcTestResult` | Aggregate Root | QC | None | None | Üretim kalite test sonucu. |
+| `QcClaim` | Aggregate Root | QC | None | CrmAccount | Kalite şikâyeti / CAPA (Müşteri ilişkisi logical FK'dır). |
+| `DecisionLog` | Aggregate Root | CEO | None | None | Yönetici karar defteri. |
+| `Tenant` | System Entity | Kernel | None | None | Kiracı (SaaS bağımsız organizasyon). |
+| `User` | System Entity | Kernel | None | Tenant, Role | Sistem kullanıcısı. |
+| `Role` | System Entity | Kernel | None | User | Yetkilendirme rolü. |
+| `AuditLog` | System Entity | Kernel | None | User, Tenant | Sistem denetim izi. |
+
+---
+
 # Ana Domain Alanları
 
 ## CRM Domain
