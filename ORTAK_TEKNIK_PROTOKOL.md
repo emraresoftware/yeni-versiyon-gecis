@@ -1,8 +1,37 @@
 # 🛠️ Ortak Teknik Protokol
 
-Bu dosya, `yeni-versiyon-gecis` projesinde çalışan tüm yapay zeka ajanlarının ortak teknik çalışma kurallarını tanımlar.
+**Title:** Ortak Teknik Protokol
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** ANAYASA.md, README.md, STATUS.md
+**Related Documents:** STATUS.md, REFERANSLAR.md
 
-Amaç; her ajanın aynı mimari, aynı kalite standardı ve aynı teslim protokolüyle çalışmasını sağlamaktır.
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
+## Amaç
+
+Bu dosya, `yeni-versiyon-gecis` projesinde çalışan tüm yapay zeka ajanlarının ortak teknik çalışma kurallarını tanımlar. Amaç; her ajanın aynı mimari, aynı kalite standardı ve aynı teslim protokolüyle çalışmasını sağlamaktır.
+
+---
+
+## Kapsam
+
+Git branch kuralları, teslim ve durum güncelleme akışları, katman bağımlılık sınırları.
+
+---
+
+## Hedef Kitle
+
+AI Ajanları, Geliştiriciler.
 
 ---
 

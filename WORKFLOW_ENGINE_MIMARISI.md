@@ -1,5 +1,22 @@
 # 🔄 Workflow Engine Mimarisi
 
+**Title:** Workflow Engine Mimarisi
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** EVENT_BUS_MIMARISI.md
+**Related Documents:** RULE_ENGINE.md, NOTIFICATION_ENGINE.md
+
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
 ## Amaç
 
 Workflow Engine, Emare Business Operating System (BOS) içerisinde tüm iş süreçlerini yöneten merkezi otomasyon motorudur.

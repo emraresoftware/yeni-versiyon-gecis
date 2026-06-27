@@ -1,5 +1,22 @@
 # 🧩 Bounded Contexts
 
+**Title:** Bounded Contexts
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** DOMAIN_MODEL.md
+**Related Documents:** UBIQUITOUS_LANGUAGE.md, EVENT_BUS_MIMARISI.md
+
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
 ## Amaç
 
 Bu doküman Emare Business Operating System (BOS) içerisindeki Domain Driven Design (DDD) bounded context yapılarını tanımlar.

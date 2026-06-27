@@ -1,5 +1,22 @@
 # 🤖 AI Engine Mimarisi
 
+**Title:** AI Engine Mimarisi
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** EVENT_BUS_MIMARISI.md
+**Related Documents:** WORKFLOW_ENGINE_MIMARISI.md, INTEGRATION_ENGINE.md
+
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
 ## Amaç
 
 AI Engine, Emare Business Operating System (BOS) içerisindeki tüm yapay zekâ yeteneklerini yöneten merkezi platformdur.

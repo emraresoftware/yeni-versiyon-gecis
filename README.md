@@ -1,5 +1,22 @@
 # 🏛️ Emare Business Operating System (BOS) Mimarisi
 
+**Title:** Emare Business Operating System (BOS) Mimarisi
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** Yok
+**Related Documents:** MASTER_ARCHITECTURE_INDEX.md, DOMAIN_MODEL.md, BOUNDED_CONTEXTS.md
+
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
 ## Amaç
 
 Emare Business Operating System (BOS), klasik ERP yaklaşımının ötesine geçerek; şirketin tüm süreçlerini, verilerini, kullanıcılarını, yapay zekâ ajanlarını ve entegrasyonlarını tek platform üzerinde yöneten kurumsal işletim sistemi mimarisidir.

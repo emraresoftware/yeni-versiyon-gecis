@@ -1,5 +1,22 @@
 # 🧬 Domain Model
 
+**Title:** Domain Model Mimarisi
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** BOUNDED_CONTEXTS.md
+**Related Documents:** ERD_MODEL.md, UBIQUITOUS_LANGUAGE.md
+
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
 ## Amaç
 
 Bu doküman Emare Business Operating System (BOS) içerisindeki temel domain modelini, modül sınırlarını, aggregate yapılarını ve entity ilişkilerini tanımlar.

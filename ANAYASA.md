@@ -1,6 +1,37 @@
-# 📜 Emare Kod Kalitesi Anayasası (ANAYASA.md)
+# 📜 Emare Kod Kalitesi Anayasası
+
+**Title:** Emare Kod Kalitesi Anayasası
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** Yok
+**Related Documents:** ORTAK_TEKNIK_PROTOKOL.md, ERD_MODEL.md, DOMAIN_MODEL.md
+
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
+## Amaç
 
 Bu dosya, projede kod geliştiren tüm yapay zeka ajanlarının uymakla yükümlü olduğu **değişmez kurallar bütünüdür**. Herhangi bir ajan tarafından bu kuralların çiğnenmesi kabul edilemez ve doğrudan derleme/çalışma hatası olarak kabul edilir.
+
+---
+
+## Kapsam
+
+C# Backend, React Frontend, veritabanı sorguları ve white-labeling yapılandırması.
+
+---
+
+## Hedef Kitle
+
+Geliştiriciler, AI Ajanları.
 
 ---
 

@@ -1,5 +1,22 @@
 # ⚖️ Rule Engine Mimarisi
 
+**Title:** Rule Engine Mimarisi
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** WORKFLOW_ENGINE_MIMARISI.md
+**Related Documents:** METADATA_ENGINE.md, SECURITY_ARCHITECTURE.md
+
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
 ## Amaç
 
 Rule Engine, Emare Business Operating System (BOS) içerisindeki tüm iş kurallarını merkezi olarak yöneten motordur.

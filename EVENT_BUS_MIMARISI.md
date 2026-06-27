@@ -1,5 +1,22 @@
 # ⚡ Event Bus Mimarisi
 
+**Title:** Event Bus Mimarisi
+**Version:** 1.0.0
+**Status:** Approved
+**Owner:** Architecture Board
+**Last Updated:** 2026-06-27
+**Dependencies:** README.md
+**Related Documents:** WORKFLOW_ENGINE_MIMARISI.md, RULE_ENGINE.md
+
+---
+
+## Change History
+| Version | Date | Author | Description |
+| ------- | ---- | ------ | ----------- |
+| 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
+
+---
+
 ## Amaç
 
 Emare Business Operating System (BOS), Event Driven Architecture (EDA) kullanır.
