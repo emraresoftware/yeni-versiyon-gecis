@@ -2,9 +2,9 @@
 
 **Title:** Teklif modülü genişletme — Acar Telekom pilot, tüm tenant’lar için multi-tenant  
 **Version:** 1.0.0  
-**Status:** Approved (planning)  
+**Status:** Phase 0 complete (implementation) — pending ops seed on production  
 **Owner:** Product / Agent 1  
-**Last Updated:** 2026-06-28  
+**Last Updated:** 2026-06-22  
 **Pilot Tenant:** Acar Telekom / Acarcell — `95f4fbc7-db68-4063-9be7-c0a8ce93afb9`  
 **Related:** `LEGACY_BUSINESS_RULES.md`, `FEATURE_TRACEABILITY_MATRIX.md`, Platform `CrmProposal` (Task 013/015 — ayrı hat)
 
@@ -85,10 +85,10 @@
 
 ### Phase 0 — Acar pilot hazırlık (1–2 gün)
 
-- [ ] `TenantFeatures` → `proposals`, `whatsapp`, `email`, `reports` (satış akışı için)
-- [ ] Acarcell branding: logo, `#` renkler, public `/p/{id}` önizleme
-- [ ] Demo teklif + public link smoke test
-- [ ] Script: `scripts/tenants/seed-acar-telekom-proposals.sql` (yeni)
+- [x] `TenantFeatures` → `proposals`, `whatsapp`, `email`, `reports` (satış akışı için)
+- [x] Acarcell branding: logo, `#` renkler, public `/p/{id}` önizleme
+- [ ] Demo teklif + public link smoke test *(canlı DB seed sonrası)*
+- [x] Script: `scripts/tenants/seed-acar-telekom-proposals.sql` (yeni)
 
 ### Phase 1 — Modül sağlamlaştırma (tüm tenant’lar)
 
@@ -137,7 +137,7 @@
 | Opsiyonel | `PublicProposalsController.cs` — Acar şablon alanları |
 | Opsiyonel | `web/src/app/p/[id]/page.tsx` — branding iyileştirme |
 | Test | `tests/EmareTicket.Tests/Proposals/` veya API integration |
-| Rapor | `docs/project-management/reports/TASK_018_REPORT.md` |
+| Rapor | `docs/project-management/reports/TASK_018_PROPOSAL_ACAR_PILOT_REPORT.md` |
 
 ---
 
@@ -154,4 +154,4 @@
 
 ## 8. Sonraki adım
 
-**Agent 1:** Phase 0 — `seed-acar-telekom-proposals.sql` + Acar branding doğrulama + smoke test.
+**Agent 1:** Phase 0 tamamlandı — production'da `seed-acar-telekom-proposals.sql` uygula + smoke test. Sonra Phase 1.
