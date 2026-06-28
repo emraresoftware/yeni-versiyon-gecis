@@ -2,7 +2,7 @@
 
 **Başlangıç:** Sprint 1 platform çekirdeği tamamlandı (Task 001–008A)  
 ****Son güncelleme:** 2026-06-28  
-**İlerleme:** **40%** (CRM CQRS Application Layer tamamlandı)
+**İlerleme:** **42%** (CRM CQRS Application Layer ve IMAP Sync tamamlandı)
 
 ---
 
@@ -33,6 +33,9 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task 014** | Agent 1 (Dev) | [TASK_014_REPORT.md](../reports/TASK_014_REPORT.md) | CRM Application Layer (CQRS Commands, Queries, Handlers, DTOs, Validators) | ✅ Tamamlandı |
 | **Task 025** | Agent 1 (Dev) | [TASK_025_REPORT.md](../reports/TASK_025_REPORT.md) | Nginx Routing Hotfix for asistan.emarecloud.tr | ✅ Tamamlandı |
 | **Task 026** | Agent 1 (Dev) | [TASK_026_REPORT.md](../reports/TASK_026_REPORT.md) | Dynamic Tenant Resolution Hotfix for SuperAdmin & Anonymous requests | ✅ Tamamlandı |
+| **Task 027** | Agent 1 (Dev) | [TASK_027_REPORT.md](../reports/TASK_027_REPORT.md) | Manual IMAP Sync History Trigger & Date Sync | ✅ Tamamlandı |
+
+**Task 027 özeti:** Implemented manual IMAP email synchronization from a specific start date, adding `ImapSyncStartDate` property, updating `ImapPollerBackgroundService`, and exposing a `POST /api/v1/mail-accounts/{id}/sync-history` endpoint. Also resolved database insert crashes for long emails by truncating ticket descriptions to 5000 characters.
 
 **Task 026 özeti:** Resolved blocking 403 Forbidden errors on WhatsApp accounts retrieval for SuperAdmin users by adding dynamic Host-to-Tenant resolution with memory caching in CurrentUserService.
 
