@@ -31,6 +31,9 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task 013A** | Agent 1 (Dev) | [TASK_013A_CRM_HARDENING_REPORT.md](../reports/TASK_013A_CRM_HARDENING_REPORT.md) | CRM Domain + Persistence Hardening | ✅ Tamamlandı |
 | **Task 013A Security** | Agent 4 (Sec) | [TASK_013A_REPORT.md](../reports/TASK_013A_REPORT.md) | [CRM_SECURITY_REVIEW_TASK_013A.md](../security/CRM_SECURITY_REVIEW_TASK_013A.md) | ✅ Tamamlandı |
 | **Task 014** | Agent 1 (Dev) | [TASK_014_REPORT.md](../reports/TASK_014_REPORT.md) | CRM Application Layer (CQRS Commands, Queries, Handlers, DTOs, Validators) | ✅ Tamamlandı |
+| **Task 025** | Agent 1 (Dev) | [TASK_025_REPORT.md](../reports/TASK_025_REPORT.md) | Nginx Routing Hotfix for asistan.emarecloud.tr | ✅ Tamamlandı |
+
+**Task 025 özeti:** Nginx routing and deployment hotfix implemented to resolve 404/403 session and API errors on the `asistan.emarecloud.tr` tenant domain.
 
 **Task 009 özeti:** 92 widget traceability satırı (CEO 32 · Sales 29 · Finance 31). Kod yazılmadı.
 
