@@ -1,8 +1,8 @@
 # Sprint 2 — Control Tower (CEO · Sales · Finance)
 
 **Başlangıç:** Sprint 1 platform çekirdeği tamamlandı (Task 001–008A)  
-**Son güncelleme:** 2026-06-28  
-**İlerleme:** **25%** (CRM Hardening tamamlandı)
+****Son güncelleme:** 2026-06-28  
+**İlerleme:** **40%** (CRM CQRS Application Layer tamamlandı)
 
 ---
 
@@ -30,12 +30,15 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task 013** | Agent 1 (Dev) | [TASK_013_CRM_FOUNDATION_REPORT.md](../reports/TASK_013_CRM_FOUNDATION_REPORT.md) | Domain + Persistence for CRM Entities | ✅ Tamamlandı |
 | **Task 013A** | Agent 1 (Dev) | [TASK_013A_CRM_HARDENING_REPORT.md](../reports/TASK_013A_CRM_HARDENING_REPORT.md) | CRM Domain + Persistence Hardening | ✅ Tamamlandı |
 | **Task 013A Security** | Agent 4 (Sec) | [TASK_013A_REPORT.md](../reports/TASK_013A_REPORT.md) | [CRM_SECURITY_REVIEW_TASK_013A.md](../security/CRM_SECURITY_REVIEW_TASK_013A.md) | ✅ Tamamlandı |
+| **Task 014** | Agent 1 (Dev) | [TASK_014_REPORT.md](../reports/TASK_014_REPORT.md) | CRM Application Layer (CQRS Commands, Queries, Handlers, DTOs, Validators) | ✅ Tamamlandı |
 
 **Task 009 özeti:** 92 widget traceability satırı (CEO 32 · Sales 29 · Finance 31). Kod yazılmadı.
 
 **Task 013 özeti:** 6 CRM entity'si (`CrmAccount`, `CrmContact`, `CrmOpportunity`, `CrmProposal`, `CrmActivity`, `CrmTag`) validation kuralları, domain event'leri, EF Core konfigürasyonları ve testleri tamamlandı.
 
 **Task 013A özeti:** `CrmProposalItem` child entity'si eklendi. `CrmAccount` NPS/Segment/Risk/Health alanları ve kısıtlamaları uygulandı. CRM izin listesi tamamlandı. 104/104 test başarılı.
+
+**Task 014 özeti:** CRM modülü için CQRS Command, Query, DTO, Validator yapıları ve 117 entegrasyon testinin tamamı yeşil olarak tamamlandı.
 
 ---
 
@@ -44,13 +47,12 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | # | Task | Ajan | Bağımlılık |
 |---|------|------|------------|
 | 1 | Chief Architect Review — Task 009, 013 & 013A | Chief Architect | TASK_009_REPORT, TASK_013_CRM_FOUNDATION_REPORT, TASK_013A_CRM_HARDENING_REPORT |
-| 2 | CRM Application / API Handler (CQRS Command/Query) | Agent 1 | TASK_013A |
-| 3 | Sales Order API | Agent 1 | Matris §2 |
-| 4 | CEO Control Tower read endpoints | Agent 1 | Matris §1 |
-| 5 | Finance Journal / Invoice / Payment API | Agent 1 | Matris §3 |
-| 6 | Finance Control Tower read endpoints | Agent 1 | Matris §3 |
-| 7 | Control Tower frontend shell (3 kule) | Agent 1 | i18n standard |
-| 8 | Permission matrix güncelleme (`*.ControlTower.View`) | Agent 1 | SECURITY_AUTHORIZATION |
+| 2 | Sales Order API | Agent 1 | Matris §2 |
+| 3 | CEO Control Tower read endpoints | Agent 1 | Matris §1 |
+| 4 | Finance Journal / Invoice / Payment API | Agent 1 | Matris §3 |
+| 5 | Finance Control Tower read endpoints | Agent 1 | Matris §3 |
+| 6 | Control Tower frontend shell (3 kule) | Agent 1 | i18n standard |
+| 7 | Permission matrix güncelleme (`*.ControlTower.View`) | Agent 1 | SECURITY_AUTHORIZATION |
 
 
 ---

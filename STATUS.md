@@ -49,7 +49,3 @@ Bu dosya, ERP geçiş sürecinde yer alan 7 ajanın ve modüllerinin anlık duru
 - **Tamamlanma Tarihi:** 2026-06-28
 - **Sonuç:** Kod yazılmadan, tüm kontrol kulesi kapsamları, API, CQRS, Permission ve Event adayları ile test senaryolarını içeren detaylı plan dökümanı tamamlandı.
 - **Detaylı Rapor:** [TASK_013_CRM_FOUNDATION_PLAN.md](file:///Users/emre/yeni-versiyon-gecis/docs/project-management/tasks/TASK_013_CRM_FOUNDATION_PLAN.md)
-
-
-
-
