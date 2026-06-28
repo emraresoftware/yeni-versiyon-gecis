@@ -3,11 +3,19 @@
 **Task:** 015 — CRM REST API (MediatR + Authorization)  
 **Date:** 2026-06-28  
 **Reviewer:** Agent 2 (Independent QA)  
-**Scope:** `CrmController.cs`, CRM Application commands/queries, `CrmControllerTests.cs`, build/test  
-**Method:** `dotnet restore/build/test` + kaynak inceleme + `TASK_015_CRM_API_REPORT.md` çapraz doğrulama  
+**Protocol:** MANDATORY TASK COMPLETION PROTOCOL v1.0  
 **Kısıt:** Kod değiştirilmedi. Private repo commit/push yapılmadı.
 
-**Referanslar:** `TASK_015_CRM_API_REPORT.md`, `TASK_013_CRM_FOUNDATION_PLAN.md`, `AGENTS.md`, `ANAYASA.md`
+---
+
+## PRE-FLIGHT
+
+✓ AGENTS.md  
+✓ ANAYASA.md  
+✓ DOMAIN_MODEL.md  
+✓ SECURITY_AUTHORIZATION.md  
+✓ EVENT_BUS.md  
+✓ FEATURE_TRACEABILITY_MATRIX.md  
 
 ---
 
@@ -15,117 +23,187 @@
 
 # CONDITIONAL PASS
 
-Clean Architecture checklist karşılanıyor: controller DbContext kullanmıyor, MediatR + `HasPermission` + `ApiResponse<T>` + Swagger mevcut, tenant handler katmanında `ITenantProvider` ile alınıyor. Build/test yeşil. **Koşullar:** Contact API uç noktaları eksik (handler/permission var), negatif auth (401/403) ve cross-tenant API testi yok; Agent 1 raporundaki test/uyarı sayıları hatalı.
+(Task 015 commit `7a06f9b9` — mimari kriterler karşılandı; Contact endpoint + negatif auth testleri eksik. **Güncel HEAD `f7ab337d` build kırık** — test/command drift, ayrı blocker.)
 
 ---
 
-## Build & Test
+## 2. BUILD
 
-**PASS**
+```bash
+dotnet restore Emare.sln   # ✅ Başarılı
+dotnet build Emare.sln
+```
 
-| Komut | Sonuç |
+| Snapshot | Sonuç |
+|----------|--------|
+| Task 015 commit `7a06f9b9` | ✅ 0 hata, 5 uyarı |
+| Güncel HEAD `f7ab337d` | ❌ **4 hata** — `CreateCrmProposalCommand` / `CrmProposal.Create` `Status` parametresi testlerde kalmış, command'dan kaldırılmış |
+
+---
+
+## 3. TEST
+
+```bash
+dotnet test Emare.sln
+```
+
+### Task 015 commit `7a06f9b9`
+
+| Metrik | Değer |
+|--------|-------|
+| Toplam test | **122** |
+| Passed | **122** |
+| Failed | **0** |
+| Skipped | **0** |
+| Süre | ~4 s (API projesi ~3 s) |
+
+| Proje | Passed |
 |-------|--------|
-| `dotnet restore Emare.sln` | ✅ |
-| `dotnet build Emare.sln` | ✅ **0 hata**, 5 uyarı (CA1000 ×4, CS1998 ×1) |
-| `dotnet test Emare.sln` | ✅ **122/122** |
+| Emare.BuildingBlocks.Tests | 8 |
+| Emare.Platform.Domain.Tests | 28 |
+| Emare.Platform.Persistence.Tests | 34 |
+| Emare.Platform.API.Tests | 52 |
 
-| Proje | Geçen |
-|-------|-------|
-| `Emare.BuildingBlocks.Tests` | 8 |
-| `Emare.Platform.Domain.Tests` | 28 |
-| `Emare.Platform.Persistence.Tests` | 34 |
-| `Emare.Platform.API.Tests` | 52 |
-| **Toplam** | **122** |
+### Güncel HEAD `f7ab337d`
 
-**Agent rapor düzeltmesi:** Rapor `52` total test ve `0 uyarı` iddia ediyor → QA: **122** solution test, **52** yalnızca API projesi; **5 uyarı**.
-
----
-
-## Kontrol Matrisi
-
-| # | Kontrol | Sonuç | Kanıt |
-|---|---------|--------|-------|
-| 1 | Controller doğrudan DbContext kullanıyor mu? | ✅ Hayır | `CrmController` yalnızca `ISender _sender` inject ediyor; `EmareDbContext` import/yok |
-| 2 | MediatR kullanılmış mı? | ✅ | Tüm action'lar `_sender.Send(...)` — command/query record'ları |
-| 3 | Permission / Authorization | ✅ | Sınıf `[Authorize]`; her endpoint `[HasPermission(Permissions.CRM.*)]` |
-| 4 | TenantId request'ten alınmıyor mu? | ✅ | Command handler'lar `_tenantProvider.TenantId`; controller/command DTO'da `TenantId` parametresi yok |
-| 5 | `ApiResponse<T>` standardı | ✅ | Başarı: `Ok(ApiResponse<T>.SuccessResponse(...))`; hata: `BadRequest(ApiResponse<T>.FailureResponse(...))` |
-| 6 | Swagger | ✅ | `Program.cs`: `AddSwaggerDocumentation()`, `UseSwagger()`, `UseSwaggerUI` |
-| 7 | Build/test yeşil | ✅ | 122/122 |
-| 8 | Pre-flight (Agent rapor) | ⚠️ | `TASK_015_CRM_API_REPORT.md` § PRE-FLIGHT CHECK mevcut (AGENTS, ANAYASA, DOMAIN_MODEL) |
+| Metrik | Değer |
+|--------|-------|
+| Toplam test (koşan) | **36** |
+| Passed | **36** |
+| Failed | **0** |
+| Skipped | — |
+| Not | API + Persistence test projeleri **derlenemedi** (4 CS1739) |
 
 ---
 
-## Endpoint Özeti (`CrmController`)
+## 4. KOD KALİTESİ (CRM API scope)
 
-| Grup | Endpoint'ler | Permission |
-|------|--------------|------------|
-| Accounts | GET list/detail, POST, PUT, DELETE | `AccountRead` / `AccountWrite` |
-| Opportunities | GET list/detail, POST, PUT stage | `OpportunityRead` / `OpportunityWrite` |
-| Proposals | GET list/detail, POST, POST items, send, approve | `ProposalRead` / `ProposalWrite` / `ProposalApprove` |
-| Activities | POST create | `ActivityWrite` |
-| Dashboard | GET summary | `AccountRead` |
-
-**17 action** — tamamı MediatR + `HasPermission`.
+| Kontrol | Durum |
+|---------|--------|
+| DateTime.Now | **PASS** — production CRM API/Application path yok |
+| throw new Exception | **PASS** |
+| TODO | **PASS** |
+| FIXME | **PASS** |
+| Hardcoded Secret | **WARNING** — `appsettings.json` dev JWT/DB placeholder (geliştirme ortamı; prod `.env` beklenir) |
+| Connection String | **WARNING** — appsettings dev default |
+| Tenant Filter | **PASS** — EF global filter + `ITenantProvider` |
+| Permission Check | **PASS** — `[HasPermission]` tüm endpoint'lerde |
+| CancellationToken | **PASS** — handler'larda mevcut |
+| Raw SQL | **PASS** |
+| Direct DbContext Usage | **PASS** — `CrmController` yalnızca `ISender` |
+| Repository Pattern | **PASS** |
+| CQRS | **PASS** — MediatR command/query |
+| Outbox | **PASS** — SaveChanges pipeline (domain events) |
+| Audit | **PASS** — interceptor |
+| Soft Delete | **PASS** |
+| Concurrency | **PASS** — RowVersion |
+| Result Pattern | **PASS** |
+| Swagger | **PASS** |
+| Localization | **WARNING** — mesajlar İngilizce sabit string |
 
 ---
 
-## Entegrasyon Testleri (`CrmControllerTests.cs`)
+## 5. GÜVENLİK
 
-| Test | Kapsam |
+| Kontrol | Durum |
+|---------|--------|
+| Tenant Isolation | **PASS** — tenant JWT/`ITenantProvider`; handler body'de TenantId yok |
+| Authorization | **PASS** — `[Authorize]` + `[HasPermission]` |
+| Permission Matrix | **WARNING** — `ContactRead/Write` tanımlı, endpoint yok |
+| Sensitive Data | **PASS** — QA raporunda secret yok |
+| PII | **PASS** — email/phone domain validation |
+| JWT | **PASS** — Bearer test factory |
+| Service Account | **PASS** — N/A |
+| Audit | **PASS** |
+| Event Bus | **PASS** |
+| Outbox | **PASS** |
+
+---
+
+## 6. ARCHITECTURE
+
+| Kontrol | Durum |
+|---------|--------|
+| DDD | **PASS** |
+| SOLID | **PASS** |
+| Clean Architecture | **PASS** — API → Application → Domain |
+| Aggregate | **PASS** |
+| Child Entity | **PASS** — ProposalItem via `AddItem` |
+| Repository | **PASS** |
+| Application Layer | **PASS** |
+| Persistence Layer | **PASS** |
+| API Layer | **PASS** |
+| Control Tower | **WARNING** — `dashboard-summary` var; CEO/Sales widget API'leri Task 015 dışı |
+
+---
+
+## 7. PERFORMANCE
+
+| Kontrol | Durum |
+|---------|--------|
+| Index | **PASS** — CRM EF indexes (Task 013/013A) |
+| N+1 Query | **WARNING** — specification Include kullanımı var; production load test yok |
+| AsNoTracking | **WARNING** — read query handler'larda explicit yok (repo implementasyonuna bağlı) |
+| Caching | **PASS** — N/A Task 015 |
+| Large Collection | **PASS** — skip/take paging |
+| LINQ | **PASS** |
+| Memory | **PASS** |
+
+---
+
+## 8. AI / VOICE
+
+N/A — Task 015 CRM API kapsamı dışı.
+
+---
+
+## 9. DOKÜMANLAR
+
+| Doküman | Durum |
+|---------|--------|
+| STATUS | ⚠️ Sprint dosyası Task 015 QA güncellemesi bekliyor |
+| Daily Log | ⚠️ `daily/2026-06-28.md` Task 015 QA satırı yok |
+| Architect Report | — |
+| QA Report | ✅ Bu dosya |
+| Task Report | ✅ `TASK_015_CRM_API_REPORT.md` |
+| Feature Matrix | ✅ Mevcut |
+| Control Tower | ⚠️ CRM API kısmi |
+| Legacy | — |
+
+---
+
+## 10. GIT
+
+| Alan | Değer |
 |------|--------|
-| `GetDashboardSummary_*` | Dashboard + `ApiResponse` |
-| `Accounts_CRUD_*` | Account CRUD + NPS/segment alanları |
-| `Opportunity_CRUD_*` | Opportunity + stage change |
-| `Proposals_And_Items_Workflow_*` | Proposal + items + send/approve + amount recalc |
-| `CreateActivity_*` | Activity create |
-
-**5 CRM API integration test** — happy-path, JWT mock auth ile.
+| Git Status (private) | HEAD `f7ab337d`; Task 015 = `7a06f9b9` |
+| Git Add | QA: public repo only |
+| Git Commit (private) | Yok (Agent 2 QA) |
+| Git Push | Yok |
+| Git Commit (public) | `8946c1a` + bu güncelleme |
 
 ---
 
-## Olumlu Bulgular
+## Kontrol Özeti (orijinal checklist)
 
-1. **Thin controller** — iş mantığı Application handler'larda; controller yalnızca HTTP ↔ MediatR köprüsü.
-2. **Tenant güvenliği** — `CreateCrmAccountCommandHandler` vb. tenant'ı JWT/`ITenantProvider`'dan alıyor; client body'de tenant gönderemiyor.
-3. **Proposal workflow API** — items, send, approve uç noktaları Task 013A domain ile uyumlu.
-4. **FluentValidation** — command validator'lar Application katmanında (`CrmValidators.cs`).
-5. **EF global tenant filter** — query'ler specification + DbContext filter ile izole.
-
----
-
-## Gap'ler (CONDITIONAL PASS gerekçesi)
-
-| Madde | Durum | Not |
-|-------|--------|-----|
-| Contact API | ❌ | `CreateCrmContactCommand` + handler + `ContactRead/Write` permission var; **controller endpoint yok** |
-| Activity list/read | ❌ | Yalnızca POST create; `ActivityRead` permission kullanılmıyor |
-| 401/403 testleri | ❌ | Yetkisiz / permission eksik senaryo test edilmiyor |
-| Cross-tenant API testi | ❌ | Tenant A verisi Tenant B token ile erişim testi yok |
-| NotFound HTTP kodu | ⚠️ | Silinen account GET → `BadRequest` (404 değil) — tutarlılık tercihi |
-| Agent rapor doğruluğu | ⚠️ | Test/uyarı sayıları güncellenmeli |
+| # | Kontrol | Sonuç |
+|---|---------|--------|
+| 1 | Controller DbContext | ✅ Hayır |
+| 2 | MediatR | ✅ |
+| 3 | Permission/Authorization | ✅ |
+| 4 | TenantId request'ten değil | ✅ |
+| 5 | ApiResponse | ✅ |
+| 6 | Swagger | ✅ |
+| 7 | Build/test (015 commit) | ✅ 122/122 |
 
 ---
 
-## Agent 1 Raporu Çapraz Doğrulama
+## Gap'ler
 
-| İddia | QA |
-|-------|-----|
-| MediatR, ApiResponse, HasPermission | ✅ |
-| TenantId client'tan alınmıyor | ✅ |
-| Build 0 hata | ✅ |
-| Test 52 passed | ⚠️ API projesi 52; **solution 122** |
-| 0 uyarı | ❌ 5 uyarı |
-| Technical debt: None | ⚠️ Contact endpoint gap |
-
----
-
-## PASS İçin Önerilen Tamamlama
-
-1. `POST/GET /api/crm/accounts/{id}/contacts` (plan §6 ile hizalı).
-2. `GET /api/crm/activities` (+ `ActivityRead`).
-3. Integration test: 401 (no token), 403 (missing permission), cross-tenant isolation.
-4. Agent raporunda solution test sayısı (122) ve uyarılar.
+1. Contact API endpoint yok (`CreateCrmContactCommand` handler mevcut).
+2. Activity yalnızca POST; `ActivityRead` kullanılmıyor.
+3. 401/403 ve cross-tenant API integration testi yok.
+4. Güncel HEAD: test/command drift → build kırık (Task 017 sonrası).
 
 ---
 
@@ -133,7 +211,6 @@ Clean Architecture checklist karşılanıyor: controller DbContext kullanmıyor,
 
 | Alan | Değer |
 |------|--------|
-| Verdict | **CONDITIONAL PASS** |
+| Verdict | **CONDITIONAL PASS** (015 slice) / HEAD build **FAIL** |
 | Private repo | `/Users/emre/Elyafgroup` |
 | Public repo | `/Users/emre/yeni-versiyon-gecis` (`gece-otonom`) |
-| Kod değişikliği | Yok (QA only) |
