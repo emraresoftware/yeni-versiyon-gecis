@@ -20,6 +20,16 @@ Bu dosya, ERP geçiş sürecinde yer alan 7 ajanın ve modüllerinin anlık duru
 
 ## 🛠️ Tamamlanan Ajan Çalışmaları (Geçmiş)
 
+### **Agent 2 — QA (QA Ajanı)**
+- **Görev:** TASK 015 kapsamında CRM API katmanı için geliştirilen controller ve entegrasyon testlerinin kalite, güvenlik, DDD ve Clean Architecture standartlarına göre incelenmesi ve onaylanması.
+- **Tamamlanma Tarihi:** 2026-06-28
+- **Sonuç:** Kod, güvenlik ve entegrasyon testleri başarıyla doğrulandı.
+- **Detaylı Rapor:** [QA_TASK_015.md](file:///Volumes/emre/yeni-versiyon-gecis/docs/project-management/qa/QA_TASK_015.md)
+- **Görev (Temizlik):** TASK_018_CLEAN kapsamında Voice Bridge `requirements.txt` dosyasından `asyncpg` bağımlılığının kaldırılması ve aiohttp entegrasyonunun QA denetimi.
+- **Tamamlanma Tarihi:** 2026-06-28
+- **Sonuç:** `asyncpg` bağımlılığı production runtime'dan tamamen kaldırıldı. Kod ve derleme doğrulandı.
+- **Detaylı Rapor:** [QA_TASK_018_CLEAN.md](file:///Volumes/emre/yeni-versiyon-gecis/docs/project-management/qa/QA_TASK_018_CLEAN.md)
+
 ### **A5 — Production (Antigravity)**
 - **Görev:** Production & Manufacturing Dashboard verilerinin ve KPI'larının in-memory backend verileriyle eşleştirilmesi, arayüzdeki "View all" detay bağlantılarının Next.js rotalarıyla dinamik hale getirilmesi.
 - **Tamamlanma Tarihi:** 2026-06-27
