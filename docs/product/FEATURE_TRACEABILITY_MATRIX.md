@@ -4,7 +4,7 @@
 **Versiyon:** 1.0.0  
 **Durum:** Approved for Sprint 2 Gate  
 **Sahip:** Agent 2 (Product Traceability)  
-**Son Güncelleme:** 2026-06-28  
+**Son Güncelleme:** 2026-06-27  
 **Kapsam:** CEO · Sales · Finance Control Tower (Sprint 2A / 2B)
 
 ---
@@ -53,8 +53,8 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 
 ### Shell & ortak kontroller
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
 | CEO | Sol dikey menü + kule geçişleri | `GET /api/control-tower/ceo/navigation` | `GetCeoNavigationQuery` | `GetCeoNavigationQueryHandler` | — (RBAC) | — | — | `CEO.ControlTower.View` | `GetCeoNavigationQueryHandlerTests` |
 | CEO | Rol bazlı kullanıcı / profil alanı | `GET /api/control-tower/ceo/profile` | `GetCeoProfileContextQuery` | `GetCeoProfileContextQueryHandler` | `User`, `Role` | — | `UserLoggedIn` | `CEO.ControlTower.View` | `GetCeoProfileContextQueryHandlerTests` |
 | CEO | Export / Filter / Date controls | `GET /api/control-tower/ceo/export` | `ExportCeoDashboardQuery` | `ExportCeoDashboardQueryHandler` | read models | — | — | `CEO.ControlTower.View` | `CeoControlTowerApiTests` |
@@ -62,14 +62,14 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 
 ### Standart dashboard widget'ları
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
 | CEO | Executive Snapshot | `GET /api/control-tower/ceo/snapshot` | `GetCeoExecutiveSnapshotQuery` | `GetCeoExecutiveSnapshotQueryHandler` | `ExecutiveDashboardSnapshot`, `CompanyHealthScore` | — (read projection) | `PerformanceKPIValueUpdated` | `CEO.ControlTower.View` | `GetCeoExecutiveSnapshotQueryHandlerTests` |
 | CEO | Today's Priorities | `GET /api/control-tower/ceo/priorities/today` | `GetCeoTodayPrioritiesQuery` | `GetCeoTodayPrioritiesQueryHandler` | `DecisionLog`, `FinanceInvoice`, `QcClaim` | — | `CeoDecisionLogCreated`, `FinanceInvoiceCreated`, `QcClaimCreated` | `CEO.DecisionLog.Read`, `Finance.Invoice.Read`, `QC.Claim.Read` | `GetCeoTodayPrioritiesQueryHandlerTests` |
 | CEO | Critical Alerts | `GET /api/control-tower/ceo/alerts/critical` | `GetCeoCriticalAlertsQuery` | `GetCeoCriticalAlertsQueryHandler` | `CompanyHealthScore`, `ProductionWorkOrder`, `FinancePayment` | — | `ProductionWorkOrderCreated`, `FinancePaymentCompleted` | `CEO.ControlTower.View` | `GetCeoCriticalAlertsQueryHandlerTests` |
 | CEO | Notifications | `GET /api/control-tower/ceo/notifications` | `GetCeoNotificationsQuery` | `GetCeoNotificationsQueryHandler` | `AuditLog` | — | `CeoDecisionLogApproved` | `CEO.ControlTower.View` | `GetCeoNotificationsQueryHandlerTests` |
-| CEO | Risk / Health Score (Company & Customer) | `GET /api/control-tower/ceo/health-scores` | `GetCeoHealthScoresQuery` | `GetCeoHealthScoresQueryHandler` | `CompanyHealthScore`, `DepartmentScorecard`, `CrmAccount` | — | `PerformanceKPIValueUpdated`, `CrmAccountUpdated` | `CEO.ControlTower.View` | `GetCeoHealthScoresQueryHandlerTests` |
-| CEO | Customer Panel (segment, NPS, risk, health) | `GET /api/control-tower/ceo/stakeholders` | `GetCeoStakeholderPanelsQuery` | `GetCeoStakeholderPanelsQueryHandler` | `CrmAccount`, `DepartmentScorecard` | — | `CrmAccountCreated`, `CrmAccountUpdated` | `CRM.Account.Read`, `CEO.ControlTower.View` | `GetCeoStakeholderPanelsQueryHandlerTests` |
+| CEO | Risk / Health Score | `GET /api/control-tower/ceo/health-scores` | `GetCeoHealthScoresQuery` | `GetCeoHealthScoresQueryHandler` | `CompanyHealthScore`, `DepartmentScorecard` | — | `PerformanceKPIValueUpdated` | `CEO.ControlTower.View` | `GetCeoHealthScoresQueryHandlerTests` |
+| CEO | Customer / Supplier / Department Panel | `GET /api/control-tower/ceo/stakeholders` | `GetCeoStakeholderPanelsQuery` | `GetCeoStakeholderPanelsQueryHandler` | `CrmAccount`, `DepartmentScorecard` | — | `CrmAccountCreated` | `CRM.Account.Read`, `CEO.ControlTower.View` | `GetCeoStakeholderPanelsQueryHandlerTests` |
 | CEO | Message Drafts | `GET /api/control-tower/ceo/message-drafts` | `GetCeoMessageDraftsQuery` | `GetCeoMessageDraftsQueryHandler` | message draft projection | — | — | `CEO.DecisionLog.Write`, `AI.Copilot.Use` | `GetCeoMessageDraftsQueryHandlerTests` |
 | CEO | Calendar & Key Events | `GET /api/control-tower/ceo/calendar` | `GetCeoCalendarEventsQuery` | `GetCeoCalendarEventsQueryHandler` | calendar projection | — | — | `CEO.ControlTower.View` | `GetCeoCalendarEventsQueryHandlerTests` |
 | CEO | Next 7 Days Focus | `GET /api/control-tower/ceo/focus/next-7-days` | `GetCeoNext7DaysFocusQuery` | `GetCeoNext7DaysFocusQueryHandler` | `BudgetTarget`, `DecisionLog` | — | `CeoDecisionLogCreated` | `CEO.ControlTower.View` | `GetCeoNext7DaysFocusQueryHandlerTests` |
@@ -77,8 +77,8 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 
 ### KPI kartları
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
 | CEO | KPI — Aylık Ciro (Gerçek vs Hedef) | `GET /api/control-tower/ceo/kpis/monthly-revenue` | `GetCeoKpiMonthlyRevenueQuery` | `GetCeoKpiMonthlyRevenueQueryHandler` | `SalesOrder`, `BudgetTarget`, `KPIValue` | — | `SalesOrderConfirmed`, `PerformanceKPIValueUpdated` | `CEO.ControlTower.View`, `Sales.Order.Read` | `GetCeoKpiMonthlyRevenueQueryHandlerTests` |
 | CEO | KPI — EBITDA Marjı (%) | `GET /api/control-tower/ceo/kpis/ebitda-margin` | `GetCeoKpiEbitdaMarginQuery` | `GetCeoKpiEbitdaMarginQueryHandler` | `FinanceJournalEntry`, `KPIValue` | — | `FinanceJournalEntryPosted` | `CEO.ControlTower.View`, `Finance.JournalEntry.Read` | `GetCeoKpiEbitdaMarginQueryHandlerTests` |
 | CEO | KPI — Aktif Müşteri Sayısı | `GET /api/control-tower/ceo/kpis/active-customers` | `GetCeoKpiActiveCustomersQuery` | `GetCeoKpiActiveCustomersQueryHandler` | `CrmAccount` | — | `CrmAccountCreated` | `CEO.ControlTower.View`, `CRM.Account.Read` | `GetCeoKpiActiveCustomersQueryHandlerTests` |
@@ -87,13 +87,13 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 | CEO | KPI — Personel Sayısı | `GET /api/control-tower/ceo/kpis/headcount` | `GetCeoKpiHeadcountQuery` | `GetCeoKpiHeadcountQueryHandler` | `HrEmployee` | — | `HrEmployeeOnboarded` | `CEO.ControlTower.View`, `HR.Payroll.Read` | `GetCeoKpiHeadcountQueryHandlerTests` |
 | CEO | KPI — Üretim Verimliliği (%) | `GET /api/control-tower/ceo/kpis/production-efficiency` | `GetCeoKpiProductionEfficiencyQuery` | `GetCeoKpiProductionEfficiencyQueryHandler` | `ProductionWorkOrder`, `KPIValue` | — | `ProductionWorkOrderCompleted` | `CEO.ControlTower.View`, `Production.WorkOrder.Read` | `GetCeoKpiProductionEfficiencyQueryHandlerTests` |
 | CEO | KPI — Kalite Red Oranı (%) | `GET /api/control-tower/ceo/kpis/quality-reject-rate` | `GetCeoKpiQualityRejectRateQuery` | `GetCeoKpiQualityRejectRateQueryHandler` | `QcTestResult` | — | `QcTestResultCompleted` | `CEO.ControlTower.View`, `QC.Claim.Read` | `GetCeoKpiQualityRejectRateQueryHandlerTests` |
-| CEO | KPI — Net Promoter Score (NPS) | `GET /api/control-tower/ceo/kpis/nps` | `GetCeoKpiNpsQuery` | `GetCeoKpiNpsQueryHandler` | `CrmAccount`, `KPIValue` | — | `PerformanceKPIValueUpdated`, `CrmAccountUpdated` | `CEO.ControlTower.View`, `CRM.Account.Read` | `GetCeoKpiNpsQueryHandlerTests` |
+| CEO | KPI — Net Promoter Score (NPS) | `GET /api/control-tower/ceo/kpis/nps` | `GetCeoKpiNpsQuery` | `GetCeoKpiNpsQueryHandler` | `CrmAccount`, `KPIValue` | — | `PerformanceKPIValueUpdated` | `CEO.ControlTower.View`, `CRM.Account.Read` | `GetCeoKpiNpsQueryHandlerTests` |
 | CEO | KPI — Nakit Pozisyonu | `GET /api/control-tower/ceo/kpis/cash-position` | `GetCeoKpiCashPositionQuery` | `GetCeoKpiCashPositionQueryHandler` | `BankAccount`, `CashVault` | — | `FinancePaymentCompleted` | `CEO.ControlTower.View`, `Finance.Payment.Read` | `GetCeoKpiCashPositionQueryHandlerTests` |
 
 ### Menü alt ekranları
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
 | CEO | Strategic Decisions | `GET /api/ceo/decision-logs` | `ListCeoDecisionLogsQuery` | `ListCeoDecisionLogsQueryHandler` | `DecisionLog` | `DecisionLogApproval` | `CeoDecisionLogCreated` | `CEO.DecisionLog.Read` | `ListCeoDecisionLogsQueryHandlerTests` |
 | CEO | Company Health Score (detay) | `GET /api/control-tower/ceo/health-scores/detail` | `GetCeoCompanyHealthScoreDetailQuery` | `GetCeoCompanyHealthScoreDetailQueryHandler` | `CompanyHealthScore` | — | `PerformanceKPIValueUpdated` | `CEO.ControlTower.View` | `GetCeoCompanyHealthScoreDetailQueryHandlerTests` |
 | CEO | Department Scorecards | `GET /api/control-tower/ceo/department-scorecards` | `ListCeoDepartmentScorecardsQuery` | `ListCeoDepartmentScorecardsQueryHandler` | `DepartmentScorecard` | — | `PerformanceKPIValueUpdated` | `CEO.ControlTower.View` | `ListCeoDepartmentScorecardsQueryHandlerTests` |
@@ -103,8 +103,8 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 
 ### Aksiyon komutları
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
 | CEO | Karar oluşturma | `POST /api/ceo/decision-logs` | `CreateCeoDecisionLogCommand` | `CreateCeoDecisionLogCommandHandler` | `DecisionLog` | `DecisionLogApproval` | `CeoDecisionLogCreated` | `CEO.DecisionLog.Write` | `CreateCeoDecisionLogCommandHandlerTests` |
 | CEO | Karar onayı | `POST /api/ceo/decision-logs/{id}/approve` | `ApproveCeoDecisionLogCommand` | `ApproveCeoDecisionLogCommandHandler` | `DecisionLog` | `DecisionLogApproval` | `CeoDecisionLogApproved` | `CEO.DecisionLog.Approve` | `ApproveCeoDecisionLogCommandHandlerTests` |
 
@@ -118,8 +118,8 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 
 ### Shell & ortak kontroller
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
 | Sales | Sol dikey menü + kule geçişleri | `GET /api/control-tower/sales/navigation` | `GetSalesNavigationQuery` | `GetSalesNavigationQueryHandler` | — (RBAC) | — | — | `Sales.ControlTower.View` | `GetSalesNavigationQueryHandlerTests` |
 | Sales | Rol bazlı kullanıcı / profil alanı | `GET /api/control-tower/sales/profile` | `GetSalesProfileContextQuery` | `GetSalesProfileContextQueryHandler` | `User`, `Role` | — | `UserLoggedIn` | `Sales.ControlTower.View` | `GetSalesProfileContextQueryHandlerTests` |
 | Sales | Export / Filter / Date controls | `GET /api/control-tower/sales/export` | `ExportSalesDashboardQuery` | `ExportSalesDashboardQueryHandler` | read models | — | — | `Sales.ControlTower.View` | `SalesControlTowerApiTests` |
@@ -127,14 +127,14 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 
 ### Standart dashboard widget'ları
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
 | Sales | Executive Snapshot | `GET /api/control-tower/sales/snapshot` | `GetSalesExecutiveSnapshotQuery` | `GetSalesExecutiveSnapshotQueryHandler` | `CrmOpportunity`, `CrmProposal`, `SalesOrder` | — | `CrmOpportunityCreated`, `SalesOrderConfirmed` | `Sales.ControlTower.View` | `GetSalesExecutiveSnapshotQueryHandlerTests` |
-| Sales | Today's Priorities | `GET /api/control-tower/sales/priorities/today` | `GetSalesTodayPrioritiesQuery` | `GetSalesTodayPrioritiesQueryHandler` | `CrmOpportunity`, `CrmProposal`, `SalesOrder` | — | `CrmProposalCreated` | `CRM.Proposal.Read`, `Sales.Order.Read`, `CRM.Opportunity.Read` | `GetSalesTodayPrioritiesQueryHandlerTests` |
+| Sales | Today's Priorities | `GET /api/control-tower/sales/priorities/today` | `GetSalesTodayPrioritiesQuery` | `GetSalesTodayPrioritiesQueryHandler` | `CrmOpportunity`, `CrmProposal`, `SalesOrder` | — | `CrmProposalCreated` | `CRM.Proposal.Read`, `Sales.Order.Read` | `GetSalesTodayPrioritiesQueryHandlerTests` |
 | Sales | Critical Alerts | `GET /api/control-tower/sales/alerts/critical` | `GetSalesCriticalAlertsQuery` | `GetSalesCriticalAlertsQueryHandler` | `CrmProposal`, `SalesOrder`, `CrmAccount` | — | `CrmProposalCreated` | `Sales.ControlTower.View` | `GetSalesCriticalAlertsQueryHandlerTests` |
 | Sales | Notifications | `GET /api/control-tower/sales/notifications` | `GetSalesNotificationsQuery` | `GetSalesNotificationsQueryHandler` | notification projection | — | `SalesOrderCreated`, `CrmProposalApproved` | `Sales.ControlTower.View` | `GetSalesNotificationsQueryHandlerTests` |
-| Sales | Customer Risk Score & Customer Health Score | `GET /api/control-tower/sales/health-scores` | `GetSalesHealthScoresQuery` | `GetSalesHealthScoresQueryHandler` | `CrmAccount`, `CrmOpportunity` | — | `CrmOpportunityCreated`, `CrmAccountUpdated` | `Sales.ControlTower.View` | `GetSalesHealthScoresQueryHandlerTests` |
-| Sales | Customer Panel (segment, status) | `GET /api/control-tower/sales/customers` | `GetSalesCustomerPanelQuery` | `GetSalesCustomerPanelQueryHandler` | `CrmAccount`, `CrmActivity` | — | `CrmAccountCreated`, `CrmAccountUpdated` | `CRM.Account.Read`, `CRM.Activity.Read` | `GetSalesCustomerPanelQueryHandlerTests` |
+| Sales | Risk / Health Score | `GET /api/control-tower/sales/health-scores` | `GetSalesHealthScoresQuery` | `GetSalesHealthScoresQueryHandler` | `CrmOpportunity`, `CrmAccount` | — | `CrmOpportunityCreated` | `Sales.ControlTower.View` | `GetSalesHealthScoresQueryHandlerTests` |
+| Sales | Customer / Department Panel | `GET /api/control-tower/sales/customers` | `GetSalesCustomerPanelQuery` | `GetSalesCustomerPanelQueryHandler` | `CrmAccount`, `SalesActivityLog` | — | `CrmAccountCreated` | `CRM.Account.Read` | `GetSalesCustomerPanelQueryHandlerTests` |
 | Sales | Message Drafts | `GET /api/control-tower/sales/message-drafts` | `GetSalesMessageDraftsQuery` | `GetSalesMessageDraftsQueryHandler` | message draft projection | — | — | `CRM.Proposal.Write`, `AI.Copilot.Use` | `GetSalesMessageDraftsQueryHandlerTests` |
 | Sales | Calendar & Key Events | `GET /api/control-tower/sales/calendar` | `GetSalesCalendarEventsQuery` | `GetSalesCalendarEventsQueryHandler` | calendar projection | — | — | `Sales.ControlTower.View` | `GetSalesCalendarEventsQueryHandlerTests` |
 | Sales | Next 7 Days Focus | `GET /api/control-tower/sales/focus/next-7-days` | `GetSalesNext7DaysFocusQuery` | `GetSalesNext7DaysFocusQueryHandler` | `CrmOpportunity`, `CrmProposal` | — | `CrmOpportunityCreated` | `Sales.ControlTower.View` | `GetSalesNext7DaysFocusQueryHandlerTests` |
@@ -142,34 +142,33 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 
 ### KPI kartları
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
 | Sales | KPI — Aylık Satış Cirosu | `GET /api/control-tower/sales/kpis/monthly-revenue` | `GetSalesKpiMonthlyRevenueQuery` | `GetSalesKpiMonthlyRevenueQueryHandler` | `SalesOrder`, `SalesTarget` | — | `SalesOrderConfirmed` | `Sales.ControlTower.View`, `Sales.Order.Read` | `GetSalesKpiMonthlyRevenueQueryHandlerTests` |
-| Sales | KPI — Fırsat Sayısı & Değeri | `GET /api/control-tower/sales/kpis/active-opportunities` | `GetSalesKpiActiveOpportunitiesQuery` | `GetSalesKpiActiveOpportunitiesQueryHandler` | `CrmOpportunity` | — | `CrmOpportunityCreated` | `Sales.ControlTower.View`, `CRM.Opportunity.Read` | `GetSalesKpiActiveOpportunitiesQueryHandlerTests` |
-| Sales | KPI — Win Rate (%) | `GET /api/control-tower/sales/kpis/win-rate` | `GetSalesKpiWinRateQuery` | `GetSalesKpiWinRateQueryHandler` | `CrmOpportunity`, `SalesOrder` | — | `SalesOrderConfirmed` | `Sales.ControlTower.View`, `CRM.Opportunity.Read` | `GetSalesKpiWinRateQueryHandlerTests` |
-| Sales | KPI — Ortalama Kapanış Süresi | `GET /api/control-tower/sales/kpis/avg-close-days` | `GetSalesKpiAvgCloseDaysQuery` | `GetSalesKpiAvgCloseDaysQueryHandler` | `CrmOpportunity` | — | `CrmOpportunityCreated` | `Sales.ControlTower.View`, `CRM.Opportunity.Read` | `GetSalesKpiAvgCloseDaysQueryHandlerTests` |
+| Sales | KPI — Aktif Fırsat Sayısı ve Değeri | `GET /api/control-tower/sales/kpis/active-opportunities` | `GetSalesKpiActiveOpportunitiesQuery` | `GetSalesKpiActiveOpportunitiesQueryHandler` | `CrmOpportunity` | — | `CrmOpportunityCreated` | `Sales.ControlTower.View`, `CRM.Account.Read` | `GetSalesKpiActiveOpportunitiesQueryHandlerTests` |
+| Sales | KPI — Win Rate (%) | `GET /api/control-tower/sales/kpis/win-rate` | `GetSalesKpiWinRateQuery` | `GetSalesKpiWinRateQueryHandler` | `CrmOpportunity`, `SalesOrder` | — | `SalesOrderConfirmed` | `Sales.ControlTower.View` | `GetSalesKpiWinRateQueryHandlerTests` |
+| Sales | KPI — Ortalama Kapanış Süresi | `GET /api/control-tower/sales/kpis/avg-close-days` | `GetSalesKpiAvgCloseDaysQuery` | `GetSalesKpiAvgCloseDaysQueryHandler` | `CrmOpportunity` | — | `CrmOpportunityCreated` | `Sales.ControlTower.View` | `GetSalesKpiAvgCloseDaysQueryHandlerTests` |
 | Sales | KPI — Teklife Dönüşüm Oranı | `GET /api/control-tower/sales/kpis/proposal-conversion` | `GetSalesKpiProposalConversionQuery` | `GetSalesKpiProposalConversionQueryHandler` | `CrmProposal`, `SalesOrder` | — | `CrmProposalApproved` | `Sales.ControlTower.View`, `CRM.Proposal.Read` | `GetSalesKpiProposalConversionQueryHandlerTests` |
 | Sales | KPI — Aktif Sipariş Sayısı | `GET /api/control-tower/sales/kpis/active-orders` | `GetSalesKpiActiveOrdersQuery` | `GetSalesKpiActiveOrdersQueryHandler` | `SalesOrder` | — | `SalesOrderCreated` | `Sales.ControlTower.View`, `Sales.Order.Read` | `GetSalesKpiActiveOrdersQueryHandlerTests` |
 | Sales | KPI — Yeni Müşteri Sayısı (Ay) | `GET /api/control-tower/sales/kpis/new-customers` | `GetSalesKpiNewCustomersQuery` | `GetSalesKpiNewCustomersQueryHandler` | `CrmAccount` | — | `CrmAccountCreated` | `Sales.ControlTower.View`, `CRM.Account.Read` | `GetSalesKpiNewCustomersQueryHandlerTests` |
-| Sales | KPI — Kayıp Fırsat Değeri | `GET /api/control-tower/sales/kpis/lost-opportunity-value` | `GetSalesKpiLostOpportunityValueQuery` | `GetSalesKpiLostOpportunityValueQueryHandler` | `CrmOpportunity` | — | `CrmOpportunityCreated` | `Sales.ControlTower.View`, `CRM.Opportunity.Read` | `GetSalesKpiLostOpportunityValueQueryHandlerTests` |
+| Sales | KPI — Kayıp Fırsat Değeri | `GET /api/control-tower/sales/kpis/lost-opportunity-value` | `GetSalesKpiLostOpportunityValueQuery` | `GetSalesKpiLostOpportunityValueQueryHandler` | `CrmOpportunity` | — | `CrmOpportunityCreated` | `Sales.ControlTower.View` | `GetSalesKpiLostOpportunityValueQueryHandlerTests` |
 
 ### Menü alt ekranları
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
-| Sales | Opportunities Pipeline | `GET /api/crm/opportunities` | `ListCrmOpportunitiesQuery` | `ListCrmOpportunitiesQueryHandler` | `CrmOpportunity`, `CrmAccount` | — | `CrmOpportunityCreated` | `CRM.Opportunity.Read` | `ListCrmOpportunitiesQueryHandlerTests` |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
+| Sales | Opportunities Pipeline | `GET /api/crm/opportunities` | `ListCrmOpportunitiesQuery` | `ListCrmOpportunitiesQueryHandler` | `CrmOpportunity`, `CrmAccount` | — | `CrmOpportunityCreated` | `CRM.Account.Read` | `ListCrmOpportunitiesQueryHandlerTests` |
 | Sales | Proposals & Quotes | `GET /api/crm/proposals` | `ListCrmProposalsQuery` | `ListCrmProposalsQueryHandler` | `CrmProposal`, `CrmProposalItem` | `CrmProposalApproval` | `CrmProposalCreated` | `CRM.Proposal.Read` | `ListCrmProposalsQueryHandlerTests` |
 | Sales | Sales Orders | `GET /api/sales/orders` | `ListSalesOrdersQuery` | `ListSalesOrdersQueryHandler` | `SalesOrder`, `SalesOrderItem` | — | `SalesOrderCreated` | `Sales.Order.Read` | `ListSalesOrdersQueryHandlerTests` |
-| Sales | Customer Accounts (segment, status) | `GET /api/crm/accounts` | `ListCrmAccountsQuery` | `ListCrmAccountsQueryHandler` | `CrmAccount`, `CrmContact` | — | `CrmAccountCreated`, `CrmAccountUpdated` | `CRM.Account.Read` | `ListCrmAccountsQueryHandlerTests` |
-| Sales | Targets & Performance | `GET /api/sales/targets` | `ListSalesTargetsQuery` | `ListSalesTargetsQueryHandler` | `SalesTarget`, `CrmActivity` | — | `PerformanceKPIValueUpdated` | `Sales.ControlTower.View`, `CRM.Activity.Read` | `ListSalesTargetsQueryHandlerTests` |
+| Sales | Customer Accounts | `GET /api/crm/accounts` | `ListCrmAccountsQuery` | `ListCrmAccountsQueryHandler` | `CrmAccount`, `CrmContact` | — | `CrmAccountCreated` | `CRM.Account.Read` | `ListCrmAccountsQueryHandlerTests` |
+| Sales | Targets & Performance | `GET /api/sales/targets` | `ListSalesTargetsQuery` | `ListSalesTargetsQueryHandler` | `SalesTarget`, `SalesActivityLog` | — | `PerformanceKPIValueUpdated` | `Sales.ControlTower.View` | `ListSalesTargetsQueryHandlerTests` |
 | Sales | Sales Reports (detay) | `GET /api/sales/reports` | `ListSalesReportsQuery` | `ListSalesReportsQueryHandler` | reporting metadata | — | — | `Sales.ControlTower.View` | `ListSalesReportsQueryHandlerTests` |
 
 ### Aksiyon komutları
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
-| Sales | Fırsat oluşturma | `POST /api/crm/opportunities` | `CreateCrmOpportunityCommand` | `CreateCrmOpportunityCommandHandler` | `CrmOpportunity` | — | `CrmOpportunityCreated` | `CRM.Opportunity.Write` | `CreateCrmOpportunityCommandHandlerTests` |
-| Sales | Teklif oluşturma | `POST /api/crm/proposals` | `CreateCrmProposalCommand` | `CreateCrmProposalCommandHandler` | `CrmProposal`, `CrmProposalItem` | — | `CrmProposalCreated` | `CRM.Proposal.Write` | `CreateCrmProposalCommandHandlerTests` |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
+| Sales | Fırsat oluşturma | `POST /api/crm/opportunities` | `CreateCrmOpportunityCommand` | `CreateCrmOpportunityCommandHandler` | `CrmOpportunity` | — | `CrmOpportunityCreated` | `CRM.Account.Write` | `CreateCrmOpportunityCommandHandlerTests` |
 | Sales | Teklif onayı | `POST /api/crm/proposals/{id}/approve` | `ApproveCrmProposalCommand` | `ApproveCrmProposalCommandHandler` | `CrmProposal` | `CrmProposalApproval` | `CrmProposalApproved` | `CRM.Proposal.Approve` | `ApproveCrmProposalCommandHandlerTests` |
 | Sales | Sipariş oluşturma | `POST /api/sales/orders` | `CreateSalesOrderCommand` | `CreateSalesOrderCommandHandler` | `SalesOrder`, `SalesOrderItem` | — | `SalesOrderCreated`, `SalesOrderConfirmed` | `Sales.Order.Write` | `CreateSalesOrderCommandHandlerTests` |
 
@@ -183,8 +182,8 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 
 ### Shell & ortak kontroller
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
 | Finance | Sol dikey menü + kule geçişleri | `GET /api/control-tower/finance/navigation` | `GetFinanceNavigationQuery` | `GetFinanceNavigationQueryHandler` | — (RBAC) | — | — | `Finance.ControlTower.View` | `GetFinanceNavigationQueryHandlerTests` |
 | Finance | Rol bazlı kullanıcı / profil alanı | `GET /api/control-tower/finance/profile` | `GetFinanceProfileContextQuery` | `GetFinanceProfileContextQueryHandler` | `User`, `Role` | — | `UserLoggedIn` | `Finance.ControlTower.View` | `GetFinanceProfileContextQueryHandlerTests` |
 | Finance | Export / Filter / Date controls | `GET /api/control-tower/finance/export` | `ExportFinanceDashboardQuery` | `ExportFinanceDashboardQueryHandler` | read models | — | — | `Finance.ControlTower.View` | `FinanceControlTowerApiTests` |
@@ -192,8 +191,8 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 
 ### Standart dashboard widget'ları
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
 | Finance | Executive Snapshot | `GET /api/control-tower/finance/snapshot` | `GetFinanceExecutiveSnapshotQuery` | `GetFinanceExecutiveSnapshotQueryHandler` | `FinancePayment`, `BankAccount` | — | `FinancePaymentCompleted` | `Finance.ControlTower.View` | `GetFinanceExecutiveSnapshotQueryHandlerTests` |
 | Finance | Today's Priorities | `GET /api/control-tower/finance/priorities/today` | `GetFinanceTodayPrioritiesQuery` | `GetFinanceTodayPrioritiesQueryHandler` | `FinancePayment`, `FinanceJournalEntry`, `BankReconciliation` | — | `FinanceJournalEntryCreated` | `Finance.JournalEntry.Read`, `Finance.Payment.Write` | `GetFinanceTodayPrioritiesQueryHandlerTests` |
 | Finance | Critical Alerts | `GET /api/control-tower/finance/alerts/critical` | `GetFinanceCriticalAlertsQuery` | `GetFinanceCriticalAlertsQueryHandler` | `FinanceInvoice`, `BudgetLine`, `TaxDeclaration` | — | `FinanceInvoiceCreated` | `Finance.ControlTower.View` | `GetFinanceCriticalAlertsQueryHandlerTests` |
@@ -207,8 +206,8 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 
 ### KPI kartları
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
 | Finance | KPI — Günlük Nakit Pozisyonu | `GET /api/control-tower/finance/kpis/daily-cash` | `GetFinanceKpiDailyCashQuery` | `GetFinanceKpiDailyCashQueryHandler` | `BankAccount`, `CashVault` | — | `FinancePaymentCompleted` | `Finance.ControlTower.View`, `Finance.Payment.Read` | `GetFinanceKpiDailyCashQueryHandlerTests` |
 | Finance | KPI — Toplam Alacak | `GET /api/control-tower/finance/kpis/receivables` | `GetFinanceKpiReceivablesQuery` | `GetFinanceKpiReceivablesQueryHandler` | `FinanceInvoice` | — | `FinanceInvoiceCreated` | `Finance.ControlTower.View`, `Finance.Invoice.Read` | `GetFinanceKpiReceivablesQueryHandlerTests` |
 | Finance | KPI — Toplam Borç | `GET /api/control-tower/finance/kpis/payables` | `GetFinanceKpiPayablesQuery` | `GetFinanceKpiPayablesQueryHandler` | `FinanceInvoice`, `FinancePayment` | — | `FinancePaymentCompleted` | `Finance.ControlTower.View`, `Finance.Payment.Read` | `GetFinanceKpiPayablesQueryHandlerTests` |
@@ -220,8 +219,8 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 
 ### Menü alt ekranları
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
 | Finance | Cash Position | `GET /api/finance/cash-position` | `GetFinanceCashPositionQuery` | `GetFinanceCashPositionQueryHandler` | `BankAccount`, `CashVault` | — | `FinancePaymentCompleted` | `Finance.ControlTower.View` | `GetFinanceCashPositionQueryHandlerTests` |
 | Finance | Receivables & Payables | `GET /api/finance/receivables-payables` | `GetFinanceReceivablesPayablesQuery` | `GetFinanceReceivablesPayablesQueryHandler` | `FinanceInvoice`, `FinancePayment` | — | `FinanceInvoiceCreated` | `Finance.Invoice.Read` | `GetFinanceReceivablesPayablesQueryHandlerTests` |
 | Finance | Journal Entries | `GET /api/finance/journal-entries` | `ListFinanceJournalEntriesQuery` | `ListFinanceJournalEntriesQueryHandler` | `FinanceJournalEntry`, `FinanceJournalEntryLine` | `FinanceJournalEntryPosting` | `FinanceJournalEntryCreated` | `Finance.JournalEntry.Read` | `ListFinanceJournalEntriesQueryHandlerTests` |
@@ -233,8 +232,8 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 
 ### Aksiyon komutları
 
-| Control Tower | Widget | API | Query/Command | Handler | Entity | Workflow | Event | Permission | Test |
-| ------------- | ------ | --- | ------------- | ------- | ------ | -------- | ----- | ---------- | ---- |
+| Control Tower | Widget / Feature | API Endpoint | Query / Command | Handler | Entity | Workflow | Domain Event | Permission | Test |
+| ------------- | ---------------- | ------------ | --------------- | ------- | ------ | -------- | ------------ | ---------- | ---- |
 | Finance | Yevmiye fişi post | `POST /api/finance/journal-entries/{id}/post` | `PostFinanceJournalEntryCommand` | `PostFinanceJournalEntryCommandHandler` | `FinanceJournalEntry` | `FinanceJournalEntryPosting` | `FinanceJournalEntryPosted` | `Finance.JournalEntry.Post` | `PostFinanceJournalEntryCommandHandlerTests` |
 | Finance | Fatura oluştur | `POST /api/finance/invoices` | `CreateFinanceInvoiceCommand` | `CreateFinanceInvoiceCommandHandler` | `FinanceInvoice`, `FinanceInvoiceLine` | — | `FinanceInvoiceCreated` | `Finance.Invoice.Write` | `CreateFinanceInvoiceCommandHandlerTests` |
 | Finance | Ödeme / tahsilat kaydı | `POST /api/finance/payments` | `CreateFinancePaymentCommand` | `CreateFinancePaymentCommandHandler` | `FinancePayment` | — | `FinancePaymentCompleted` | `Finance.Payment.Write` | `CreateFinancePaymentCommandHandlerTests` |
@@ -258,12 +257,37 @@ Her widget için **ekran → API → handler → entity → workflow → event �
 | Control Tower | Widget satırı | Sprint |
 |---------------|---------------|--------|
 | CEO | 32 | 2A |
-| Sales | 30 | 2A |
+| Sales | 29 | 2A |
 | Finance | 31 | 2B |
-| **Toplam** | **93** | Sprint 2 gate |
+| **Toplam** | **92** | Sprint 2 gate |
 
 **Phase 2:** Kule 4–16 (HR, Production, QC, Logistics, …) ayrı task ile genişletilecektir.
 
 ---
 
-*Task 009 — Agent 2 Product Engineering. Kod veya hassas veri içermez.*
+## Legacy Epic Referansları (Agent 6 — Task 022 v2.0)
+
+Her widget/entity implementasyonu öncesi `docs/legacy/` paketine bakılır.  
+Kanonik epic listesi: `EPIC_MIGRATION_PLAN.md` · Gap: `DOMAIN_GAP_ANALYSIS.md`
+
+| Sprint gate widget grubu | Birincil Epic | Legacy bilgi kaynağı |
+|--------------------------|---------------|----------------------|
+| CEO / Sales / Finance CT shell + KPI | EPIC-LEG-007 | LEGACY_DASHBOARDS.md |
+| CRM Account / Contact / Opportunity | EPIC-LEG-002 | LEGACY_ENTITY_CATALOG.md |
+| Proposal + onay | EPIC-LEG-003, EPIC-LEG-011 | LEGACY_WORKFLOWS.md, BUSINESS_RULE_MIGRATION_MATRIX.md |
+| SalesOrder + backlog KPI | EPIC-LEG-004 | DOMAIN_GAP_ANALYSIS.md |
+| Finance journal / invoice / payment | EPIC-LEG-005, EPIC-LEG-006 | LEGACY_ALGORITHMS.md (ALG-16) |
+| Document numbering (CR-/PR-) | EPIC-LEG-022 | LEGACY_DATABASE_PATTERNS.md |
+| Inventory / PO / receipt | EPIC-LEG-010 | LEGACY_BUSINESS_RULES.md §3 |
+| BOM / MRP / costing | EPIC-LEG-013 | LEGACY_ALGORITHMS.md |
+| Textile / Sample / Merchandising | EPIC-LEG-016 | LEGACY_TEXTILE_KNOWLEDGE.md |
+| QC / AQL KPI | EPIC-LEG-017 | LEGACY_TEXTILE_KNOWLEDGE.md |
+| Import / reporting | EPIC-LEG-008 | LEGACY_INTEGRATIONS.md |
+| Marketplace / e-belge | EPIC-LEG-021 | LEGACY_INTEGRATIONS.md |
+| i18n CT strings | EPIC-LEG-015 | LOCALIZATION_I18N_STANDARDS.md + legacy i18n discovery |
+
+**Kural:** Traceability satırı "Implemented" işaretlenmeden önce ilgili epic'in `BUSINESS_RULE_MIGRATION_MATRIX.md` satırları "Spec ready" veya "Ported" olmalıdır.
+
+---
+
+*Task 009 — Agent 2 Product Engineering. Task 022 v2.0 — Agent 6 Legacy Epic cross-ref.*
