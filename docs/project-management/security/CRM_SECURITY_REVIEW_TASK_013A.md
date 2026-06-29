@@ -51,7 +51,7 @@ CRM yetki seti ile `SECURITY_AUTHORIZATION.md` üzerinde güncellenmiş izin mat
     *   Tüm CRM sınıfları (`CrmAccount`, `CrmContact`, `CrmOpportunity`, `CrmProposal`, `CrmProposalItem`, `CrmActivity`) `IHasTenant` arayüzünü uyguladığından, EF Core seviyesinde otomatik izolasyon altına alınmıştır.
     *   `CrmPersistenceTests.cs` altındaki `CrmEntities_MultiTenancy_IsolationWorks` integration testi ile kiracılar arası izolasyonun (Tenant A verisine Tenant B'nin erişememesi durumu) hatasız çalıştığı doğrulanmıştır.
 *   **Kalan Risk ve Tavsiye:**
-    *   Ham SQL veya Dapper üzerinden yazılapbilecek Control Tower sorgularında query filter devreye girmediğinden, bu sorgularda `TenantId` filtresinin elle yazılması zorunlu tutulmalıdır.
+    *   Ham SQL veya Dapper üzerinden yazılabilecek Control Tower sorgularında query filter devreye girmediğinden, bu sorgularda `TenantId` filtresinin elle yazılması zorunlu tutulmalıdır.
 
 ---
 

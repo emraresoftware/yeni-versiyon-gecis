@@ -16,10 +16,27 @@ Chief Architect (ChatGPT) → ARCHITECT_REVIEW_TASK_XXX.md   ← Agent 1/2 YAZMA
 
 ## Rol ayrımı
 
+| Ajan | Private Repo | Public Repo |
+|------|--------------|-------------|
+| Agent 1 | ✅ Kod + Commit | ✅ Rapor |
+| Agent 2 | ❌ | ✅ QA |
+| Agent 3 | ❌ | ✅ Product Docs |
+| Agent 4 | ❌ | ✅ Security Docs |
+| Agent 5 | ❌ | ✅ UX Docs |
+| **Agent 6** | 👀 Sadece Okur | ✅ Legacy Dokümanları (`docs/legacy/`) |
+| Chief Architect | ❌ | ✅ Architect Review |
+
+Detay: public repo `docs/legacy/README.md` v2.1
+
+---
+
+## Rol ayrımı (yazar / yazmaz)
+
 | Rol | Yazar | Yazmaz |
 |-----|--------|--------|
 | **Agent 1** | Kod, `TASK_XXX_REPORT.md`, sprint | QA, **Architect Review** |
 | **Agent 2** | `QA_TASK_XXX.md`, risk, debt, daily | Kod, commit, **Architect Review** |
+| **Agent 6** | Public: `docs/legacy/` + TASK raporu (👀 private sadece okur) | Kod, private commit, migration, QA, Architect Review |
 | **Chief Architect** | `ARCHITECT_REVIEW_TASK_XXX.md` | Uygulama kodu |
 
 ---
@@ -46,5 +63,8 @@ docs/project-management/
 ├── sprints/     SPRINT_N.md               (Agent 1)
 ├── risks/       RISK_REGISTER.md
 ├── debt/        TECHNICAL_DEBT.md
-└── daily/       YYYY-MM-DD.md             (Agent 2)
+├── daily/       YYYY-MM-DD.md             (Agent 2)
+└── legacy/      arşiv (TASK 021) — kanonik: public repo docs/legacy/
 ```
+
+Agent 6 charter (kanonik): **public repo** `docs/legacy/README.md` · Private arşiv: [`legacy/README.md`](legacy/README.md)

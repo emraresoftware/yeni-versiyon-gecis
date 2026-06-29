@@ -1,0 +1,129 @@
+# Legacy scan manifest — Agent 6
+# Tek kaynak: yeni taramalarda önce bu liste, sonra incremental find.
+# Hassas veri (şifre, token, müşteri PII) dokümana yazılmaz.
+
+version: "1.0"
+updated: "2026-06-28"
+
+# Elyafgroup repo içi — BOS hedef (READ ONLY analiz)
+bos_canonical:
+  root: /Users/emre/Elyafgroup
+  architecture_docs:
+    - docs/product/DOMAIN_MODEL.md
+    - docs/product/CONTROL_TOWER_FINAL_SCOPE.md
+    - docs/product/FEATURE_TRACEABILITY_MATRIX.md
+    - Yeni versiyon geçiş/ANAYASA.md
+    - Yeni versiyon geçiş/DOMAIN_MODEL.md
+    - AGENTS.md
+
+# Birincil legacy kaynaklar (canonical — duplicate sayma)
+canonical:
+  - path: /Users/emre/Elyafgroup
+    role: bos_target
+    note: Aktif .NET 8 + Next.js platform
+
+  - path: /Users/emre/Dergah/Emare projeler/Emare Finance
+    role: finance_production
+    note: Finans, BOM, MRP, stok — birincil Laravel ERP
+
+  - path: /Users/emre/Dergah/Emare projeler/emarerp/emare-crm
+    role: crm_workflow
+    note: CRM, onay, Blueprint, 186 model
+
+  - path: /Users/emre/Dergah/Emare projeler/Emare saloon
+    role: retail_service_erp
+    note: Perakende/hizmet ERP, kasa observer
+
+  - path: /Users/emre/Dergah/Emare projeler/Emare pazar
+    role: marketplace
+    note: 14 marketplace adapter
+
+  - path: /Users/emre/Dergah/Emare projeler/emareasistan
+    role: omnichannel_assistant
+    note: FastAPI, workflow, RAG
+
+  - path: /Users/emre/Dergah/Emare projeler/emarepos/pos-system
+    role: pos_retail
+    note: POS, restoran, tenant SaaS
+
+  - path: /Users/emre/Dergah/Emare projeler/emarecc
+    role: call_center
+    note: Tahsilat CC, Asterisk
+
+  - path: /Users/emre/emarecallcenter
+    role: call_center_prod
+    note: emarecc prod fork — kod için emarecc yeterli
+
+  - path: /Users/emre/Genel/Floragenix_CRM
+    role: b2b_crm
+    note: Lead, proposal, dealer hierarchy
+
+  - path: /Users/emre/Desktop/raporlama/raporlama-app
+    role: reporting_import
+    note: Rapor suite + DataImportBatch
+
+  - path: /Users/emre/Desktop/ecomaiq
+    role: ecommerce_qa
+    note: Trendyol soru-cevap
+
+  - path: /Users/emre/Dergah/Emare projeler/translation-manager
+    role: i18n_central
+    note: Filament çeviri paneli
+
+  - path: /Users/emre/yeni-versiyon-gecis
+    role: architecture_public
+    note: ADR, traceability — doküman only
+
+# Arşiv snapshot (2026-03-09 bulk; emarepos 2026-03-22 istisna)
+archive:
+  root: /Users/emre/Dergah/Emare projeler/tüm projeler/26.03.2026
+  high_value:
+    - emarepos
+    - emareciftlik
+    - emareaplincedesk
+    - emaretedarik
+    - emarepazar
+    - emareflow
+  note: Arşiv kopyaları; aktif path varsa canonical tercih edilir
+
+# Duplicate — envanterde SAYMA
+dedup:
+  - pattern: "**/Dervisler/**"
+    action: ignore
+    reason: emareapi agent workspace kopyası
+
+  - pattern: "**/.git/worktrees/**"
+    action: ignore
+    reason: Elyafgroup worktree
+
+  - pattern: "**/.windsurf/worktrees/**"
+    action: ignore
+
+  - pattern: "**/.claude/worktrees/**"
+    action: ignore
+
+  - pattern: "**/node_modules/**"
+    action: ignore
+
+  - pattern: "**/vendor/**"
+    action: ignore
+
+  - path: /Users/emre/Dergah/Emare projeler/emarerp/Emare Finance
+    action: ignore
+    reason: Obsolete; standalone Emare Finance kullan
+
+  - path: /Users/emre/Desktop/Emare Ticket 17.03.18
+    action: ignore
+    reason: Snapshot; Elyafgroup tercih
+
+  - path: /Users/emre/emarecallcenter
+    duplicate_of: /Users/emre/Dergah/Emare projeler/emarecc
+    action: ignore_unless_prod_data
+
+# Incremental tarama
+scan_commands:
+  git_repos: |
+    find /Users/emre/Dergah -maxdepth 5 -type d -name '.git' 2>/dev/null \
+      | grep -v node_modules | sed 's|/.git||' | sort -u
+  manifests: |
+    find {paths} -maxdepth 4 \( -name composer.json -o -name '*.sln' -o -name requirements.txt \) 2>/dev/null

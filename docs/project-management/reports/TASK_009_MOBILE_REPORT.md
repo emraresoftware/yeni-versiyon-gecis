@@ -28,6 +28,8 @@ None (refactored and added code within existing classes/layouts).
 - **Hybrid WebView Synchronization:** Instead of recreating the 18 demo scenarios and their dynamic parameters in Android Kotlin native UI (which would require a new APK compile and reinstall for every small change), we utilized the live webapp route `/demo-agent`.
 - **Zustand LocalStorage Injection:** On WebView load, the native app dynamically serializes the logged-in user's credentials and tokens from SharedPreferences and injects them directly into the WebView's `localStorage` (key: `auth-storage`). This ensures the user is logged in instantly without seeing any login prompts.
 - **Compatibility Methods:** Maintained old methods (`saveCredentials`, etc.) with safe fallbacks in `SessionManager` so that other modules (like `RegisterActivity`) compile successfully.
+- **Case-Insensitive Email Casing & Keyboard Tuning:** Mobile keyboards by default auto-capitalize the first letter, which causes PostgreSQL login queries to fail. We enforced automatic lowercase formatting on the email string on the client side.
+- **API Error Body Parser:** Intercepted and parsed `response.errorBody()` inside the API response handler to extract the exact backend exception messages (e.g., account locked, wrong credentials) and toast them directly to the user.
 
 ## Dependencies Added
 None.

@@ -13,9 +13,6 @@
 
 Bu doküman, private kod reposu (`emaredestek/emaredestek`) Chief Software Architect (ChatGPT) tarafından tam denetime açıldığında yapılacak mimari ve güvenlik denetiminin kapsamını ve kontrol listesini belirler. Denetimlerin standardizasyonu ve hiçbir kritik açığın gözden kaçmaması için bu kontrol listesindeki her madde tek tek doğrulanacaktır.
 
-> [!IMPORTANT]
-> Kod reposu geçici public açıldığında deploy, scripts, compose, database, asterisk, node_modules ve secret/config dosyaları riskli kabul edilir. Full repo review sırasında ilk kontrol Repository Security Review olacaktır.
-
 ---
 
 ## 🛡️ 1. Repository Security Review

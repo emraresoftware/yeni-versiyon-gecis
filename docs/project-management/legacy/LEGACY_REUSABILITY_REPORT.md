@@ -223,9 +223,15 @@ Detaylı tablo: `LEGACY_BUSINESS_RULES.md`
 
 ## Dosya Konumu
 
-**Kanonik (Agent 6 yazma alanı):** public repo `emraresoftware/yeni-versiyon-gecis` → `docs/legacy/`
+Bu analiz yalnızca yerel workspace'te tutulur:
 
-Private repo (`Elyafgroup`) yalnızca redirect README tutar; tam mirror kullanılmaz.
+```
+/Users/emre/Elyafgroup/docs/project-management/legacy/
+├── LEGACY_PROJECT_INVENTORY.md
+├── LEGACY_ENTITY_CATALOG.md
+├── LEGACY_BUSINESS_RULES.md
+└── LEGACY_REUSABILITY_REPORT.md
+```
 
 Public repo (`emraresoftware/yeni-versiyon-gecis`) — mimari referans olarak TASK 021-B'de incelendi; kod eklenmedi.
 

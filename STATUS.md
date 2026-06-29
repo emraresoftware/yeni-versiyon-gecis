@@ -8,13 +8,13 @@ Bu dosya, ERP geçiş sürecinde yer alan 7 ajanın ve modüllerinin anlık duru
 
 | Ajan ID | Rol / Departman | Sorumlu Ajan | Durum | Açıklama |
 |---------|-----------------|--------------|-------|----------|
-| **A1**  | CEO / Executive | Ajan 1 | `BEKLIYOR` | Stratejik yönetim ve karar modülleri |
+| **A1**  | CEO / Executive | Ajan 1 (Antigravity) | `TAMAM` | Stratejik yönetim ve karar modülleri (Task 028) |
 | **A2**  | Sales Manager | Ajan 2 | `TAMAM` | Müşteriler, Fırsatlar, Teklifler ve Satışlar |
 | **A3**  | Finance Manager / Security & CRM Plan | Ajan 3 | `TAMAM` | Güvenlik İncelemesi & CRM Planlama (Task 010, 013 tamamlandı) |
 | **A4**  | HR & Admin / CRM Security Review | Ajan 4 | `TAMAM` | İzin Yönetimi & CRM Güvenlik Denetimi (Task 011, 013A tamamlandı) |
 | **A5**  | Production / İmalat | Antigravity (Ajan 5) | `TAMAM` | Üretim Dashboard veri entegrasyonu, API doğrulaması ve Testler |
-| **A6**  | QC (Quality Control) | Ajan 6 | `BEKLIYOR` | Kalite ve Hata Bildirimleri |
-| **A7**  | Logistics / Sevkiyat | Ajan 7 | `BEKLIYOR` | Sevkiyat ve Lojistik Planlama |
+| **A6**  | QC (Quality Control) | Ajan 6 (Antigravity) | `TAMAM` | Kalite ve Hata Bildirimleri (Task 028) |
+| **A7**  | Logistics / Sevkiyat | Ajan 7 (Antigravity) | `TAMAM` | Sevkiyat ve Lojistik Planlama (Task 028) |
 
 ---
 

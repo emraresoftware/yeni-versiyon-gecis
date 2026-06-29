@@ -1,8 +1,8 @@
 # Sprint 2 — Control Tower (CEO · Sales · Finance)
 
 **Başlangıç:** Sprint 1 platform çekirdeği tamamlandı (Task 001–008A)  
-****Son güncelleme:** 2026-06-28  
-**İlerleme:** **42%** (CRM CQRS Application Layer ve IMAP Sync tamamlandı)
+**Son güncelleme:** 2026-06-29  
+**İlerleme:** **58%** (CEO, QC ve Logistics V2 entegrasyonu tamamlandı)
 
 ---
 
@@ -31,9 +31,14 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task 013A** | Agent 1 (Dev) | [TASK_013A_CRM_HARDENING_REPORT.md](../reports/TASK_013A_CRM_HARDENING_REPORT.md) | CRM Domain + Persistence Hardening | ✅ Tamamlandı |
 | **Task 013A Security** | Agent 4 (Sec) | [TASK_013A_REPORT.md](../reports/TASK_013A_REPORT.md) | [CRM_SECURITY_REVIEW_TASK_013A.md](../security/CRM_SECURITY_REVIEW_TASK_013A.md) | ✅ Tamamlandı |
 | **Task 014** | Agent 1 (Dev) | [TASK_014_REPORT.md](../reports/TASK_014_REPORT.md) | CRM Application Layer (CQRS Commands, Queries, Handlers, DTOs, Validators) | ✅ Tamamlandı |
+| **Task 015** | Agent 1 (Dev) | [TASK_015_CRM_API_REPORT.md](../reports/TASK_015_CRM_API_REPORT.md) | CRM REST API Endpoints (Controllers + Integration Tests) | ✅ Tamamlandı |
+| **Task 015 QA** | Agent 2 (QA) | [QA_TASK_015.md](../qa/QA_TASK_015.md) | Quality Assurance Review for CRM API layer | ✅ Tamamlandı |
 | **Task 025** | Agent 1 (Dev) | [TASK_025_REPORT.md](../reports/TASK_025_REPORT.md) | Nginx Routing Hotfix for asistan.emarecloud.tr | ✅ Tamamlandı |
 | **Task 026** | Agent 1 (Dev) | [TASK_026_REPORT.md](../reports/TASK_026_REPORT.md) | Dynamic Tenant Resolution Hotfix for SuperAdmin & Anonymous requests | ✅ Tamamlandı |
 | **Task 027** | Agent 1 (Dev) | [TASK_027_REPORT.md](../reports/TASK_027_REPORT.md) | Manual IMAP Sync History Trigger & Date Sync | ✅ Tamamlandı |
+| **Task 028** | Agent 1 (Dev) | [TASK_028_REPORT.md](../reports/TASK_028_REPORT.md) | Elyaf V2 Strategic Rollout (A1, A6, A7 Modules) | ✅ Tamamlandı |
+
+**Task 028 özeti:** Implemented V2 strategic rollout for CEO (A1 Decisions Log), Quality Control (A6 Claims & Test Logs), and Logistics (A7 Warehouse stock levels & double-approval transfer workflow) across backend API and frontend Next.js layers.
 
 **Task 027 özeti:** Implemented manual IMAP email synchronization from a specific start date, adding `ImapSyncStartDate` property, updating `ImapPollerBackgroundService`, and exposing a `POST /api/v1/mail-accounts/{id}/sync-history` endpoint. Also resolved database insert crashes for long emails by truncating ticket descriptions to 5000 characters.
 
@@ -48,6 +53,8 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 **Task 013A özeti:** `CrmProposalItem` child entity'si eklendi. `CrmAccount` NPS/Segment/Risk/Health alanları ve kısıtlamaları uygulandı. CRM izin listesi tamamlandı. 104/104 test başarılı.
 
 **Task 014 özeti:** CRM modülü için CQRS Command, Query, DTO, Validator yapıları ve 117 entegrasyon testinin tamamı yeşil olarak tamamlandı.
+
+**Task 015 özeti:** CRM REST API endpoints and mock-authenticated integration tests implemented successfully under `CrmController` and `CrmControllerTests`. High coverage and strict security permission filters applied.
 
 ---
 
