@@ -6,7 +6,7 @@ This queue holds the prioritized backlog of all sprint and infrastructure tasks.
 
 | Task | Mission | Epic | Owner | Status | Priority | Depends On | Files | Handoff To | Last Updated |
 | ---- | ------- | ---- | ----- | ------ | -------- | ---------- | ----- | ---------- | ------------ |
-| None | None | None | None | None | None | None | None | None | 2026-06-29T13:21:49+03:00 |
+| `TASK_WORKSPACE_SHELL_V1` | `MISSION_005_WORKSPACE_SHELL` | Workspace Shell | Agent 1 | `WAITING_QA` | HIGH | None | `web/src/app/(dashboard)/layout.tsx`, `web/src/components/layout/` | Agent 2 | 2026-06-30T12:41:39+03:00 |
 
 ## Completed Tasks
 
