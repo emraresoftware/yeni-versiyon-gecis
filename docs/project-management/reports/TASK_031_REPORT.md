@@ -4,10 +4,12 @@
 
 1. Görsel senaryo akışı (visual scenario) ile yapılan test aramalarında, veritabanına kaydedilen senaryo grafik verisinin (GraphDataJson) yapay zeka tarafından eksik/kesik üretilip kaydedilmesinden kaynaklanan JSON format bozukluğunun (truncation) tespit edilmesi ve düzeltilmesi.
 2. `VoiceBridgeService` tarafından veritabanından çekilen senaryo grafiğinin doğru şekilde ayrıştırılması ve görsel akıştaki ilk konuşma (speak) düğümünden okunan dinamik karşılama cümlesinin (`greetingText`) santral karşılama ayarına başarıyla enjekte edilmesinin sağlanması.
+3. Özel tasarımlarda karşılama metninin başına ziyaretçi ismi/unvanı eklenmesi gibi otomatik kişiselleştirme adımlarının devre dışı bırakılarak, şablondaki karşılama metninin birebir okunmasının sağlanması.
 
 ## Scope
 
 - `src/EmareTicket.API` (VoiceBridgeService.cs)
+- `gemini-live-standalone` (standalone_bridge.py)
 - `PostgreSQL Database` (VoiceScenarioVersions.GraphDataJson)
 
 ## Files Created
@@ -17,12 +19,14 @@
 ## Files Modified
 
 - `src/EmareTicket.API/Services/VoiceBridgeService.cs`
+- `gemini-live-standalone/standalone_bridge.py`
 
 ## Architecture Decisions
 
 - **Veritabanı JSON Verisi Onarımı:** `06a32a2c-9397-46cc-a95c-4ded9c256f66` ID'li demo senaryosunun `VoiceScenarioVersions` tablosundaki `GraphDataJson` kolonunda bulunan eksik/kesilmiş JSON verisi tespit edilmiştir. JSON dizesinin sonundaki eksik bağlantı dizisi kapatılarak veritabanı kaydı valid bir JSON nesnesine onarılmıştır.
 - **Dinamik Karşılama Enjeksiyonu:** `VoiceBridgeService` içerisinde, görsel senaryo aktif olduğunda grafiğin `nodes` listesindeki ilk `speak` düğümü taranarak içindeki `prompt` metni asenkron olarak okunur ve santral ses köprüsü ayarlarındaki `greetingText` alanına başarıyla enjekte edilir.
 - **Süreç Yönlendirme ve Fallback:** Eğer veri tabanındaki senaryo verisi bir sebeple bozuksa veya yüklenemediyse, sistemin çökmesini engellemek amacıyla try-catch bloklarıyla fallback mekanizması işletilerek standart tenant karşılama metnine güvenli dönüş sağlanmıştır.
+- **Kişiselleştirme Bypass:** `standalone_bridge.py` üzerinde yapılan geliştirmeyle, arama akışı görsel senaryodan (GUID) tetiklendiğinde `is_custom_scenario` bayrağı aktif edilerek karşılama metninin başına müşteri ismi, 'merhaba' kelimesi veya unvan ekleyen otomatik kişiselleştirme bloğu bypass edilmiş ve kullanıcının tasarladığı şablon metninin birebir okunması sağlanmıştır.
 
 ## Dependencies Added
 

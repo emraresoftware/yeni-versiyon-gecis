@@ -33,6 +33,7 @@
 ## API
 
 - `/api/voice-bridge/call-session` endpoint'inin HTTP 200 yanıtı ile doğru JSON şemasını (`agentSystemPromptOverride` ve `agentCustomSettingsJson.greetingText` alanları doldurulmuş şekilde) döndürdüğü entegrasyon seviyesinde doğrulanmıştır.
+- `standalone-voice-bridge` Python ses köprüsü entegrasyonunda, görsel senaryo (GUID) aramalarında karşılama metninin başına otomatik müşteri adı/unvanı/merhaba kelimesi eklenmesi adımı başarıyla kapatılmış (bypass edilmiş) ve şablondaki karşılama cümlesinin birebir okunması doğrulanmıştır.
 
 ## Test Coverage
 
