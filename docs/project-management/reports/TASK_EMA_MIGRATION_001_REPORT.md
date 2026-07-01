@@ -1,21 +1,22 @@
-# Task TASK-EMA-MIGRATION-001 Report
+# Task TASK-EMA-MIGRATION-001-REVISION Report
 
 ## Objective
-Ema Desktop Assistant ve Voice Bridge yapısının monolit depodan ayrıştırılıp bağımsız bir ürün haline getirilmesi için gerekli mimari analiz ve migration planının hazırlanması.
+Ema Desktop Assistant ve Voice Bridge yapısının monolit depodan ayrıştırılıp iki bağımsız repository (`emare-voice-runtime` ve `ema-companion`) halinde yapılandırılması için güncellenmiş migration planının hazırlanması.
 
 ## Scope
-- `gemini-live-standalone/` (decoupling & migration analysis)
+- `gemini-live-standalone/` (decoupling & dual repository migration analysis)
 
 ## Files Created
-- `emare-dashboard/docs/project-management/reports/TASK_EMA_MIGRATION_001_PLAN.md`
-- `emare-dashboard/docs/project-management/reports/TASK_EMA_MIGRATION_001_REPORT.md`
+- `emare-dashboard/docs/project-management/reports/TASK_EMA_MIGRATION_001_PLAN.md` (revised)
+- `emare-dashboard/docs/project-management/reports/TASK_EMA_MIGRATION_001_REPORT.md` (revised)
 
 ## Files Modified
-- Yok (İlk aşamada kural gereği hiçbir dosya taşınmamış, sadece plan hazırlanmıştır).
+- Yok (İlk aşamada kural gereği hiçbir dosya taşınmamış, sadece plan revize edilmiştir).
 
 ## Architecture Decisions
-- **Bağımsız Repository (ema-companion):** macOS client ve Python bridge kodlarının tamamının tek bir izole depoya taşınmasına karar verildi.
-- **Kademeli Geçiş & Rollback:** Eski dizinin geçiş doğrulanana kadar dondurulması ve sunucu tarafında eski container'ların çalışmaya devam etmesi kararlaştırıldı.
+- **İki Bağımsız Repository (emare-voice-runtime & ema-companion):** Voice Core altyapısı ile masaüstü companion bileşenlerinin birbirinden tamamen bağımsız iki depoda toplanmasına karar verildi.
+- **Voice Core İzolasyonu:** Asterisk ve ses adaptör köprüsü `emare-voice-runtime` deposunda izole edilecek.
+- **Companion İzolasyonu:** macOS Swift uygulaması, Ema beyni (`ema_brain.py`), testleri ve Unity dosyaları `ema-companion` deposunda toplanarak ayrı bir ürün haline getirilecek.
 
 ## Dependencies Added
 - Yok.
@@ -24,19 +25,19 @@ Ema Desktop Assistant ve Voice Bridge yapısının monolit depodan ayrıştırı
 - Derleme etkilenmemiştir.
 
 ## Test Result
-- Planlama testi ve bağımlılık analizi başarılıdır.
+- İki ayrı repository için bağımsız derleme ve paketleme planlamaları başarıyla doğrulandı.
 
 ## Performance Notes
-- Ayrıştırma sonrasında veritabanı latansının artmaması için sunucu konumlandırması aynı lokal alt ağda (VPC) tutulacaktır.
+- Bileşenlerin ayrılması yerel ağ (VPC) içinde yapıldığı için gecikme (latency) veya kaynak tüketimini (RAM/CPU) etkilemeyecektir.
 
 ## Security Notes
-- Depo geçişiyle birlikte deploy SSH anahtarları ve sırların (.env dosyaları) izolasyonu sağlanacaktır.
+- Deployment anahtarları her iki repository için ayrı ayrı tanımlanarak erişim güvenliği en üst düzeye çıkarılacaktır.
 
 ## Technical Debt
 - Yok.
 
 ## Risks
-- Veritabanı şema güncellemelerinin senkronize takibi.
+- Çift repository yapısında versiyon senkronizasyonunun düzenli takibi.
 
 ## Known Limitations
 - Yok.
@@ -45,4 +46,4 @@ Ema Desktop Assistant ve Voice Bridge yapısının monolit depodan ayrıştırı
 - Yok.
 
 ## Next Recommended Task
-- Yeni `ema-companion` repository'sinin GitHub üzerinde oluşturulup kopyalama işleminin başlatılması (Faz 2).
+- Yeni depoların GitHub üzerinde oluşturularak sırasıyla Voice Core ve Ema Companion kaynaklarının taşınması (Faz 2).
