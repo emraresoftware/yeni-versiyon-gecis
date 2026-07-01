@@ -2,7 +2,7 @@
 
 **Başlangıç:** Sprint 1 platform çekirdeği tamamlandı (Task 001–008A)  
 **Son güncelleme:** 2026-07-01  
-**İlerleme:** **60%** (CEO, QC ve Logistics V2 entegrasyonu tamamlandı)
+**İlerleme:** **61%** (CEO, QC ve Logistics V2 entegrasyonu tamamlandı)
 
 ---
 
@@ -42,6 +42,9 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task 033** | Agent 1 (Dev) | [TASK_033_REPORT.md](../reports/TASK_033_REPORT.md) | Next.js TypeError & 401 Robustness Mappings Hotfix | ✅ Tamamlandı |
 | **Task 034** | Agent 1 (Dev) | [TASK_034_REPORT.md](../reports/TASK_034_REPORT.md) | CRM Redirect Loop and SuperAdmin Dashboard Access | ✅ Tamamlandı |
 | **Task 035** | Agent 1 (Dev) | [TASK_035_REPORT.md](../reports/TASK_035_REPORT.md) | Voice Bridge Barge-in & Echo Suppression Optimization | ✅ Tamamlandı |
+| **Task 036** | Agent 1 (Dev) | [TASK_036_REPORT.md](../reports/TASK_036_REPORT.md) | Gemini Live Playout Starvation & Supervisor Bypass | ✅ Tamamlandı |
+
+**Task 036 özeti:** Gemini Live telefon görüşmelerinde playout underflow durumlarında oluşan 6.25 Hz robotik ses chattering'i çözüldü (consecutive underflows model). Canlı ses kanalına yapılan Supervisor/Teacher enjeksiyonları bypass edilerek barge-in çakışmaları ve token bloat'u giderildi.
 
 **Task 035 özeti:** Görüşme esnasındaki yankı kaynaklı asistan kesilmelerini (self-interruption) ve lag problemlerini çözmek için barge-in süresi 40ms'den 240ms'ye çıkarıldı. Asistan konuşurken mikrofona yansıyan ses yankısının Gemini VAD motorunu tetiklememesi için sessizlik filtreli echo suppression entegre edildi.
 
