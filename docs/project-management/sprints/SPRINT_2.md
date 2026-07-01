@@ -43,6 +43,9 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task 034** | Agent 1 (Dev) | [TASK_034_REPORT.md](../reports/TASK_034_REPORT.md) | CRM Redirect Loop and SuperAdmin Dashboard Access | ✅ Tamamlandı |
 | **Task 035** | Agent 1 (Dev) | [TASK_035_REPORT.md](../reports/TASK_035_REPORT.md) | Voice Bridge Barge-in & Echo Suppression Optimization | ✅ Tamamlandı |
 | **Task 036** | Agent 1 (Dev) | [TASK_036_REPORT.md](../reports/TASK_036_REPORT.md) | Gemini Live Playout Starvation & Supervisor Bypass | ✅ Tamamlandı |
+| **Task 036A** | Agent 1 (Dev) | [TASK_036A_REPORT.md](../reports/TASK_036A_REPORT.md) | C# Compile Warnings & Next.js Git Merge Conflict Resolution | ✅ Tamamlandı |
+
+**Task 036A özeti:** C# API'deki CS8604 null referans uyarıları, SuperAdminTenantsController'daki enum ve float tip uyumsuzluğu derleme hataları giderildi. Next.js sayfa ve client dosyalarındaki git merge conflict işaretçileri temizlendi. updates/version indirme url'i dinamik hale getirildi.
 
 **Task 036 özeti:** Gemini Live telefon görüşmelerinde playout underflow durumlarında oluşan 6.25 Hz robotik ses chattering'i çözüldü (consecutive underflows model). Canlı ses kanalına yapılan Supervisor/Teacher enjeksiyonları bypass edilerek barge-in çakışmaları ve token bloat'u giderildi.
 
