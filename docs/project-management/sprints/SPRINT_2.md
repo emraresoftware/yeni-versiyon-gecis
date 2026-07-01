@@ -1,8 +1,8 @@
 # Sprint 2 — Control Tower (CEO · Sales · Finance)
 
 **Başlangıç:** Sprint 1 platform çekirdeği tamamlandı (Task 001–008A)  
-**Son güncelleme:** 2026-06-29  
-**İlerleme:** **58%** (CEO, QC ve Logistics V2 entegrasyonu tamamlandı)
+**Son güncelleme:** 2026-07-01  
+**İlerleme:** **60%** (CEO, QC ve Logistics V2 entegrasyonu tamamlandı)
 
 ---
 
@@ -39,6 +39,9 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task 028** | Agent 1 (Dev) | [TASK_028_REPORT.md](../reports/TASK_028_REPORT.md) | Elyaf V2 Strategic Rollout (A1, A6, A7 Modules) | ✅ Tamamlandı |
 | **Task 031** | Agent 1 (Dev) | [TASK_031_REPORT.md](../reports/TASK_031_REPORT.md) | Visual Scenario Graph JSON Repair,Greeting Text Injection Bypass & Demo Deletion | ✅ Tamamlandı |
 | **Task 032** | Agent 1 (Dev) | [TASK_032_REPORT.md](../reports/TASK_032_REPORT.md) | SuperAdmin Dashboard 403 Console Errors & Recharts Warnings Hotfix | ✅ Tamamlandı |
+| **Task 033** | Agent 1 (Dev) | [TASK_033_REPORT.md](../reports/TASK_033_REPORT.md) | Next.js TypeError & 401 Robustness Mappings Hotfix | ✅ Tamamlandı |
+
+**Task 033 özeti:** Oturum geçişlerinde (impersonation) ve token yenileme anlarında `tenant-admin` ve `home` sayfalarının çökmesini (TypeError) engellemek için dizi eşleme kontrollerine safety wrapper'lar (`?? []`) ekledik. `inboundEmailsData` veri modelindeki API uyuşmazlığı giderildi.
 
 **Task 032 özeti:** SuperAdmin panelindeki 403 Forbidden ve 500 hatalarını (özellikle ToDictionaryAsync mükerrer key sorunu ve eksik tenantId durumları) ve Recharts ResponsiveContainer genişlik/yükseklik uyarılarını minWidth={0} ekleyerek giderdik.
 
