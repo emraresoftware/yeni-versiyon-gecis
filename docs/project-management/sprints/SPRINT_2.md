@@ -37,6 +37,12 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task 026** | Agent 1 (Dev) | [TASK_026_REPORT.md](../reports/TASK_026_REPORT.md) | Dynamic Tenant Resolution Hotfix for SuperAdmin & Anonymous requests | ✅ Tamamlandı |
 | **Task 027** | Agent 1 (Dev) | [TASK_027_REPORT.md](../reports/TASK_027_REPORT.md) | Manual IMAP Sync History Trigger & Date Sync | ✅ Tamamlandı |
 | **Task 028** | Agent 1 (Dev) | [TASK_028_REPORT.md](../reports/TASK_028_REPORT.md) | Elyaf V2 Strategic Rollout (A1, A6, A7 Modules) | ✅ Tamamlandı |
+| **Task 031** | Agent 1 (Dev) | [TASK_031_REPORT.md](../reports/TASK_031_REPORT.md) | Visual Scenario Graph JSON Repair,Greeting Text Injection Bypass & Demo Deletion | ✅ Tamamlandı |
+| **Task 032** | Agent 1 (Dev) | [TASK_032_REPORT.md](../reports/TASK_032_REPORT.md) | SuperAdmin Dashboard 403 Console Errors & Recharts Warnings Hotfix | ✅ Tamamlandı |
+
+**Task 032 özeti:** SuperAdmin panelindeki 403 Forbidden ve 500 hatalarını (özellikle ToDictionaryAsync mükerrer key sorunu ve eksik tenantId durumları) ve Recharts ResponsiveContainer genişlik/yükseklik uyarılarını minWidth={0} ekleyerek giderdik.
+
+**Task 031 özeti:** Görsel senaryo akışı JSON onarımı, karşılama metni enjeksiyonu, özel tasarım karşılama metinlerinde otomatik merhaba/isim bypass'ı ve Demo Ajanı paneline özel akış silme entegrasyonu tamamlandı.
 
 **Task 028 özeti:** Implemented V2 strategic rollout for CEO (A1 Decisions Log), Quality Control (A6 Claims & Test Logs), and Logistics (A7 Warehouse stock levels & double-approval transfer workflow) across backend API and frontend Next.js layers.
 
