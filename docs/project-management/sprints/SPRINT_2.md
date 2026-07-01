@@ -40,12 +40,6 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task 031** | Agent 1 (Dev) | [TASK_031_REPORT.md](../reports/TASK_031_REPORT.md) | Visual Scenario Graph JSON Repair,Greeting Text Injection Bypass & Demo Deletion | ✅ Tamamlandı |
 | **Task 032** | Agent 1 (Dev) | [TASK_032_REPORT.md](../reports/TASK_032_REPORT.md) | SuperAdmin Dashboard 403 Console Errors & Recharts Warnings Hotfix | ✅ Tamamlandı |
 | **Task 033** | Agent 1 (Dev) | [TASK_033_REPORT.md](../reports/TASK_033_REPORT.md) | Next.js TypeError & 401 Robustness Mappings Hotfix | ✅ Tamamlandı |
-| **Task 034** | Agent 1 (Dev) | [TASK_034_REPORT.md](../reports/TASK_034_REPORT.md) | CRM Redirect Loop and SuperAdmin Dashboard Access | ✅ Tamamlandı |
-| **Task 035** | Agent 1 (Dev) | [TASK_035_REPORT.md](../reports/TASK_035_REPORT.md) | Voice Bridge Barge-in & Echo Suppression Optimization | ✅ Tamamlandı |
-
-**Task 035 özeti:** Görüşme esnasındaki yankı kaynaklı asistan kesilmelerini (self-interruption) ve lag problemlerini çözmek için barge-in süresi 40ms'den 240ms'ye çıkarıldı. Asistan konuşurken mikrofona yansıyan ses yankısının Gemini VAD motorunu tetiklememesi için sessizlik filtreli echo suppression entegre edildi.
-
-**Task 034 özeti:** Control Tower ekranındaki "CRM'e Dön" butonunun oluşturduğu yönlendirme döngüsü giderildi. Platform yöneticilerinin (`SuperAdmin`/`Admin`) Elyaf Control Tower kule verilerine erişebilmesi için GetTenantId() ve RequireTenant() metotlarındaki tenant kısıtlamaları platform yöneticilerine özel olarak esnetildi.
 
 **Task 033 özeti:** Oturum geçişlerinde (impersonation) ve token yenileme anlarında `tenant-admin` ve `home` sayfalarının çökmesini (TypeError) engellemek için dizi eşleme kontrollerine safety wrapper'lar (`?? []`) ekledik. `inboundEmailsData` veri modelindeki API uyuşmazlığı giderildi.
 
