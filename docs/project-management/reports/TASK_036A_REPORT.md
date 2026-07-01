@@ -8,6 +8,9 @@ Stabilize compile/build issues, resolve git merge conflict markers across Next.j
 - Repair type mismatch errors in `SuperAdminTenantsController.cs` (ProviderType enum mapping and float conversion).
 - Clear nested git merge conflict markers in Next.js frontend pages and api client.
 - Correct dynamic version download URLs in `UpdatesController.cs` using the application's configured public URL.
+- Resolve git conflicts in `LiveChatWidgetHandlers.cs` to ensure clean compile.
+- Fix database string truncations in `AIAuditLogger.cs` (prompt/response columns constrained to 4000 characters).
+- Map local `standalone-redis` host port to `63799` in `compose.yml` to prevent local port binding conflict.
 - Test compilation and build locally and deploy on Staging/Staging-Orchestrator server (`31.169.72.85`).
 
 ## Files Created
@@ -19,6 +22,9 @@ None.
 - [UpdatesController.cs](file:///Users/emre/Elyafgroup/src/EmareTicket.API/Controllers/UpdatesController.cs)
 - [Tenant.cs](file:///Users/emre/Elyafgroup/src/EmareTicket.Domain/Entities/Tenant.cs)
 - [page.tsx](file:///Users/emre/Elyafgroup/web/src/app/page.tsx)
+- [LiveChatWidgetHandlers.cs](file:///Users/emre/Elyafgroup/src/EmareTicket.Application/Features/LiveChat/Widget/LiveChatWidgetHandlers.cs)
+- [AIAuditLogger.cs](file:///Users/emre/Elyafgroup/src/EmareTicket.API/Services/AIAuditLogger.cs)
+- [compose.yml](file:///Users/emre/Elyafgroup/gemini-live-standalone/compose.yml)
 
 ## Architecture Decisions
 - Configured dynamic update download url using the application's configuration `Application:PublicUrl` fallback rather than using internal request host bindings. This prevents 404s/500s when the API runs behind a reverse proxy (e.g. Nginx).
