@@ -20,6 +20,8 @@
 - `src/EmareTicket.API/Controllers/CallsController.cs`
 - `src/EmareTicket.API/Controllers/VoiceCallController.cs`
 - `src/EmareTicket.API/Services/VoiceBridgeService.cs`
+- `src/EmareTicket.API/Controllers/VoiceScenariosController.cs`
+- `web/src/app/layout.tsx`
 - `gemini-live-standalone/standalone_bridge.py`
 
 ## Architecture Decisions
@@ -29,6 +31,8 @@
 - Standalone Python ses köprüsü (Asterisk AudioSocket) Gemini Live akış modunda çalıştığı için, görsel akış düğümleri dotnet API tarafında `CompileScenarioGraphToPrompt` aracılığıyla Gemini'ın anlayacağı talimatlar bütününe (System Prompt) derlenip ses köprüsüne beslenmektedir.
 - Python tarafındaki `get_localized_demo_scenario` metodunun, görsel senaryo GUID'lerini tespit ettiğinde dotnet API tarafından derlenmiş olan özel sistem prompt'unu ve karşılama metnini ezerek standart şablonlara düşmesi engellenmiş, görsel akışın derlenmiş prompt'unun korunması sağlanmıştır.
 - Görsel akıştaki ilk `speak` düğümünden okunan karşılama metni, asenkron olarak santral karşılama ayarı (`greetingText`) içerisine enjekte edilerek Python köprüsünün doğru karşılama cümlesiyle başlaması sağlanmıştır.
+- Next.js frontend ana şablonunda (`layout.tsx`) bulunan canlı destek widget script adresi (`embed.js`), platform genelinde `ticket.emarecloud.tr` adresi kullanımdan kaldırıldığı için relative URL'e çevrilerek dinamikleştirilmiş ve yönlendirme (redirect loop) hatası giderilmiştir.
+- Yapay zeka ile ses senaryosu üretilirken (`Create` / `Update` aşamalarında) gelen açıklama metinlerinin (description) veritabanı schema limiti olan 1000 karakteri aşması durumunda oluşan 500 hatalarını engellemek için, açıklama uzunluğu API controller seviyesinde otomatik olarak kırpılarak (truncate) veritabanı tutarlılığı korunmuştur.
 
 ## Dependencies Added
 
