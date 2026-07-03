@@ -8,13 +8,13 @@
 - 344/344 xUnit tests passed successfully.
 
 ## Clean Architecture
-- Compliant. Permission updates were performed inside the API's authorization layer catalog, respecting architectural boundaries.
+- Compliant. Permission updates were performed inside the API's authorization layer catalog, and endpoint authorization rules were updated in UsersController, respecting architectural boundaries.
 
 ## DDD Compliance
 - Compliant.
 
 ## Security
-- Correct role segregation maintained. Granting roles view/manage access to Reseller users is appropriate as they manage sub-tenants and configurations in their scoped domain.
+- Correct role segregation maintained. Granting roles view/manage and user management access to Reseller users is appropriate as they manage sub-tenants and configurations in their scoped domain.
 
 ## Performance
 - Permissions are cached on JWT authentication claims, no performance regressions.
@@ -24,6 +24,7 @@
 
 ## API
 - `GET /api/v1/roles/all` now responds with 200 OK for Tenant Admins (Reseller role).
+- `PUT /api/v1/users/{id}` now responds with 200 OK for Tenant Admins (Reseller role) when editing user profiles.
 
 ## Test Coverage
 - Remains at 100% functional coverage.
