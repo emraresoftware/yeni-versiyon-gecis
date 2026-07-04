@@ -1,8 +1,8 @@
 # Sprint 2 — Control Tower (CEO · Sales · Finance)
 
 **Başlangıç:** Sprint 1 platform çekirdeği tamamlandı (Task 001–008A)  
-**Son güncelleme:** 2026-07-01  
-**İlerleme:** **61%** (CEO, QC ve Logistics V2 entegrasyonu tamamlandı)
+**Son güncelleme:** 2026-07-04  
+**İlerleme:** **63%** (CEO, QC, Logistics V2 & Tenant Seeding Duplication Hotfix tamamlandı)
 
 ---
 
@@ -44,6 +44,12 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task 035** | Agent 1 (Dev) | [TASK_035_REPORT.md](../reports/TASK_035_REPORT.md) | Voice Bridge Barge-in & Echo Suppression Optimization | ✅ Tamamlandı |
 | **Task 036** | Agent 1 (Dev) | [TASK_036_REPORT.md](../reports/TASK_036_REPORT.md) | Gemini Live Playout Starvation & Supervisor Bypass | ✅ Tamamlandı |
 | **Task 036A** | Agent 1 (Dev) | [TASK_036A_REPORT.md](../reports/TASK_036A_REPORT.md) | C# Compile Warnings & Next.js Git Merge Conflict Resolution | ✅ Tamamlandı |
+| **Task 037** | Agent 1 (Dev) | [TASK_037_REPORT.md](../reports/TASK_037_REPORT.md) | Reseller Permissions and User Management Authorization Hotfix | ✅ Tamamlandı |
+| **Task 038** | Agent 1 (Dev) | [TASK_038_REPORT.md](../reports/TASK_038_REPORT.md) | SuperAdmin Tenants Seeding Duplication Hotfix | ✅ Tamamlandı |
+
+**Task 038 özeti:** Yeni tenant oluşturma esnasında `AIAutoReplyConfigs` ve `AIProviderConfigs` verilerinin 7 kez yinelenmesi nedeniyle veritabanında oluşan `duplicate key` hatası çözüldü, mükerrer seed yapıları temizlendi.
+
+**Task 037 özeti:** Tenant Admin (Reseller) kullanıcılarının rol ve kullanıcı yönetim sayfalarına (örneğin `/api/v1/roles/all` ve `PUT /api/v1/users/{id}`) erişirken aldıkları 403 Forbidden hataları rol yetkileri ve katalog izinleri eklenerek giderildi.
 
 **Task 036A özeti:** C# API'deki CS8604 null referans uyarıları, SuperAdminTenantsController'daki enum ve float tip uyumsuzluğu derleme hataları giderildi. Next.js sayfa ve client dosyalarındaki git merge conflict işaretçileri temizlendi. updates/version indirme url'i dinamik hale getirildi.
 
