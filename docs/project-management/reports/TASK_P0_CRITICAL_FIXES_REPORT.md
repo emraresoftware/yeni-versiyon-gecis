@@ -5,6 +5,9 @@
 Resolve critical P0 errors listed in `Emare-Keşif.docx` including file upload authentication redirects, sales lead postgres kind exceptions, automatic product SKU generation, and invoice layout theme alignments. Also resolved additional issues:
 - SuperAdmin 403 Forbidden upload bypass in `FilesController`.
 - System-wide JSON circular reference cycle serialization fix in `Program.cs`.
+- Incognito mode authentication cookie fix in `AuthController.cs` by changing SameSite from `None` to `Lax`.
+- SuperAdmin Kanban Board array-to-object serialization format fix in `TasksController.cs`.
+- Defensive React coding in `KanbanBoard.tsx` to handle undefined board/columns datasets.
 - Removed the old Live Support widget ("Canlı Destek") overlapping at the bottom right.
 - Repositioned the remaining floating AI Assistant bubble and Feedback widget to stack neatly on the bottom right.
 - Expanded bottom padding of the dashboard container layout (`pb-36`) to fully clear all action buttons when scrolled to the bottom.
@@ -12,8 +15,8 @@ Resolve critical P0 errors listed in `Emare-Keşif.docx` including file upload a
 
 ## Scope
 
-- **API Modules:** `FilesController`, `SalesLeadsController`, `ProductsController`, `Program.cs`.
-- **Frontend Pages/Components:** `FileUploadDialog`, `customers/[id]/page.tsx`, `files/page.tsx`, `products/page.tsx`, `invoices/page.tsx`, `invoices/[id]/page.tsx`, `invoices/settings/page.tsx`, `invoices/new/page.tsx`, `layout.tsx`, `FloatingChatBubble`, `FloatingFeedbackWidget`, `DashboardLayout`.
+- **API Modules:** `FilesController`, `SalesLeadsController`, `ProductsController`, `AuthController.cs`, `TasksController.cs`, `Program.cs`.
+- **Frontend Pages/Components:** `FileUploadDialog`, `customers/[id]/page.tsx`, `files/page.tsx`, `products/page.tsx`, `invoices/page.tsx`, `invoices/[id]/page.tsx`, `invoices/settings/page.tsx`, `invoices/new/page.tsx`, `layout.tsx`, `FloatingChatBubble`, `FloatingFeedbackWidget`, `DashboardLayout`, `KanbanBoard.tsx`.
 - **API Client / State Hooks:** `client.ts`, `files.ts`, `customers.ts`, `use-files.ts`, `use-tasks.ts`, `use-customers.ts`.
 
 ## Files Created
@@ -25,11 +28,14 @@ None.
 - `src/EmareTicket.API/Controllers/ProductsController.cs`
 - `src/EmareTicket.API/Controllers/SalesLeadsController.cs`
 - `src/EmareTicket.API/Controllers/FilesController.cs`
+- `src/EmareTicket.API/Controllers/AuthController.cs`
+- `src/EmareTicket.API/Controllers/TasksController.cs`
 - `src/EmareTicket.API/Program.cs`
 - `web/src/app/layout.tsx`
 - `web/src/components/global/FloatingChatBubble.tsx`
 - `web/src/components/global/FloatingFeedbackWidget.tsx`
 - `web/src/components/layout/DashboardLayout.tsx`
+- `web/src/components/kanban/KanbanBoard.tsx`
 - `web/src/app/(dashboard)/invoices/new/page.tsx`
 - `web/src/app/(dashboard)/customers/[id]/page.tsx`
 - `web/src/app/(dashboard)/files/page.tsx`
