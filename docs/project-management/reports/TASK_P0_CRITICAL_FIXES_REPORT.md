@@ -3,7 +3,7 @@
 ## Objective
 
 Resolve critical P0 errors listed in `Emare-Keşif.docx` including file upload authentication redirects, sales lead postgres kind exceptions, automatic product SKU generation, and invoice layout theme alignments. Also resolved additional issues:
-- SuperAdmin 403 Forbidden upload bypass in `FilesController`.
+- SuperAdmin 403 Forbidden upload bypass and global list filter bypass in `FilesController.cs`.
 - System-wide JSON circular reference cycle serialization fix in `Program.cs`.
 - Incognito mode authentication cookie fix in `AuthController.cs` by changing SameSite from `None` to `Lax`.
 - SuperAdmin Kanban Board array-to-object serialization format fix in `TasksController.cs`.
