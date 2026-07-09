@@ -4,6 +4,7 @@
 
 Resolve critical P0 errors listed in `Emare-Keşif.docx` including file upload authentication redirects, sales lead postgres kind exceptions, automatic product SKU generation, and invoice layout theme alignments. Also resolved additional issues:
 - SuperAdmin 403 Forbidden upload bypass in `FilesController`.
+- System-wide JSON circular reference cycle serialization fix in `Program.cs`.
 - Removed the old Live Support widget ("Canlı Destek") overlapping at the bottom right.
 - Repositioned the remaining floating AI Assistant bubble and Feedback widget to stack neatly on the bottom right.
 - Expanded bottom padding of the dashboard container layout (`pb-36`) to fully clear all action buttons when scrolled to the bottom.
@@ -11,7 +12,7 @@ Resolve critical P0 errors listed in `Emare-Keşif.docx` including file upload a
 
 ## Scope
 
-- **API Modules:** `FilesController`, `SalesLeadsController`, `ProductsController`.
+- **API Modules:** `FilesController`, `SalesLeadsController`, `ProductsController`, `Program.cs`.
 - **Frontend Pages/Components:** `FileUploadDialog`, `customers/[id]/page.tsx`, `files/page.tsx`, `products/page.tsx`, `invoices/page.tsx`, `invoices/[id]/page.tsx`, `invoices/settings/page.tsx`, `invoices/new/page.tsx`, `layout.tsx`, `FloatingChatBubble`, `FloatingFeedbackWidget`, `DashboardLayout`.
 - **API Client / State Hooks:** `client.ts`, `files.ts`, `customers.ts`, `use-files.ts`, `use-tasks.ts`, `use-customers.ts`.
 
@@ -24,6 +25,7 @@ None.
 - `src/EmareTicket.API/Controllers/ProductsController.cs`
 - `src/EmareTicket.API/Controllers/SalesLeadsController.cs`
 - `src/EmareTicket.API/Controllers/FilesController.cs`
+- `src/EmareTicket.API/Program.cs`
 - `web/src/app/layout.tsx`
 - `web/src/components/global/FloatingChatBubble.tsx`
 - `web/src/components/global/FloatingFeedbackWidget.tsx`
