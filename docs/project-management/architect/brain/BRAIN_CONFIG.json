@@ -1,0 +1,8 @@
+{
+  "schema": "architect-brain-config",
+  "version": "1.0.0",
+  "generated_at": "2026-07-05T19:42:16.525684",
+  "accept_threshold": 70,
+  "adr_dir": "emare-dashboard/docs/project-management/architect/brain/adrs",
+  "agent_home": "../Ai Agent/Agents/Agent7-ChiefArchitect"
+}

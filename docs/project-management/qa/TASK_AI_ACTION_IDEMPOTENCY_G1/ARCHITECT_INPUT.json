@@ -1,0 +1,24 @@
+{
+  "schema": "architect-input-v2",
+  "task_id": "TASK_AI_ACTION_IDEMPOTENCY_G1",
+  "mission": "MISSION_AI_ACTION_RELIABILITY",
+  "qa_verdict": "QA_PASS",
+  "risk_level": "LOW",
+  "risk_score": 13,
+  "recommendation": "ACCEPT",
+  "changed_files": [
+    "`emare-dashboard/specs/SPEC_AI_ACTION_RELIABILITY.md#G1`",
+    "`src/EmareTicket.Domain/Entities/`",
+    "`src/EmareTicket.Infrastructure/Services/Ai/AiActionService.cs`",
+    "`gemini-live-standalone/bridge_api_client.py`"
+  ],
+  "affected_modules": [
+    "domain"
+  ],
+  "failed_checks": [],
+  "warnings": [],
+  "evidence_path": "/Users/emre/Elyafgroup/emare-dashboard/docs/project-management/qa/TASK_AI_ACTION_IDEMPOTENCY_G1/QA_EVIDENCE.json",
+  "report_path": "/Users/emre/Elyafgroup/emare-dashboard/docs/project-management/qa/TASK_AI_ACTION_IDEMPOTENCY_G1/QA_INTELLIGENCE_REPORT.md",
+  "generated_at": "2026-07-05T23:43:54Z",
+  "generated_by": "qa-intelligence-engine-v2"
+}

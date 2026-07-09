@@ -1,0 +1,126 @@
+{
+  "schema": "qa-evidence-v2",
+  "engine_version": "2.0.0",
+  "generated_by": "qa-intelligence-engine-v2",
+  "task_id": "TASK_AI_OS_EVENT_CHAIN_TEST",
+  "mission": "MISSION_PLATFORM_RUNTIME_V1",
+  "mode": "smoke",
+  "verdict": "QA_PASS",
+  "started_at": "2026-07-05T19:19:53Z",
+  "duration_ms": 196,
+  "git_base": "task_scope",
+  "changed_files": [
+    "scripts/qa-autorunner-v1.py",
+    "scripts/architect-autorunner-v1.py",
+    "scripts/ai-os-smoke-task-v1.py",
+    "scripts/ai-os-start-autonomous.sh"
+  ],
+  "changed_dirs": [
+    "scripts"
+  ],
+  "affected_modules": [
+    "platform_runtime"
+  ],
+  "risk_level": "HIGH",
+  "risk_score": 61,
+  "risk_hits": [
+    {
+      "level": "MEDIUM",
+      "path": "scripts/qa-autorunner-v1.py",
+      "pattern": "scripts/"
+    },
+    {
+      "level": "MEDIUM",
+      "path": "scripts/architect-autorunner-v1.py",
+      "pattern": "scripts/"
+    },
+    {
+      "level": "MEDIUM",
+      "path": "scripts/ai-os-smoke-task-v1.py",
+      "pattern": "scripts/"
+    },
+    {
+      "level": "MEDIUM",
+      "path": "scripts/ai-os-start-autonomous.sh",
+      "pattern": "scripts/"
+    }
+  ],
+  "test_plan": [
+    {
+      "name": "py_compile:ai-os-smoke-task-v1.py",
+      "category": "scripts",
+      "reason": "Smoke/test task — script syntax only",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "py_compile",
+        "scripts/ai-os-smoke-task-v1.py"
+      ]
+    },
+    {
+      "name": "py_compile:architect-autorunner-v1.py",
+      "category": "scripts",
+      "reason": "Smoke/test task — script syntax only",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "py_compile",
+        "scripts/architect-autorunner-v1.py"
+      ]
+    },
+    {
+      "name": "py_compile:qa-autorunner-v1.py",
+      "category": "scripts",
+      "reason": "Smoke/test task — script syntax only",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "py_compile",
+        "scripts/qa-autorunner-v1.py"
+      ]
+    },
+    {
+      "name": "bash_n:ai-os-start-autonomous.sh",
+      "category": "scripts",
+      "reason": "Smoke/test task — shell syntax only",
+      "command": [
+        "bash",
+        "-n",
+        "scripts/ai-os-start-autonomous.sh"
+      ]
+    }
+  ],
+  "build_result": null,
+  "test_results": [
+    {
+      "name": "py_compile:ai-os-smoke-task-v1.py",
+      "category": "scripts",
+      "passed": true,
+      "skipped": false,
+      "duration_ms": 75
+    },
+    {
+      "name": "py_compile:architect-autorunner-v1.py",
+      "category": "scripts",
+      "passed": true,
+      "skipped": false,
+      "duration_ms": 63
+    },
+    {
+      "name": "py_compile:qa-autorunner-v1.py",
+      "category": "scripts",
+      "passed": true,
+      "skipped": false,
+      "duration_ms": 46
+    },
+    {
+      "name": "bash_n:ai-os-start-autonomous.sh",
+      "category": "scripts",
+      "passed": true,
+      "skipped": false,
+      "duration_ms": 11
+    }
+  ],
+  "coverage": null,
+  "warnings": []
+}

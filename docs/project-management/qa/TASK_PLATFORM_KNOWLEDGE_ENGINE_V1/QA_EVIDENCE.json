@@ -1,0 +1,57 @@
+{
+  "schema": "qa-evidence-v2",
+  "engine_version": "2.0.0",
+  "generated_by": "qa-intelligence-engine-v2",
+  "task_id": "TASK_PLATFORM_KNOWLEDGE_ENGINE_V1",
+  "mission": "MISSION_009_PLATFORM_FOUNDATION",
+  "mode": "live",
+  "verdict": "QA_PASS",
+  "started_at": "2026-07-05T16:14:04Z",
+  "duration_ms": 148,
+  "git_base": "HEAD",
+  "changed_files": [
+    "`scripts/knowledge-engine-v1.py",
+    "Ai Agent/Shared/Knowledge/`"
+  ],
+  "changed_dirs": [
+    "Ai Agent",
+    "`scripts"
+  ],
+  "affected_modules": [
+    "platform_runtime"
+  ],
+  "risk_level": "MEDIUM",
+  "risk_score": 21,
+  "risk_hits": [
+    {
+      "level": "MEDIUM",
+      "path": "`scripts/knowledge-engine-v1.py",
+      "pattern": "scripts/"
+    }
+  ],
+  "test_plan": [
+    {
+      "name": "py_compile:fallback",
+      "category": "scripts",
+      "reason": "No targeted tests — minimal platform sanity",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "py_compile",
+        "scripts/qa-intelligence-engine-v2.py"
+      ]
+    }
+  ],
+  "build_result": null,
+  "test_results": [
+    {
+      "name": "py_compile:fallback",
+      "category": "scripts",
+      "passed": true,
+      "skipped": false,
+      "duration_ms": 116
+    }
+  ],
+  "coverage": null,
+  "warnings": []
+}

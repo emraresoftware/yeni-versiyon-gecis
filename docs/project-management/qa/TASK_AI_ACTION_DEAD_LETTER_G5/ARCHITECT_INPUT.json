@@ -1,0 +1,22 @@
+{
+  "schema": "architect-input-v2",
+  "task_id": "TASK_AI_ACTION_DEAD_LETTER_G5",
+  "mission": "MISSION_AI_ACTION_RELIABILITY",
+  "qa_verdict": "QA_PASS",
+  "risk_level": "LOW",
+  "risk_score": 9,
+  "recommendation": "ACCEPT",
+  "changed_files": [
+    "`emare-dashboard/specs/SPEC_AI_ACTION_RELIABILITY.md#G5`",
+    "`src/EmareTicket.BackgroundJobs/`"
+  ],
+  "affected_modules": [
+    "unknown"
+  ],
+  "failed_checks": [],
+  "warnings": [],
+  "evidence_path": "/Users/emre/Elyafgroup/emare-dashboard/docs/project-management/qa/TASK_AI_ACTION_DEAD_LETTER_G5/QA_EVIDENCE.json",
+  "report_path": "/Users/emre/Elyafgroup/emare-dashboard/docs/project-management/qa/TASK_AI_ACTION_DEAD_LETTER_G5/QA_INTELLIGENCE_REPORT.md",
+  "generated_at": "2026-07-05T23:56:24Z",
+  "generated_by": "qa-intelligence-engine-v2"
+}

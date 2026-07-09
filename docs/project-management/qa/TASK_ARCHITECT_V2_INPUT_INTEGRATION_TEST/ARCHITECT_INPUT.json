@@ -1,0 +1,22 @@
+{
+  "schema": "architect-input-v2",
+  "task_id": "TASK_ARCHITECT_V2_INPUT_INTEGRATION_TEST",
+  "mission": "MISSION_PLATFORM_RUNTIME_V1",
+  "qa_verdict": "QA_PASS",
+  "risk_level": "MEDIUM",
+  "risk_score": 33,
+  "recommendation": "ACCEPT",
+  "changed_files": [
+    "scripts/qa-intelligence-engine-v2.py",
+    "scripts/qa-autorunner-v1.py"
+  ],
+  "affected_modules": [
+    "platform_runtime"
+  ],
+  "failed_checks": [],
+  "warnings": [],
+  "evidence_path": "/Users/emre/Elyafgroup/emare-dashboard/docs/project-management/qa/TASK_ARCHITECT_V2_INPUT_INTEGRATION_TEST/QA_EVIDENCE.json",
+  "report_path": "/Users/emre/Elyafgroup/emare-dashboard/docs/project-management/qa/TASK_ARCHITECT_V2_INPUT_INTEGRATION_TEST/QA_INTELLIGENCE_REPORT.md",
+  "generated_at": "2026-07-05T14:30:18Z",
+  "generated_by": "qa-intelligence-engine-v2"
+}

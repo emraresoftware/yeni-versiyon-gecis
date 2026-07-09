@@ -1,0 +1,24 @@
+{
+  "schema": "architect-input-v2",
+  "task_id": "TASK_AI_OS_EVENT_CHAIN_TEST",
+  "mission": "MISSION_PLATFORM_RUNTIME_V1",
+  "qa_verdict": "QA_PASS",
+  "risk_level": "HIGH",
+  "risk_score": 61,
+  "recommendation": "ACCEPT",
+  "changed_files": [
+    "scripts/qa-autorunner-v1.py",
+    "scripts/architect-autorunner-v1.py",
+    "scripts/ai-os-smoke-task-v1.py",
+    "scripts/ai-os-start-autonomous.sh"
+  ],
+  "affected_modules": [
+    "platform_runtime"
+  ],
+  "failed_checks": [],
+  "warnings": [],
+  "evidence_path": "/Users/emre/Elyafgroup/emare-dashboard/docs/project-management/qa/TASK_AI_OS_EVENT_CHAIN_TEST/QA_EVIDENCE.json",
+  "report_path": "/Users/emre/Elyafgroup/emare-dashboard/docs/project-management/qa/TASK_AI_OS_EVENT_CHAIN_TEST/QA_INTELLIGENCE_REPORT.md",
+  "generated_at": "2026-07-05T19:19:53Z",
+  "generated_by": "qa-intelligence-engine-v2"
+}

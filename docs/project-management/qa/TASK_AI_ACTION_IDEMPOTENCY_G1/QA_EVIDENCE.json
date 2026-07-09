@@ -1,0 +1,75 @@
+{
+  "schema": "qa-evidence-v2",
+  "engine_version": "2.0.0",
+  "generated_by": "qa-intelligence-engine-v2",
+  "task_id": "TASK_AI_ACTION_IDEMPOTENCY_G1",
+  "mission": "MISSION_AI_ACTION_RELIABILITY",
+  "mode": "live",
+  "verdict": "QA_PASS",
+  "started_at": "2026-07-05T23:43:33Z",
+  "duration_ms": 20873,
+  "git_base": "HEAD",
+  "changed_files": [
+    "`emare-dashboard/specs/SPEC_AI_ACTION_RELIABILITY.md#G1`",
+    "`src/EmareTicket.Domain/Entities/`",
+    "`src/EmareTicket.Infrastructure/Services/Ai/AiActionService.cs`",
+    "`gemini-live-standalone/bridge_api_client.py`"
+  ],
+  "changed_dirs": [
+    "`emare-dashboard",
+    "`gemini-live-standalone",
+    "`src"
+  ],
+  "affected_modules": [
+    "domain"
+  ],
+  "risk_level": "LOW",
+  "risk_score": 13,
+  "risk_hits": [],
+  "test_plan": [
+    {
+      "name": "dotnet_build",
+      "category": "api",
+      "reason": "Backend/API surface changed",
+      "command": [
+        "dotnet",
+        "build",
+        "EmareTicket.sln",
+        "-v",
+        "q"
+      ]
+    },
+    {
+      "name": "dotnet_test",
+      "category": "api",
+      "reason": "Backend tests for API/domain changes",
+      "command": [
+        "dotnet",
+        "test",
+        "EmareTicket.sln",
+        "--no-build",
+        "-v",
+        "q"
+      ]
+    }
+  ],
+  "build_result": true,
+  "test_results": [
+    {
+      "name": "dotnet_build",
+      "category": "api",
+      "passed": true,
+      "skipped": false,
+      "duration_ms": 17703
+    },
+    {
+      "name": "dotnet_test",
+      "category": "api",
+      "passed": true,
+      "skipped": false,
+      "duration_ms": 3149
+    }
+  ],
+  "coverage": null,
+  "warnings": []
+}

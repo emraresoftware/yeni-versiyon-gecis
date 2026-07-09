@@ -74,7 +74,6 @@
 |---|---|
 | Aktif Üretim (Master) | 185.189.54.107 |
 | Staging / Orkestratör | 31.169.72.85 |
-| Yedek Staging | 77.92.152.3 |
 | Standby | 31.169.72.82 |
 
 ---

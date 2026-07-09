@@ -1,0 +1,22 @@
+{
+  "schema": "architect-input-v2",
+  "task_id": "TASK_PLATFORM_QA_INTELLIGENCE_V1",
+  "mission": "MISSION_009_PLATFORM_FOUNDATION",
+  "qa_verdict": "QA_PASS",
+  "risk_level": "MEDIUM",
+  "risk_score": 33,
+  "recommendation": "ACCEPT",
+  "changed_files": [
+    "`scripts/qa-intelligence-v1.sh",
+    "scripts/qa-smoke.sh`"
+  ],
+  "affected_modules": [
+    "platform_runtime"
+  ],
+  "failed_checks": [],
+  "warnings": [],
+  "evidence_path": "/Users/emre/Elyafgroup/emare-dashboard/docs/project-management/qa/TASK_PLATFORM_QA_INTELLIGENCE_V1/QA_EVIDENCE.json",
+  "report_path": "/Users/emre/Elyafgroup/emare-dashboard/docs/project-management/qa/TASK_PLATFORM_QA_INTELLIGENCE_V1/QA_INTELLIGENCE_REPORT.md",
+  "generated_at": "2026-07-05T16:21:34Z",
+  "generated_by": "qa-intelligence-engine-v2"
+}

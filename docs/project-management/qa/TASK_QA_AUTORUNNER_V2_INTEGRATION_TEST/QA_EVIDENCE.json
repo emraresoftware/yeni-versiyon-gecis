@@ -1,0 +1,79 @@
+{
+  "schema": "qa-evidence-v2",
+  "engine_version": "2.0.0",
+  "generated_by": "qa-intelligence-engine-v2",
+  "task_id": "TASK_QA_AUTORUNNER_V2_INTEGRATION_TEST",
+  "mission": "MISSION_PLATFORM_RUNTIME_V1",
+  "mode": "smoke",
+  "verdict": "QA_PASS",
+  "started_at": "2026-07-05T14:18:35Z",
+  "duration_ms": 67,
+  "git_base": "task_scope",
+  "changed_files": [
+    "scripts/qa-intelligence-engine-v2.py",
+    "scripts/qa-autorunner-v1.py"
+  ],
+  "changed_dirs": [
+    "scripts"
+  ],
+  "affected_modules": [
+    "platform_runtime"
+  ],
+  "risk_level": "MEDIUM",
+  "risk_score": 33,
+  "risk_hits": [
+    {
+      "level": "MEDIUM",
+      "path": "scripts/qa-intelligence-engine-v2.py",
+      "pattern": "scripts/"
+    },
+    {
+      "level": "MEDIUM",
+      "path": "scripts/qa-autorunner-v1.py",
+      "pattern": "scripts/"
+    }
+  ],
+  "test_plan": [
+    {
+      "name": "py_compile:qa-autorunner-v1.py",
+      "category": "scripts",
+      "reason": "Smoke/test task — script syntax only",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "py_compile",
+        "scripts/qa-autorunner-v1.py"
+      ]
+    },
+    {
+      "name": "py_compile:qa-intelligence-engine-v2.py",
+      "category": "scripts",
+      "reason": "Smoke/test task — script syntax only",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "py_compile",
+        "scripts/qa-intelligence-engine-v2.py"
+      ]
+    }
+  ],
+  "build_result": null,
+  "test_results": [
+    {
+      "name": "py_compile:qa-autorunner-v1.py",
+      "category": "scripts",
+      "passed": true,
+      "skipped": false,
+      "duration_ms": 34
+    },
+    {
+      "name": "py_compile:qa-intelligence-engine-v2.py",
+      "category": "scripts",
+      "passed": true,
+      "skipped": false,
+      "duration_ms": 32
+    }
+  ],
+  "coverage": null,
+  "warnings": []
+}
