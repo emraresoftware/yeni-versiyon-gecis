@@ -2,12 +2,17 @@
 
 ## Objective
 
-Resolve critical P0 errors listed in `Emare-Keşif.docx` including file upload authentication redirects, sales lead postgres kind exceptions, automatic product SKU generation, and invoice layout theme alignments.
+Resolve critical P0 errors listed in `Emare-Keşif.docx` including file upload authentication redirects, sales lead postgres kind exceptions, automatic product SKU generation, and invoice layout theme alignments. Also resolved additional issues:
+- SuperAdmin 403 Forbidden upload bypass in `FilesController`.
+- Removed the old Live Support widget ("Canlı Destek") overlapping at the bottom right.
+- Repositioned the remaining floating AI Assistant bubble and Feedback widget to stack neatly on the bottom right.
+- Expanded bottom padding of the dashboard container layout (`pb-36`) to fully clear all action buttons when scrolled to the bottom.
+- Aligned theme styling of the new invoice page (`invoices/new/page.tsx`).
 
 ## Scope
 
 - **API Modules:** `FilesController`, `SalesLeadsController`, `ProductsController`.
-- **Frontend Pages/Components:** `FileUploadDialog`, `customers/[id]/page.tsx`, `files/page.tsx`, `products/page.tsx`, `invoices/page.tsx`, `invoices/[id]/page.tsx`, `invoices/settings/page.tsx`.
+- **Frontend Pages/Components:** `FileUploadDialog`, `customers/[id]/page.tsx`, `files/page.tsx`, `products/page.tsx`, `invoices/page.tsx`, `invoices/[id]/page.tsx`, `invoices/settings/page.tsx`, `invoices/new/page.tsx`, `layout.tsx`, `FloatingChatBubble`, `FloatingFeedbackWidget`, `DashboardLayout`.
 - **API Client / State Hooks:** `client.ts`, `files.ts`, `customers.ts`, `use-files.ts`, `use-tasks.ts`, `use-customers.ts`.
 
 ## Files Created
@@ -18,6 +23,12 @@ None.
 
 - `src/EmareTicket.API/Controllers/ProductsController.cs`
 - `src/EmareTicket.API/Controllers/SalesLeadsController.cs`
+- `src/EmareTicket.API/Controllers/FilesController.cs`
+- `web/src/app/layout.tsx`
+- `web/src/components/global/FloatingChatBubble.tsx`
+- `web/src/components/global/FloatingFeedbackWidget.tsx`
+- `web/src/components/layout/DashboardLayout.tsx`
+- `web/src/app/(dashboard)/invoices/new/page.tsx`
 - `web/src/app/(dashboard)/customers/[id]/page.tsx`
 - `web/src/app/(dashboard)/files/page.tsx`
 - `web/src/app/(dashboard)/invoices/[id]/page.tsx`
@@ -62,6 +73,7 @@ None.
 
 ## Security Notes
 
+- Bypassed tenant isolation check for SuperAdmins when performing file uploads, but automatically assigned the destination customer's actual TenantId to the record to ensure tenant isolation rules are maintained.
 - Secured file upload routes and download streams by routing raw custom fetch implementations to the centralized `apiClient.postForm` and `apiClient.getBlob`. This ensures that httpOnly cookie/JWT token validation and refreshing are handled automatically and securely.
 - Prevented potential data injection on SKU codes by validating and generating unique values under tenant-isolated checks.
 
