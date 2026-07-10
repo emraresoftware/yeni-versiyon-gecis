@@ -2,7 +2,7 @@
 
 **Başlangıç:** Sprint 2 (Control Tower) tamamlandı  
 **Son güncelleme:** 2026-07-10  
-**İlerleme:** **70%** (Messaging Gateway, Conversation Store, Message Normalizer, Batch Normalization, Batch Result Model/Telemetry ve Redis Distributed Lock/Idempotency tamamlandı)
+**İlerleme:** **80%** (Messaging Gateway, Conversation Store, Message Normalizer, Batch Normalization, Batch Result Model/Telemetry, Redis Distributed Lock/Idempotency ve Operator Inbox UI tamamlandı)
 
 ---
 
@@ -23,6 +23,7 @@ Emare BOS üzerinde çalışan yapay zeka ajanlarının ve insan operatörlerin 
 | **TASK_MSG_004** | A11 Bridge | [TASK_MSG_004_BATCH_WEBHOOK_NORMALIZATION.md](../reports/TASK_MSG_004_BATCH_WEBHOOK_NORMALIZATION.md) | Batch Webhook Normalization (Preserved ordering, duplicate deduplication, mixed payloads) | ✅ Tamamlandı |
 | **TASK_MSG_005** | A11 Bridge | [TASK_MSG_005_IMPLEMENTATION_REPORT.md](../reports/TASK_MSG_005_IMPLEMENTATION_REPORT.md) | Batch Result Model & Telemetry (Item-level stopwatch telemetry, PII-masked metrics, safe error codes) | ✅ Tamamlandı |
 | **TASK_MSG_006** | A11 Bridge | [TASK_MSG_006_REPORT.md](../reports/TASK_MSG_006_REPORT.md) | Redis Idempotency & Distributed Lock (Multi-instance safety check, atomic SET NX key, Lua release script) | ✅ Tamamlandı |
+| **TASK_UI_INBOX_001** | Antigravity | [TASK_UI_INBOX_001_REPORT.md](../reports/TASK_UI_INBOX_001_REPORT.md) | Operator Inbox UI (Three-pane responsive layout, status/channel/priority/SLA/tag filters, cursor pagination, detail modifications) | ✅ Tamamlandı |
 
 ---
 
