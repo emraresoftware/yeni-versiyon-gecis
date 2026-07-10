@@ -2,7 +2,7 @@
 
 **Başlangıç:** Sprint 2 (Control Tower) tamamlandı  
 **Son güncelleme:** 2026-07-10  
-**İlerleme:** **55%** (Messaging Gateway, Conversation Store, Message Normalizer, Batch Normalization ve Batch Result Model/Telemetry tamamlandı)
+**İlerleme:** **70%** (Messaging Gateway, Conversation Store, Message Normalizer, Batch Normalization, Batch Result Model/Telemetry ve Redis Distributed Lock/Idempotency tamamlandı)
 
 ---
 
@@ -22,6 +22,7 @@ Emare BOS üzerinde çalışan yapay zeka ajanlarının ve insan operatörlerin 
 | **TASK_MSG_003** | A11 Bridge | [TASK_MSG_003_IMPLEMENTATION_REPORT.md](../reports/TASK_MSG_003_IMPLEMENTATION_REPORT.md) | Message Normalizer (Unified adapter parsing, safe attachment URI parsing, spoofing protection) | ✅ Tamamlandı |
 | **TASK_MSG_004** | A11 Bridge | [TASK_MSG_004_BATCH_WEBHOOK_NORMALIZATION.md](../reports/TASK_MSG_004_BATCH_WEBHOOK_NORMALIZATION.md) | Batch Webhook Normalization (Preserved ordering, duplicate deduplication, mixed payloads) | ✅ Tamamlandı |
 | **TASK_MSG_005** | A11 Bridge | [TASK_MSG_005_IMPLEMENTATION_REPORT.md](../reports/TASK_MSG_005_IMPLEMENTATION_REPORT.md) | Batch Result Model & Telemetry (Item-level stopwatch telemetry, PII-masked metrics, safe error codes) | ✅ Tamamlandı |
+| **TASK_MSG_006** | A11 Bridge | [TASK_MSG_006_REPORT.md](../reports/TASK_MSG_006_REPORT.md) | Redis Idempotency & Distributed Lock (Multi-instance safety check, atomic SET NX key, Lua release script) | ✅ Tamamlandı |
 
 ---
 
@@ -29,12 +30,11 @@ Emare BOS üzerinde çalışan yapay zeka ajanlarının ve insan operatörlerin 
 
 | # | Task | Sorumlu Ajan | Bağımlılık | Durum |
 |---|------|--------------|------------|-------|
-| 1 | **TASK_MSG_006** — Distributed Locking & Redlock | A11 Bridge | TASK_MSG_005 | ⏳ Bekliyor |
-| 2 | **TASK_MSG_007** — Messenger Adapter | A11 Bridge | TASK_MSG_006 | ⏳ Bekliyor |
-| 3 | **TASK_MSG_008** — Instagram Adapter | A11 Bridge | TASK_MSG_007 | ⏳ Bekliyor |
-| 4 | **TASK_MSG_009** — WhatsApp Adapter | A11 Bridge | TASK_MSG_008 | ⏳ Bekliyor |
-| 5 | **TASK_MSG_010** — Web Chat Adapter | A11 Bridge | TASK_MSG_009 | ⏳ Bekliyor |
-| 6 | **TASK_MSG_011** — Human Inbox | A11 Bridge | TASK_MSG_010 | ⏳ Bekliyor |
-| 7 | **TASK_MSG_012** — Audit Log | A11 Bridge | TASK_MSG_011 | ⏳ Bekliyor |
-| 8 | **TASK_MSG_013** — Timeline Sync | A11 Bridge | TASK_MSG_012 | ⏳ Bekliyor |
+| 1 | **TASK_MSG_007** — Messenger Adapter | A11 Bridge | TASK_MSG_006 | ⏳ Bekliyor |
+| 2 | **TASK_MSG_008** — Instagram Adapter | A11 Bridge | TASK_MSG_007 | ⏳ Bekliyor |
+| 3 | **TASK_MSG_009** — WhatsApp Adapter | A11 Bridge | TASK_MSG_008 | ⏳ Bekliyor |
+| 4 | **TASK_MSG_010** — Web Chat Adapter | A11 Bridge | TASK_MSG_009 | ⏳ Bekliyor |
+| 5 | **TASK_MSG_011** — Human Inbox | A11 Bridge | TASK_MSG_010 | ⏳ Bekliyor |
+| 6 | **TASK_MSG_012** — Audit Log | A11 Bridge | TASK_MSG_011 | ⏳ Bekliyor |
+| 7 | **TASK_MSG_013** — Timeline Sync | A11 Bridge | TASK_MSG_012 | ⏳ Bekliyor |
 
