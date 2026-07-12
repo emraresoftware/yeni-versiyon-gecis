@@ -66,7 +66,7 @@
 | AI Provider Management | ✅ Production | Multi-provider (Grok, Ollama, Gemini) |
 | AI Audit Logs | ✅ Production | Token kullanımı, maliyet takibi |
 | AI Agent Runtime V2 | 🚧 Staging | Otonom görev planlama, onay mekanizması |
-| Control Tower (EmareBrain) | 🚧 Staging | Event store, product twin, platform intelligence |
+| Control Tower (EmareBrain) | 🚧 Developer Complete | Event store, product twin, platform intelligence (Founder Verification Pending) |
 
 ### Harita & Teslimat
 
@@ -130,6 +130,9 @@ Bu bölüm, BOS mimarisine geçiş sürecindeki 7 departman ajanının durumunu 
 | Görev | Ajan | Tarih | Rapor |
 |---|---|---|---|
 | Control Tower Registry Bootstrap | Agent 11 | 2026-07-12 | [TASK_CT_CORE_006](docs/project-management/reports/TASK_CT_CORE_006_REPORT.md) |
+| Control Tower Priority Engine | Agent 11 | 2026-07-12 | [TASK_CT_CORE_008A_3](docs/project-management/reports/TASK_CT_CORE_008A_3_REPORT.md) |
+| Persona Filter + Executive Brief | Agent 11 | 2026-07-12 | [TASK_CT_CORE_008A_4](docs/project-management/reports/TASK_CT_CORE_008A_4_REPORT.md) |
+| Decision UI Integration | Agent 11 | 2026-07-12 | [TASK_CT_CORE_008A_5](docs/project-management/reports/TASK_CT_CORE_008A_5_REPORT.md) |
 | Control Tower Live Provider Adapters | Agent 11 | 2026-07-12 | [TASK_CT_CORE_003B](docs/project-management/reports/TASK_CT_CORE_003B_REPORT.md) |
 | Control Tower Persistence & Evidence | Agent 11 | 2026-07-12 | [TASK_CT_CORE_002](docs/project-management/reports/TASK_CT_CORE_002_REPORT.md) |
 | Canonical Registry Recovery | Agent 11 | 2026-07-12 | [TASK_CT_CORE_001_RECOVERY](docs/project-management/reports/TASK_CT_CORE_001_RECOVERY_REPORT.md) |
