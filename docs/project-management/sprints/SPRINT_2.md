@@ -2,7 +2,7 @@
 
 **Başlangıç:** Sprint 1 platform çekirdeği tamamlandı (Task 001–008A)  
 **Son güncelleme:** 2026-07-04  
-**İlerleme:** **85%** (Control Tower Priority Engine & Executive Brief Generator completed)
+**İlerleme:** **100%** (Control Tower Priority Engine, Executive Brief Generator & REST API Integration completed)
 
 ---
 
@@ -54,6 +54,7 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task CT_CORE_008A_2** | Agent 11 (Dev) | [TASK_CT_CORE_008A_2_REPORT.md](../reports/TASK_CT_CORE_008A_2_REPORT.md) | Deterministic Rule Engine and 30-Rule Catalog | ✅ Tamamlandı |
 | **Task CT_CORE_008A_3** | Agent 11 (Dev) | [TASK_CT_CORE_008A_3_REPORT.md](../reports/TASK_CT_CORE_008A_3_REPORT.md) | Deterministic Priority Engine | ✅ Tamamlandı |
 | **Task CT_CORE_008A_4** | Agent 11 (Dev) | [TASK_CT_CORE_008A_4_REPORT.md](../reports/TASK_CT_CORE_008A_4_REPORT.md) | Persona Filter + Executive Brief | ✅ Tamamlandı |
+| **Task CT_CORE_008A_5** | Agent 11 (Dev) | [TASK_CT_CORE_008A_5_REPORT.md](../reports/TASK_CT_CORE_008A_5_REPORT.md) | Decision UI Integration | ✅ Tamamlandı |
 
 **Task 038 özeti:** Yeni tenant oluşturma esnasında `AIAutoReplyConfigs` ve `AIProviderConfigs` verilerinin 7 kez yinelenmesi nedeniyle veritabanında oluşan `duplicate key` hatası çözüldü, mükerrer seed yapıları temizlendi.
 
