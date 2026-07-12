@@ -1,10 +1,10 @@
 # 🧭 Master Architecture Index
 
 **Title:** Master Architecture Index
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Status:** Approved
 **Owner:** Architecture Board
-**Last Updated:** 2026-06-27
+**Last Updated:** 2026-07-12
 **Dependencies:** Yok
 **Related Documents:** Tüm Mimari Dökümanlar
 
@@ -13,6 +13,7 @@
 ## Change History
 | Version | Date | Author | Description |
 | ------- | ---- | ------ | ----------- |
+| 1.1.0   | 2026-07-12 | Agent 0 (Antigravity) | BRANCHING_STRATEGY.md eklendi, STATUS.md güncellendi. |
 | 1.0.0   | 2026-06-27 | Architecture Team | Initial creation and added Document Dependency Matrix. |
 
 ---
@@ -76,3 +77,5 @@ Daha fazla detay için bkz. [ADR-0002 — Clean Architecture](file:///Users/emre
 | [OBSERVABILITY.md](file:///Users/emre/yeni-versiyon-gecis/OBSERVABILITY.md) | README.md | EVENT_BUS.md, WORKFLOW_ENGINE.md, SECURITY_ARCHITECTURE.md | ✅ Approved | Metrik, log ve dağıtık izleme |
 | [DEPLOYMENT_ARCHITECTURE.md](file:///Users/emre/yeni-versiyon-gecis/DEPLOYMENT_ARCHITECTURE.md) | README.md | OBSERVABILITY.md, SECURITY_ARCHITECTURE.md, DATA_ARCHITECTURE.md, INTEGRATION_ENGINE.md, AI_ENGINE.md | ✅ Approved | K8s, CI/CD ve ortam stratejisi |
 | [SPRINT_0_DEVELOPMENT_READINESS.md](file:///Users/emre/yeni-versiyon-gecis/SPRINT_0_DEVELOPMENT_READINESS.md) | MASTER_ARCHITECTURE_INDEX.md | ANAYASA.md, ORTAK_TEKNIK_PROTOKOL.md | ✅ Approved | Geliştirme readiness ve Sprint 0 planı |
+| [BRANCHING_STRATEGY.md](file:///Users/emre/yeni-versiyon-gecis/BRANCHING_STRATEGY.md) | README.md, DEPLOYMENT_ARCHITECTURE.md | AGENTS.md | ✅ Approved | Git branch modeli, sunucu eşlemesi ve merge kuralları |
+| [STATUS.md](file:///Users/emre/yeni-versiyon-gecis/STATUS.md) | MASTER_ARCHITECTURE_INDEX.md | Tüm Modül Dokümanları | ✅ Active | Platform modül durum matrisi ve alınma takibi |

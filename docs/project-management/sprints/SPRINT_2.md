@@ -2,7 +2,7 @@
 
 **Başlangıç:** Sprint 1 platform çekirdeği tamamlandı (Task 001–008A)  
 **Son güncelleme:** 2026-07-04  
-**İlerleme:** **63%** (CEO, QC, Logistics V2 & Tenant Seeding Duplication Hotfix tamamlandı)
+**İlerleme:** **72%** (Control Tower Registry, Providers, REST/SignalR Delivery & Recovery completed)
 
 ---
 
@@ -46,6 +46,10 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task 036A** | Agent 1 (Dev) | [TASK_036A_REPORT.md](../reports/TASK_036A_REPORT.md) | C# Compile Warnings & Next.js Git Merge Conflict Resolution | ✅ Tamamlandı |
 | **Task 037** | Agent 1 (Dev) | [TASK_037_REPORT.md](../reports/TASK_037_REPORT.md) | Reseller Permissions and User Management Authorization Hotfix | ✅ Tamamlandı |
 | **Task 038** | Agent 1 (Dev) | [TASK_038_REPORT.md](../reports/TASK_038_REPORT.md) | SuperAdmin Tenants Seeding Duplication Hotfix | ✅ Tamamlandı |
+| **Task CT_CORE_001_RECOVERY** | Agent 11 (Dev) | [TASK_CT_CORE_001_RECOVERY_REPORT.md](../reports/TASK_CT_CORE_001_RECOVERY_REPORT.md) | Canonical Registry & Snapshot Contracts | ✅ Tamamlandı |
+| **Task CT_CORE_002** | Agent 11 (Dev) | [TASK_CT_CORE_002_REPORT.md](../reports/TASK_CT_CORE_002_REPORT.md) | Control Tower Registry Persistence | ✅ Tamamlandı |
+| **Task CT_CORE_003B** | Agent 11 (Dev) | [TASK_CT_CORE_003B_REPORT.md](../reports/TASK_CT_CORE_003B_REPORT.md) | Control Tower Providers | ✅ Tamamlandı |
+| **Task CT_CORE_004** | Agent 11 (Dev) | [TASK_CT_CORE_004_REPORT.md](../reports/TASK_CT_CORE_004_REPORT.md) | Snapshot REST and SignalR Delivery | ✅ Tamamlandı |
 
 **Task 038 özeti:** Yeni tenant oluşturma esnasında `AIAutoReplyConfigs` ve `AIProviderConfigs` verilerinin 7 kez yinelenmesi nedeniyle veritabanında oluşan `duplicate key` hatası çözüldü, mükerrer seed yapıları temizlendi.
 

@@ -1,10 +1,10 @@
 # 📈 Observability Mimarisi
 
 **Title:** Observability Mimarisi
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Status:** Approved
 **Owner:** Architecture Board
-**Last Updated:** 2026-06-27
+**Last Updated:** 2026-07-12
 **Dependencies:** README.md
 **Related Documents:** EVENT_BUS.md, WORKFLOW_ENGINE.md, SECURITY_ARCHITECTURE.md
 
@@ -13,6 +13,7 @@
 ## Change History
 | Version | Date | Author | Description |
 | ------- | ---- | ------ | ----------- |
+| 1.1.0   | 2026-07-12 | Agent 0 (Antigravity) | Production stack detayları, health check endpoints ve Docker health probes eklendi. |
 | 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
 
 ---
@@ -280,6 +281,82 @@ Mimari aşağıdaki sistemlerle uyumlu olacak şekilde tasarlanmalıdır.
 * Elastic Stack
 * Azure Monitor
 * AWS CloudWatch
+
+---
+
+# 🏭 Production Implementasyon (Temmuz 2026)
+
+Aşağıdaki bölüm, gerçek production ortamında aktif olarak çalışan monitoring stack'i belgelemektedir.
+
+## Aktif Logging Pipeline
+
+```text
+.NET 8 API (Serilog)
+       │
+       ▼
+  stdout / file
+       │
+       ▼
+ Promtail Agent (Docker sidecar)
+       │
+       ▼
+   Grafana Loki
+       │
+       ▼
+   Grafana Dashboard
+```
+
+**Framework:** Serilog (Structured Logging)
+**Transport:** Promtail agent (`emareticket-promtail` container) → Grafana Loki (`emareticket-loki` container)
+**Görselleştirme:** Grafana Dashboard
+**Log Format:** JSON structured log (timestamp, level, message, properties, exception)
+
+## Docker Container Health Probes
+
+Tüm production container'lar `compose.prod.yml`'de health check tanımına sahiptir:
+
+| Container | Health Check | Interval |
+|---|---|---|
+| `emareticket-postgres-prod` | `pg_isready` | 10s |
+| `emareticket-api-prod` | HTTP → `:8080` | 30s |
+| `emareticket-web-prod` | HTTP → `:3000` | 30s |
+| `emareticket-wa-bridge` | Socket check | 15s |
+| `emareticket-whisper-prod` | HTTP → `/health` | 60s |
+| `standalone-asterisk` | `asterisk -rx 'core show uptime'` | 30s |
+
+## API Health Check Endpoints
+
+| Endpoint | Amaç | Auth |
+|---|---|---|
+| `GET /health` | Temel yaşam kontrolü (DB, Redis, Queue) | Yok |
+| `GET /health/ready` | Readiness probe (migration tamamlandı mı?) | Yok |
+| `GET /api/tenants/current` | Tenant çözümleme doğrulaması | JWT |
+
+## Asterisk Telephony Monitoring
+
+```bash
+# SIP Trunk kayıt durumu
+docker exec standalone-asterisk asterisk -rx 'pjsip show registrations'
+
+# Aktif çağrı sayısı
+docker exec standalone-asterisk asterisk -rx 'core show channels count'
+
+# Endpoint durumları
+docker exec standalone-asterisk asterisk -rx 'pjsip show endpoints'
+```
+
+## Container Sağlık Kontrolü
+
+```bash
+# Tüm container durumları
+docker ps -a --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
+
+# API container logları (son 50 satır)
+docker logs emareticket-api-prod --tail 50
+
+# Voice Bridge bağlantı durumu
+docker logs standalone-voice-bridge --tail 20
+```
 
 ---
 

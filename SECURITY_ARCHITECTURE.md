@@ -1,10 +1,10 @@
 # 🔐 Security Architecture
 
 **Title:** Security Architecture
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Status:** Approved
 **Owner:** Architecture Board
-**Last Updated:** 2026-06-27
+**Last Updated:** 2026-07-12
 **Dependencies:** README.md
 **Related Documents:** OBSERVABILITY.md, DATA_ARCHITECTURE.md
 
@@ -13,6 +13,7 @@
 ## Change History
 | Version | Date | Author | Description |
 | ------- | ---- | ------ | ----------- |
+| 1.1.0   | 2026-07-12 | Agent 0 (Antigravity) | Rate limiting, CORS, CSP ve güvenlik header middleware detayları eklendi. |
 | 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
 
 ---
@@ -421,6 +422,81 @@ Platform aşağıdaki standartları destekleyecek şekilde tasarlanmalıdır.
 * KVKK
 * NIST Cybersecurity Framework
 * CIS Controls
+
+---
+
+# 🏭 Production Middleware Güvenlik Yapılandırması (Temmuz 2026)
+
+Aşağıdaki bölüm, .NET 8 API katmanında aktif olarak çalışan güvenlik middleware'lerini belgelemektedir.
+
+## HTTP Security Headers
+
+Tüm API yanıtlarına aşağıdaki güvenlik header'ları eklenir (middleware ile):
+
+| Header | Değer | Amaç |
+|---|---|---|
+| `X-Content-Type-Options` | `nosniff` | MIME type sniffing engelleme |
+| `X-Frame-Options` | `DENY` | Clickjacking koruması |
+| `X-XSS-Protection` | `1; mode=block` | XSS reflective attack koruması |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` | Referrer sızıntısı engelleme |
+| `Permissions-Policy` | `camera=(), microphone=(self), geolocation=()` | Tarayıcı izin kısıtlaması |
+| `Content-Security-Policy` | `default-src 'self'; script-src 'self'; ...` | CSP koruması |
+
+## Content Security Policy (CSP)
+
+```text
+default-src 'self';
+script-src 'self';
+style-src 'self' 'unsafe-inline';
+img-src 'self' data: blob:;
+font-src 'self';
+connect-src 'self';
+frame-ancestors 'none';
+base-uri 'self';
+form-action 'self'
+```
+
+## CORS (Cross-Origin Resource Sharing)
+
+CORS politikası tenant bazlı yapılandırılır:
+
+* **Production origin'leri:** `*.emarecloud.tr`, tenant custom domain'leri
+* **Yöntemler:** `GET`, `POST`, `PUT`, `DELETE`, `PATCH`, `OPTIONS`
+* **Credential:** `true` (JWT cookie desteği)
+* **Max-Age:** 3600s
+
+## JWT Authentication
+
+| Parametre | Değer |
+|---|---|
+| **Algoritma** | HMAC-SHA256 |
+| **Access Token Ömrü** | 60 dakika |
+| **Refresh Token Ömrü** | 7 gün |
+| **İssuer** | Tenant slug bazlı |
+| **Audience** | API endpoint |
+| **Token Yenileme** | `/api/auth/refresh-token` |
+
+## Tenant İzolasyonu (Middleware)
+
+1. **TenantResolutionMiddleware:** Her HTTP request'te `Host` header veya `X-Tenant-Slug` header'ından tenant çözümlenir.
+2. **TenantId otomatik filtreleme:** EF Core global query filter ile tüm entity'ler `TenantId` bazında izole edilir.
+3. **Cross-tenant erişim:** Varsayılan olarak **YASAK**. SuperAdmin dışında hiçbir rol cross-tenant sorgulama yapamaz.
+
+## SMTP Credential Güvenliği
+
+SMTP parolaları veritabanında **AES-256 şifrelemesi** ile saklanır. Şifreleme anahtarı `.env` ortam değişkenlerinden alınır.
+
+## Rate Limiting (Gelecek Sprint)
+
+> [!WARNING]
+> Rate limiting henüz middleware olarak eklenmemiştir. Aşağıdaki plan uygulanacaktır:
+
+| Endpoint Grubu | Limit | Pencere |
+|---|---|---|
+| `/api/auth/*` | 10 istek | 1 dakika |
+| `/api/*` (genel) | 100 istek | 1 dakika |
+| `/api/webhooks/*` | 1000 istek | 1 dakika |
+| WebSocket (SignalR) | 50 bağlantı / tenant | — |
 
 ---
 

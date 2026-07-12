@@ -1,10 +1,10 @@
 # 🏛️ Emare Business Operating System (BOS) Mimarisi
 
 **Title:** Emare Business Operating System (BOS) Mimarisi
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Status:** Approved
 **Owner:** Architecture Board
-**Last Updated:** 2026-06-27
+**Last Updated:** 2026-07-12
 **Dependencies:** MASTER_ARCHITECTURE_INDEX.md
 **Related Documents:** MASTER_ARCHITECTURE_INDEX.md, DOMAIN_MODEL.md, BOUNDED_CONTEXTS.md
 
@@ -13,9 +13,45 @@
 ## Change History
 | Version | Date | Author | Description |
 | ------- | ---- | ------ | ----------- |
+| 1.1.0   | 2026-07-12 | Agent 0 (Antigravity) | Dual Repository Disclaimer, production stack özeti ve branch stratejisi eklendi. |
 | 1.0.0   | 2026-06-27 | Architecture Team | Formatted header and standardized metadata. |
 
 ---
+
+> [!IMPORTANT]
+> ## 🔒 Dual Repository Protocol v1.2
+>
+> Bu repo **yalnızca mimari belgeler, görev raporları ve QA dokümanları** içerir.
+> **Kaynak kod (`.cs`, `.tsx`, `Dockerfile`, migration vb.) bu repoya EKLENMEZ.**
+>
+> | Repository | İçerik | Erişim |
+> |---|---|---|
+> | `emaredestek/emaredestek` | Kod, Testler, Docker, CI/CD, Migration | 🔒 Private |
+> | `emraresoftware/yeni-versiyon-gecis` | Mimari belgeler, Task/QA/Architect raporları | 🌍 Public |
+>
+> Güvenlik nedeniyle (API key, connection string, iş mantığı sızıntısı riski) kod ve belgeler ayrı repolarda tutulur.
+
+---
+
+## 🚀 Production Stack Durumu (Temmuz 2026)
+
+Platform **3 sunucuda aktif production** halinde çalışmaktadır:
+
+| Bileşen | Teknoloji | Durum |
+|---|---|---|
+| Backend API | .NET 8 (Modüler Monolit, Clean Architecture + CQRS) | ✅ Production |
+| Frontend | Next.js 16 (App Router, Zustand + React Query) | ✅ Production |
+| Database | PostgreSQL 16 (Multi-tenant, Row-Level Security) | ✅ Production |
+| Telephony | Asterisk PBX + Python Voice Bridge + Whisper STT + Cartesia TTS | ✅ Production |
+| AI | Grok LLM + Ollama (lokal fallback) + Gemini Live API | ✅ Production |
+| Messaging | WhatsApp (WA-Bridge) + SMTP/IMAP + Telegram + Live Chat Widget | ✅ Production |
+| Containerization | Docker Compose (prod/dev/staging) | ✅ Production |
+| Monitoring | Serilog → Loki (Promtail agent) + Grafana | ✅ Production |
+| Mobile | Flutter (iOS + Android) SuperApp | 🚧 Beta |
+
+**Aktif modüller:** CRM, Support Tickets, Email (AI Auto-Reply), WhatsApp, Live Chat, Telephony (AI Voice), Maps & Delivery, Task/Project Management, Proposals, Multi-Tenant White-Label, Control Tower, Omnichannel Messaging Core, AI Agent Runtime V2.
+
+
 
 ## Amaç
 
