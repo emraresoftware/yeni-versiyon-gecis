@@ -2,7 +2,7 @@
 
 **Başlangıç:** Sprint 1 platform çekirdeği tamamlandı (Task 001–008A)  
 **Son güncelleme:** 2026-07-04  
-**İlerleme:** **72%** (Control Tower Registry, Providers, REST/SignalR Delivery & Recovery completed)
+**İlerleme:** **85%** (Control Tower Priority Engine & Executive Brief Generator completed)
 
 ---
 
@@ -50,6 +50,10 @@ Sprint başlamadan önce ürün izlenebilirlik matrisi zorunludur (`CONTROL_TOWE
 | **Task CT_CORE_002** | Agent 11 (Dev) | [TASK_CT_CORE_002_REPORT.md](../reports/TASK_CT_CORE_002_REPORT.md) | Control Tower Registry Persistence | ✅ Tamamlandı |
 | **Task CT_CORE_003B** | Agent 11 (Dev) | [TASK_CT_CORE_003B_REPORT.md](../reports/TASK_CT_CORE_003B_REPORT.md) | Control Tower Providers | ✅ Tamamlandı |
 | **Task CT_CORE_004** | Agent 11 (Dev) | [TASK_CT_CORE_004_REPORT.md](../reports/TASK_CT_CORE_004_REPORT.md) | Snapshot REST and SignalR Delivery | ✅ Tamamlandı |
+| **Task CT_CORE_008A_1** | Agent 11 (Dev) | [TASK_CT_CORE_008A_1_REPORT.md](../reports/TASK_CT_CORE_008A_1_REPORT.md) | Decision Contracts and Trace Foundation | ✅ Tamamlandı |
+| **Task CT_CORE_008A_2** | Agent 11 (Dev) | [TASK_CT_CORE_008A_2_REPORT.md](../reports/TASK_CT_CORE_008A_2_REPORT.md) | Deterministic Rule Engine and 30-Rule Catalog | ✅ Tamamlandı |
+| **Task CT_CORE_008A_3** | Agent 11 (Dev) | [TASK_CT_CORE_008A_3_REPORT.md](../reports/TASK_CT_CORE_008A_3_REPORT.md) | Deterministic Priority Engine | ✅ Tamamlandı |
+| **Task CT_CORE_008A_4** | Agent 11 (Dev) | [TASK_CT_CORE_008A_4_REPORT.md](../reports/TASK_CT_CORE_008A_4_REPORT.md) | Persona Filter + Executive Brief | ✅ Tamamlandı |
 
 **Task 038 özeti:** Yeni tenant oluşturma esnasında `AIAutoReplyConfigs` ve `AIProviderConfigs` verilerinin 7 kez yinelenmesi nedeniyle veritabanında oluşan `duplicate key` hatası çözüldü, mükerrer seed yapıları temizlendi.
 
