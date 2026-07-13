@@ -66,7 +66,7 @@
 | AI Provider Management | ✅ Production | Multi-provider (Grok, Ollama, Gemini) |
 | AI Audit Logs | ✅ Production | Token kullanımı, maliyet takibi |
 | AI Agent Runtime V2 | 🚧 Staging | Otonom görev planlama, onay mekanizması |
-| Control Tower (EmareBrain) | 🚧 Developer Complete | Event store, product twin, platform intelligence (Founder Verification Pending) |
+| Control Tower (EmareBrain) | ✅ Production Ready | Event store, product twin, platform intelligence (FAP-003 Accepted) |
 
 ### Harita & Teslimat
 
@@ -121,7 +121,7 @@ Bu bölüm, BOS mimarisine geçiş sürecindeki 7 departman ajanının durumunu 
 | **A5** | Production | `TAMAM` | Üretim Dashboard veri entegrasyonu |
 | **A6** | QC | `TAMAM` | Kalite ve Hata Bildirimleri |
 | **A7** | Logistics | `TAMAM` | Sevkiyat ve Lojistik Planlama |
-| **A11** | Integration & Persistence | `TAMAM` | Control Tower Registry, Event Store, Providers |
+| **A11** | Integration & Persistence | `TAMAM` | Control Tower Registry, Event Store, Providers, Decision Trace |
 
 ---
 
@@ -129,6 +129,7 @@ Bu bölüm, BOS mimarisine geçiş sürecindeki 7 departman ajanının durumunu 
 
 | Görev | Ajan | Tarih | Rapor |
 |---|---|---|---|
+| FAP-003 Decision Trace Verification | Agent 0 (CTO) | 2026-07-13 | [FAP_003_ACCEPTANCE_REPORT](docs/project-management/reports/FAP_003_ACCEPTANCE_REPORT.md) |
 | Control Tower Registry Bootstrap | Agent 11 | 2026-07-12 | [TASK_CT_CORE_006](docs/project-management/reports/TASK_CT_CORE_006_REPORT.md) |
 | Control Tower Priority Engine | Agent 11 | 2026-07-12 | [TASK_CT_CORE_008A_3](docs/project-management/reports/TASK_CT_CORE_008A_3_REPORT.md) |
 | Persona Filter + Executive Brief | Agent 11 | 2026-07-12 | [TASK_CT_CORE_008A_4](docs/project-management/reports/TASK_CT_CORE_008A_4_REPORT.md) |
