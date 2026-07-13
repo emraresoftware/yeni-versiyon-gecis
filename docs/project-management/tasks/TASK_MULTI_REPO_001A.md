@@ -1,98 +1,123 @@
-# TASK_MULTI_REPO_001A — Private Documentation Federation and Deterministic Sync Pilot
+# TASK_MULTI_REPO_001A
+## Bootstrap, Secure and Populate the Private Multi-Repo Federation
 
-## MODE: IMPLEMENTATION_AND_VERIFICATION
-## PRIORITY: P0
+TARGET REPOSITORY:
+emraresoftware/multi-repo
 
----
+MODE:
+IMPLEMENTATION_AND_VERIFICATION
 
-## 🎯 OBJECTIVE
+PRIORITY:
+P0
 
-Create the private `Emare-Multi-Repo` documentation federation and synchronize exactly 10 approved Project Intake pilot projects into it.
+IMPORTANT CURRENT REALITY
 
-*   Do not publish anything publicly.
-*   Do not create public repositories.
-*   Do not modify source projects.
-*   Do not push to source repositories.
-*   Do not copy source code or build artifacts.
-*   Do not trust the previous Project Intake completion report without verifying the actual ten project packages.
+The target repository currently:
+- is PRIVATE (Secured from public view),
+- contains docs/, .gitignore, and docs/legacy/,
+- does not yet contain the private federation structure,
+- does not prove the claimed ten-project pilot packages.
 
----
+Do not trust previous completion reports without repository evidence.
 
-## 🔒 CANONICAL REPOSITORIES
+====================================================
+PHASE 0 — SECURITY GATE
+====================================================
 
-1.  **`Emare-Knowledge` / `emare-docs`:**
-    *   Active Emare platform Engineering Memory.
-2.  **`Emare-Multi-Repo`:**
-    *   Private project documentation federation.
-    *   Project metadata, generated analysis, reports, and evidence.
-3.  **`Emare-Project-Catalog`:**
-    *   Not implemented in this task.
-    *   Future public subset after explicit approvals.
+1. Verify repository visibility.
 
----
+Required outcome:
+PRIVATE
 
-## 🚦 PHASE 0 — VERIFY PROJECT INTAKE PILOT
+If visibility is PUBLIC or cannot be changed:
+- STOP before copying project documentation.
+- Report BLOCKED_VISIBILITY.
+- Do not synchronize any internal project.
 
-Locate the 10 claimed pilot projects.
-For every project, prove:
-*   Stable `ProjectId`
-*   Approved source root
-*   Source repository or folder
-*   Source HEAD commit where applicable
-*   Read-only scan evidence
-*   Documentation package exists
-*   Required artifacts exist:
-    *   `PROJECT_PROFILE.md`
-    *   `CURRENT_STATUS.md`
-    *   `ARCHITECTURE.md`
-    *   `FEATURES.md`
-    *   `MODULE_INVENTORY.md`
-    *   `API_INVENTORY.md`
-    *   `DATABASE_INVENTORY.md`
-    *   `DEPENDENCY_MAP.md`
-    *   `REUSE_CANDIDATES.md`
-    *   `DUPLICATE_ANALYSIS.md`
-    *   `SECURITY_PUBLICATION_REPORT.md`
-    *   `LICENSE_IP_REPORT.md`
-    *   `EVALUATION.md`
-    *   `PROJECT_MANIFEST.json`
-    *   `EVIDENCE.json`
-*   Security report exists
-*   License/IP report exists
-*   Duplicate analysis exists
-*   Source project was not modified
-*   Re-scan was deterministic
-*   No public publication occurred
+2. Remove .DS_Store from tracking.
 
-*If fewer than 10 valid packages exist:*
-*   Overall result must be `PARTIAL`.
-*   Do not invent missing projects.
-*   Synchronize only verified packages.
-*   Report every missing item.
+3. Add root .gitignore including:
 
----
+.DS_Store
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+node_modules/
+bin/
+obj/
+.next/
+dist/
+coverage/
+.idea/
+.vscode/
+*.user
+*.suo
 
-## 📁 PRIVATE REPOSITORY STRUCTURE
+4. Scan the full current Git history for:
 
-Create or validate the folder tree in `Emare-Multi-Repo`:
+- API keys
+- tokens
+- passwords
+- private keys
+- connection strings
+- internal IPs and URLs
+- local user paths
+- customer/partner identifiers
+- PII/KVKK content
 
-```text
-Emare-Multi-Repo/
-├── README.md
-├── MASTER_INDEX.md
-├── catalog.json
-├── schemas/
-├── projects/
-├── duplicate-clusters/
-├── reuse-candidates/
-├── publication-review/
-├── security-reports/
-├── agents/
-└── archive/
-```
+5. If a secret is found:
+- mark SECURITY_BLOCKED,
+- do not merely delete it in a new commit,
+- report required credential rotation and history cleanup.
 
-Per project directory:
-```text
+====================================================
+PHASE 1 — REPOSITORY FOUNDATION
+====================================================
+
+Create:
+
+README.md
+MASTER_INDEX.md
+catalog.json
+
+schemas/
+projects/
+duplicate-clusters/
+reuse-candidates/
+publication-review/
+security-reports/
+agents/assignments/
+agents/run-reports/
+agents/failed-jobs/
+archive/
+
+Do not copy source code or binaries.
+
+README must define:
+
+- This is a private documentation federation.
+- Source project docs remain authoritative in source-owned mode.
+- Legacy projects may use federation-owned mode.
+- Public publication is forbidden without security, legal and Founder approval.
+- Agents cannot write directly to main.
+
+====================================================
+PHASE 2 — SCHEMAS
+====================================================
+
+Create and validate:
+
+schemas/project-manifest.schema.json
+schemas/source-record.schema.json
+schemas/sync-status.schema.json
+schemas/publication-status.schema.json
+schemas/evidence.schema.json
+
+Per-project structure:
+
 projects/{PROJECT_ID}/
 ├── project.yaml
 ├── SOURCE.json
@@ -101,136 +126,173 @@ projects/{PROJECT_ID}/
 ├── generated/
 ├── reports/
 └── evidence/
-```
 
----
+====================================================
+PHASE 3 — VERIFY THE CLAIMED TEN-PROJECT PILOT
+====================================================
 
-## ⚙️ DOCUMENTATION MODES
+Locate the exact ten claimed pilot projects.
+
+For each, prove:
+
+- ProjectId
+- approved source root
+- source repository/folder
+- source commit or deterministic fingerprint
+- required intake artifacts
+- security report
+- license/IP report
+- duplicate analysis
+- read-only scan evidence
+- no source mutation
+- deterministic second scan
+
+Required artifacts:
+
+PROJECT_PROFILE.md
+CURRENT_STATUS.md
+ARCHITECTURE.md
+FEATURES.md
+MODULE_INVENTORY.md
+API_INVENTORY.md
+DATABASE_INVENTORY.md
+DEPENDENCY_MAP.md
+REUSE_CANDIDATES.md
+DUPLICATE_ANALYSIS.md
+SECURITY_PUBLICATION_REPORT.md
+LICENSE_IP_REPORT.md
+EVALUATION.md
+PROJECT_MANIFEST.json
+EVIDENCE.json
+
+If ten valid packages do not exist:
+
+- return PARTIAL,
+- do not invent projects,
+- synchronize only verified packages,
+- list missing packages and missing artifacts.
+
+====================================================
+PHASE 4 — MULTI-REPO SYNC AGENT
+====================================================
+
+Implement deterministic MultiRepoSyncAgent.
+
+Rules:
+
+- read approved project manifest,
+- enforce source boundaries,
+- copy approved text documentation only,
+- preserve source provenance,
+- calculate semantic content hash,
+- sanitize client-visible paths,
+- isolate project failures,
+- reject duplicate ProjectId,
+- detect stale mirror,
+- detect authoritative document conflict,
+- never modify or push to source project,
+- never publish publicly.
 
 Support:
-1.  `source-owned`
-    *   Source repository `docs/` is authoritative.
-    *   Multi-Repo contains a traceable mirror.
-2.  `federation-owned`
-    *   Intended for legacy/frozen/read-only projects.
-    *   Multi-Repo documentation is canonical.
-    *   Source code remains untouched.
-    *   All claims reference source commit/fingerprint evidence.
 
-*Record the mode in each project's project.yaml.*
+documentationMode: source-owned
+documentationMode: federation-owned
 
----
+====================================================
+PHASE 5 — CONTROL TOWER
+====================================================
 
-## 📄 PROJECT MANIFEST SCHEMA
+Register the verified synchronized projects in the existing canonical
+Control Tower registry.
 
-Create and validate `.emare/project.yaml` containing:
-*   `schemaVersion`
-*   `projectId` (deterministic and immutable)
-*   `name`
-*   `documentationMode` (`source-owned` | `federation-owned`)
-*   `owner`
-*   `confidentiality`
-*   `lifecycle`
-*   `sourceRoot`
-*   `sourceRepository`
-*   `docsRoot`
-*   `syncEnabled`
-*   `readOnly`
-*   `publicDocsAllowed`
-*   `sourcePublicationAllowed`
-*   `excludePatterns`
+Expose:
 
----
+- ProjectId
+- Name
+- DocumentationMode
+- SyncStatus
+- SecurityStatus
+- PublicationStatus
+- SourceCommit
+- DocsFreshness
+- DuplicateCluster
+- ReuseCandidates
+- Owner
+- LastScan
+- RecommendedDecision
+- Evidence
 
-## 🤖 MULTI-REPO SYNC AGENT
+Do not create a competing registry.
 
-Implement `MultiRepoSyncAgent` with responsibilities:
-*   Read approved manifest.
-*   Validate approved source boundary.
-*   Validate intake package.
-*   Calculate source and document hashes.
-*   Copy approved text documentation only.
-*   Preserve relative document structure.
-*   Record source repository, branch, and commit.
-*   Write `SOURCE.json` and `SYNC_STATUS.json`.
-*   Detect stale mirror.
-*   Detect duplicate project ID.
-*   Detect conflicting authoritative documents.
-*   Sanitize paths exposed to clients.
-*   Produce deterministic results.
-*   Isolate one project failure from others.
+====================================================
+PHASE 6 — DETERMINISM TEST
+====================================================
 
-*Forbidden Actions:*
-*   Source code changes.
-*   Git push to source.
-*   Public publication.
-*   Secret copying.
-*   Customer/partner private data copying.
-*   No binaries or generated builds (`node_modules`, `bin`, `obj`, `.next`, `dist`).
-*   No absolute local path exposure.
+Run synchronization twice without changing sources.
 
----
+The second run must produce:
+- zero duplicate projects,
+- zero duplicate documents,
+- same ProjectIds,
+- same semantic hashes,
+- stable ordering,
+- no unintended Git diff.
 
-## 🛡️ SECURITY GATE
+====================================================
+PUBLICATION RULE
+====================================================
 
-Check all synchronized outputs for:
-*   Tokens, API keys, passwords, private SSH keys.
-*   Connection strings, internal IPs, URLs, local user paths.
-*   PII / KVKK data (customer names, private data).
-*   White-label partner configurations, commercial secrets.
-*   License/IP uncertainty or third-party copyrighted source.
+Allowed states during this task:
 
-*States:*
-`PRIVATE`, `SECURITY_BLOCKED`, `LEGAL_REVIEW`, `FOUNDER_REVIEW` (Never `PUBLISHED` in this task).
+PRIVATE
+SECURITY_BLOCKED
+LEGAL_REVIEW
+FOUNDER_REVIEW
 
----
+Forbidden state:
 
-## 📋 PROVENANCE DATA
+PUBLISHED
 
-`SOURCE.json` must include:
-*   `projectId`, `sourceRepository`, `sanitizedRemote`, `sourceBranch`, `sourceCommit`, `sourceFingerprint`, `documentationMode`, `sourceDocsPath`, `scannedAt`, `scannerVersion`.
+Do not start TASK_PROJECT_INTAKE_002.
+Do not create Emare-Project-Catalog.
+Do not create public project repositories.
 
-`SYNC_STATUS.json` must include:
-*   `schemaVersion`, `projectId`, `sourceCommit`, `syncedAt`, `documentCount`, `contentHash`, `syncStatus`, `securityStatus`, `publicationStatus`, `warnings`, `errors`.
+====================================================
+DELIVERABLES
+====================================================
 
----
+MULTI_REPO_ARCHITECTURE.md
+MULTI_REPO_PROJECT_SCHEMA.md
+MULTI_REPO_SYNC_POLICY.md
+MULTI_REPO_SECURITY_POLICY.md
+MULTI_REPO_PUBLICATION_POLICY.md
+MULTI_REPO_PILOT_VERIFICATION.md
+MULTI_REPO_SYNC_REPORT.md
 
-## 🚦 TEST MATRIX
+Also return:
 
-Validate:
-1.  Manifest validation
-2.  Stable ProjectId
-3.  Approved-root enforcement
-4.  Read-only source behavior
-5.  Source commit provenance
-6.  `source-owned` mode
-7.  `federation-owned` mode
-8.  Secret blocking
-9.  PII blocking
-10. Internal path sanitization
-11. Generated folder exclusion
-12. Duplicate ProjectId rejection
-13. Duplicate authoritative document detection
-14. Failed project isolation
-15. Stale mirror detection
-16. Deterministic second sync
-17. Unchanged source produces no unintended diff
-18. No public publication
-19. No source mutation
-20. Control Tower registry population
+- visibility verdict,
+- history security scan,
+- verified project package count,
+- synchronized project count,
+- missing/invalid package list,
+- source provenance,
+- deterministic second-run evidence,
+- Control Tower registry evidence,
+- final commit SHA.
 
----
+====================================================
+COMPLETION VERDICT
+====================================================
 
-## 📦 DELIVERABLES
+Return exactly one:
 
-1.  `MULTI_REPO_ARCHITECTURE.md`
-2.  `MULTI_REPO_PROJECT_SCHEMA.md`
-3.  `MULTI_REPO_SYNC_POLICY.md`
-4.  `MULTI_REPO_SECURITY_POLICY.md`
-5.  `MULTI_REPO_PUBLICATION_POLICY.md`
-6.  `MULTI_REPO_PILOT_VERIFICATION.md`
-7.  `MULTI_REPO_SYNC_REPORT.md`
-8.  Verified project list / missing pilot package list.
-9.  Up to 10 synchronized private project mirrors with commit provenance & security reports.
-10. Deterministic second-run evidence.
-11. Control Tower registry update evidence.
+COMPLETED_AND_VERIFIED
+PARTIAL
+CONFLICTED
+SECURITY_BLOCKED
+NOT_IMPLEMENTED
+
+Recommended next task:
+
+TASK_MULTI_REPO_001B — Control Tower Project Atlas and Founder Review Workflow
