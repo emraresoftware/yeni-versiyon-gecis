@@ -125,6 +125,20 @@ Bu bölüm, BOS mimarisine geçiş sürecindeki 7 departman ajanının durumunu 
 
 ---
 
+## 🏛️ Proje Arkeolojisi & Multi-Repo Görev Durumları
+
+BOS ekosistemindeki dağınık projelerin taranması ve dokümantasyon federasyonuna yönelik görev durumları:
+
+| İş / Görev ID | Durum | Açıklama |
+|---|---|---|
+| `EPIC_PROJECT_INTAKE_001` | `DEVELOPER_COMPLETE — MULTI_REPO_GATE_PENDING` | 10 pilot projenin taranması geliştirici tarafından tamamlandı, paket doğrulama bekleniyor. |
+| `TASK_PROJECT_INTAKE_002` | `BLOCKED — PRIVATE_FEDERATION_REQUIRED` | Özel federasyon katmanı kurulmadan public katalog yayını yapılamaz. |
+| `TASK_MULTI_REPO_001A` | `NEXT / P0` | Özel multi-repo federasyonu kurma ve 10 pilot projenin deterministik senkronizasyonu (Aktif Görev). |
+| `TASK_MULTI_REPO_001B` | `WAITING` | Control Tower Project Atlas ekranı ve Founder onay akışı. |
+| `Public Catalog` | `PARKED` | Public proje kataloğu işleri askıya alındı. |
+
+---
+
 ## 📋 Tamamlanan Görevler (Son 30 Gün)
 
 | Görev | Ajan | Tarih | Rapor |
